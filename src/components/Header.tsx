@@ -1,148 +1,115 @@
 
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
-import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
-import { ChevronDown, Globe, DollarSign } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/context/AuthContext';
+import { LogIn, User } from 'lucide-react';
 
 const Header = () => {
-  const { currency, setCurrency, language, setLanguage } = useApp();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { setCurrency, currency, setLanguage, language } = useApp();
+  const { isAuthenticated, user } = useAuth();
+  
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleCurrencyDropdown = () => {
-    setIsCurrencyOpen(!isCurrencyOpen);
-    if (isLanguageOpen) setIsLanguageOpen(false);
-  };
-
-  const toggleLanguageDropdown = () => {
-    setIsLanguageOpen(!isLanguageOpen);
-    if (isCurrencyOpen) setIsCurrencyOpen(false);
-  };
-
-  const currencies = [
-    { code: 'USD', label: 'USD ($)' },
-    { code: 'GBP', label: 'GBP (£)' },
-    { code: 'EUR', label: 'EUR (€)' },
-    { code: 'AUD', label: 'AUD (A$)' },
-  ];
-
-  const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'es', label: 'Español' },
-    { code: 'fr', label: 'Français' },
-    { code: 'de', label: 'Deutsch' },
+  const menuItems = [
+    { label: 'Home', href: '#' },
+    { label: 'Features', href: '#features' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'Portfolio', href: '#portfolio' },
+    { label: 'Blog', href: '#blog' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4',
-        isScrolled 
-          ? 'bg-white bg-opacity-80 backdrop-blur-lg shadow-sm' 
-          : 'bg-transparent'
-      )}
-    >
-      <div className="container mx-auto flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-sm border-b">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <div className="flex items-center">
-          <a href="/" className="font-display font-bold text-2xl tracking-tight">
-            AIAppCrafter
-          </a>
+          <Link to="/" className="font-bold text-xl text-blue-600 flex items-center">
+            <span className="text-2xl mr-1">🚀</span> AIAppCrafter
+          </Link>
         </div>
-
-        <div className="flex items-center space-x-6">
-          {/* Currency Selector */}
-          <div className="relative">
-            <button
-              onClick={toggleCurrencyDropdown}
-              className={cn(
-                'flex items-center p-2 rounded-lg text-sm font-medium transition-colors',
-                isScrolled ? 'hover:bg-black/5' : 'hover:bg-white/20',
-                isCurrencyOpen && (isScrolled ? 'bg-black/5' : 'bg-white/20')
-              )}
+        
+        <nav className="hidden md:flex items-center space-x-6">
+          {menuItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             >
-              <DollarSign className="h-4 w-4 mr-1 opacity-70" />
-              <span>{currency}</span>
-              <ChevronDown className={cn(
-                "ml-1 h-4 w-4 transition-transform", 
-                isCurrencyOpen ? "rotate-180" : ""
-              )} />
-            </button>
-
-            {isCurrencyOpen && (
-              <div className="absolute right-0 mt-1 w-36 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 ease-out scale-in">
-                <div className="py-1 animate-fade-in">
-                  {currencies.map((item) => (
-                    <button
-                      key={item.code}
-                      className={cn(
-                        "block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors",
-                        currency === item.code && "font-medium bg-gray-50"
-                      )}
-                      onClick={() => {
-                        setCurrency(item.code as any);
-                        setIsCurrencyOpen(false);
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Language Selector */}
-          <div className="relative">
-            <button
-              onClick={toggleLanguageDropdown}
-              className={cn(
-                'flex items-center p-2 rounded-lg text-sm font-medium transition-colors',
-                isScrolled ? 'hover:bg-black/5' : 'hover:bg-white/20',
-                isLanguageOpen && (isScrolled ? 'bg-black/5' : 'bg-white/20')
+              {item.label}
+            </a>
+          ))}
+          
+          {isAuthenticated ? (
+            <Link to="/dashboard">
+              <Button variant="outline" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Client Login
+              </Button>
+            </Link>
+          )}
+        </nav>
+        
+        <button
+          onClick={toggleMenu}
+          className="md:hidden p-2 rounded-md hover:bg-gray-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </button>
+        
+        {isMenuOpen && (
+          <div className="absolute top-16 left-0 right-0 bg-white md:hidden border-b shadow-lg">
+            <div className="flex flex-col space-y-4 p-4">
+              {menuItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              {isAuthenticated ? (
+                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="flex items-center gap-2 w-full">
+                    <User className="h-4 w-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="flex items-center gap-2 w-full">
+                    <LogIn className="h-4 w-4" />
+                    Client Login
+                  </Button>
+                </Link>
               )}
-            >
-              <Globe className="h-4 w-4 mr-1 opacity-70" />
-              <span className="uppercase">{language}</span>
-              <ChevronDown className={cn(
-                "ml-1 h-4 w-4 transition-transform", 
-                isLanguageOpen ? "rotate-180" : ""
-              )} />
-            </button>
-
-            {isLanguageOpen && (
-              <div className="absolute right-0 mt-1 w-36 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 ease-out scale-in">
-                <div className="py-1 animate-fade-in">
-                  {languages.map((item) => (
-                    <button
-                      key={item.code}
-                      className={cn(
-                        "block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors",
-                        language === item.code && "font-medium bg-gray-50"
-                      )}
-                      onClick={() => {
-                        setLanguage(item.code as any);
-                        setIsLanguageOpen(false);
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );
