@@ -8,7 +8,6 @@ import {
   Message, 
   UserSelections, 
   ChatOption,
-  INDUSTRY_OPTIONS,
   GOALS_OPTIONS,
   INTEGRATION_OPTIONS,
   DESIGN_STYLE_OPTIONS, 
@@ -70,9 +69,9 @@ export const useChatbotState = () => {
       sendBotMessage(
         "Hi! I'm AIAppCrafter. Let's build your dream app! What industry are you in?"
       );
-      setChatState(ChatState.ASK_INDUSTRY);
-      setCurrentOptions(INDUSTRY_OPTIONS);
-      setAllowMultipleSelection(false);
+      setChatState(ChatState.ASK_GOALS);
+      setCurrentOptions(GOALS_OPTIONS);
+      setAllowMultipleSelection(true);
     }
   }, [isChatbotOpen, language]);
 
@@ -176,13 +175,6 @@ export const useChatbotState = () => {
     
     // Handle different option types based on current state
     switch (chatState) {
-      case ChatState.ASK_INDUSTRY:
-        setSelectedOptions(prev => ({...prev, industry: option.value}));
-        setUserSelections(prev => ({...prev, industry: option.value}));
-        sendUserMessage(option.value);
-        setCurrentOptions([]); // Clear current options after selection
-        break;
-        
       case ChatState.ASK_GOALS:
         if (option.id === 'other' && option.selected) {
           // Handle custom goal input
@@ -376,22 +368,10 @@ export const useChatbotState = () => {
     const lowerInput = input.toLowerCase();
     
     switch (chatState) {
-      case ChatState.ASK_INDUSTRY:
-        if (!selectedOptions.industry) {
-          // If no industry was selected via buttons
-          const foundIndustry = INDUSTRY_OPTIONS.find(
-            opt => lowerInput.includes(opt.value.toLowerCase())
-          );
-          
-          if (foundIndustry) {
-            setSelectedOptions(prev => ({...prev, industry: foundIndustry.value}));
-            setUserSelections(prev => ({...prev, industry: foundIndustry.value}));
-          } else {
-            // Use the input as a custom industry
-            setSelectedOptions(prev => ({...prev, industry: input}));
-            setUserSelections(prev => ({...prev, industry: input}));
-          }
-        }
+      case ChatState.START:
+        // Capture the industry from free-form text input
+        setSelectedOptions(prev => ({...prev, industry: input}));
+        setUserSelections(prev => ({...prev, industry: input}));
         
         // Move to next state
         setChatState(ChatState.ASK_GOALS);
@@ -567,7 +547,7 @@ Which works for you?`);
         
       default:
         sendBotMessage("I'm not sure what to do next. Let's start over. What industry are you in?");
-        setChatState(ChatState.ASK_INDUSTRY);
+        setChatState(ChatState.START);
         break;
     }
   };
@@ -575,10 +555,6 @@ Which works for you?`);
   // Update current options based on chat state
   useEffect(() => {
     switch (chatState) {
-      case ChatState.ASK_INDUSTRY:
-        setCurrentOptions(INDUSTRY_OPTIONS);
-        setAllowMultipleSelection(false);
-        break;
       case ChatState.ASK_GOALS:
         setCurrentOptions(GOALS_OPTIONS);
         setAllowMultipleSelection(true);
