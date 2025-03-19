@@ -1,15 +1,17 @@
 
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { BarChart, Calendar, FileText, Home, MessageSquare, CreditCard, Settings, Menu, X } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { BarChart, Calendar, FileText, Home, MessageSquare, CreditCard, Settings, Menu, X, User } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { Button } from '@/components/ui/button';
 
 const DashboardSidebar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   const menuItems = [
-    { name: 'Overview', path: '/dashboard', icon: Home },
+    { name: 'Overview', path: '/dashboard', icon: Home, exact: true },
     { name: 'Timeline', path: '/dashboard/timeline', icon: Calendar },
     { name: 'Messages', path: '/dashboard/messages', icon: MessageSquare },
     { name: 'Documents', path: '/dashboard/documents', icon: FileText },
@@ -19,6 +21,19 @@ const DashboardSidebar = () => {
   ];
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const isActive = (path: string, exact: boolean = false) => {
+    if (exact) {
+      return location.pathname === path;
+    }
+    return location.pathname === path || location.pathname.startsWith(path);
+  };
+
+  const handleLogout = () => {
+    if (logout) {
+      logout();
+    }
+  };
 
   return (
     <>
@@ -53,8 +68,15 @@ const DashboardSidebar = () => {
           {/* Client info */}
           {user && (
             <div className="p-4 border-b bg-gray-50">
-              <p className="text-sm font-medium text-gray-900">{user.name}</p>
-              <p className="text-xs text-gray-500">{user.company}</p>
+              <div className="flex items-center space-x-3">
+                <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                  <User className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.company || 'Client'}</p>
+                </div>
+              </div>
             </div>
           )}
 
@@ -73,6 +95,7 @@ const DashboardSidebar = () => {
                       }`
                     }
                     onClick={() => setIsOpen(false)}
+                    end={item.exact}
                   >
                     <item.icon className="h-5 w-5" />
                     <span>{item.name}</span>
@@ -82,14 +105,23 @@ const DashboardSidebar = () => {
             </ul>
           </nav>
 
-          {/* Support link */}
+          {/* Footer */}
           <div className="p-4 border-t">
-            <a
-              href="#"
-              className="text-sm text-blue-600 hover:underline flex items-center"
-            >
-              <span>Need help? Contact us</span>
-            </a>
+            <div className="space-y-3">
+              <Button
+                variant="outline"
+                className="w-full justify-start text-gray-700"
+                onClick={handleLogout}
+              >
+                <span className="mr-2">Log Out</span>
+              </Button>
+              <a
+                href="#"
+                className="text-sm text-blue-600 hover:underline flex items-center"
+              >
+                <span>Need help? Contact us</span>
+              </a>
+            </div>
           </div>
         </div>
       </aside>

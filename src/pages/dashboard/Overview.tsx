@@ -1,3 +1,5 @@
+
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -142,30 +144,30 @@ const Overview = () => {
           <CardTitle className="text-lg">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          <button className="bg-blue-50 hover:bg-blue-100 text-blue-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
+          <Link to="/dashboard/timeline" className="bg-blue-50 hover:bg-blue-100 text-blue-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <Clock className="h-6 w-6 mb-1" />
             <span>View Timeline</span>
-          </button>
-          <button className="bg-purple-50 hover:bg-purple-100 text-purple-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
+          </Link>
+          <Link to="/dashboard/messages" className="bg-purple-50 hover:bg-purple-100 text-purple-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <MessageSquare className="h-6 w-6 mb-1" />
             <span>Send Message</span>
-          </button>
-          <button className="bg-green-50 hover:bg-green-100 text-green-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
+          </Link>
+          <Link to="/dashboard/payments" className="bg-green-50 hover:bg-green-100 text-green-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <CreditCard className="h-6 w-6 mb-1" />
             <span>View Invoices</span>
-          </button>
-          <button className="bg-amber-50 hover:bg-amber-100 text-amber-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
+          </Link>
+          <Link to="/dashboard/documents" className="bg-amber-50 hover:bg-amber-100 text-amber-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <FileText className="h-6 w-6 mb-1" />
             <span>View Documents</span>
-          </button>
+          </Link>
           <button className="bg-red-50 hover:bg-red-100 text-red-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <AlertCircle className="h-6 w-6 mb-1" />
             <span>Report Issue</span>
           </button>
-          <button className="bg-gray-50 hover:bg-gray-100 text-gray-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
+          <Link to="/dashboard/settings" className="bg-gray-50 hover:bg-gray-100 text-gray-700 p-4 rounded-md flex flex-col items-center justify-center text-sm transition">
             <Settings className="h-6 w-6 mb-1" />
             <span>Settings</span>
-          </button>
+          </Link>
         </CardContent>
       </Card>
     </div>

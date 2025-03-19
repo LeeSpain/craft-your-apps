@@ -13,12 +13,10 @@ import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import Timeline from "./pages/dashboard/Timeline";
 import Messages from "./pages/dashboard/Messages";
-
-// Import placeholder components for remaining dashboard pages
-const Documents = () => <div className="p-4">Documents Page (Placeholder)</div>;
-const Payments = () => <div className="p-4">Payments Page (Placeholder)</div>;
-const Analytics = () => <div className="p-4">Analytics Page (Placeholder)</div>;
-const Settings = () => <div className="p-4">Settings Page (Placeholder)</div>;
+import Documents from "./pages/dashboard/Documents";
+import Payments from "./pages/dashboard/Payments";
+import Analytics from "./pages/dashboard/Analytics";
+import Settings from "./pages/dashboard/Settings";
 
 const queryClient = new QueryClient();
 
