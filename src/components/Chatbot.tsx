@@ -5,9 +5,10 @@ import { getTranslation } from '@/lib/translations';
 import { APPS, CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { X, Send, MessageSquare } from 'lucide-react';
+import { X, Send, MessageSquare, Mail, Check } from 'lucide-react';
 import LeadForm from './LeadForm';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 interface Message {
   id: string;
@@ -17,37 +18,71 @@ interface Message {
 
 enum ChatState {
   START,
-  ASK_INTENT,
-  BUY_FLOW,
-  CUSTOM_FLOW,
-  CUSTOM_INDUSTRY,
-  CUSTOM_FEATURES,
-  QUOTE_GENERATION,
-  LEAD_FORM,
+  ASK_INDUSTRY,
+  ASK_GOALS,
+  ASK_FEATURES,
+  ASK_CUSTOMIZATION,
+  COLLECT_DETAILS,
+  EMAIL_SENT,
+  SHOW_QUOTE,
+  PAYMENT_OPTIONS,
+  PAYMENT_LINK,
   THANK_YOU,
+}
+
+interface UserSelections {
+  industry: string;
+  goals: string[];
+  features: string[];
+  customizations: {
+    userAccounts: boolean;
+    integrations: string[];
+    designStyle: string;
+  };
+  contactInfo: {
+    name: string;
+    company: string;
+    email: string;
+    phone: string;
+  };
+  quoteConfirmed: boolean;
+  paymentOption: 'split' | 'full' | null;
 }
 
 const Chatbot = () => {
   const { language, currency, formatPrice, isChatbotOpen, closeChatbot, openChatbot } = useApp();
+  const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState('');
   const [chatState, setChatState] = useState<ChatState>(ChatState.START);
   const [isTyping, setIsTyping] = useState(false);
-  const [selectedApp, setSelectedApp] = useState<string | null>(null);
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [userSelections, setUserSelections] = useState<UserSelections>({
+    industry: '',
+    goals: [],
+    features: [],
+    customizations: {
+      userAccounts: false,
+      integrations: [],
+      designStyle: '',
+    },
+    contactInfo: {
+      name: '',
+      company: '',
+      email: '',
+      phone: '',
+    },
+    quoteConfirmed: false,
+    paymentOption: null,
+  });
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const formContainerRef = useRef<HTMLDivElement>(null);
   
   // Initial message
   useEffect(() => {
     if (isChatbotOpen && messages.length === 0) {
-      sendBotMessage(getTranslation('chatbot.welcome', language));
-      
-      setTimeout(() => {
-        setChatState(ChatState.ASK_INTENT);
-        sendBotMessage(getTranslation('chatbot.buyOrCustom', language));
-      }, 1000);
+      sendBotMessage("Hi! I'm AIAppCrafter. Let's build your dream app! What industry are you in? (e.g., pet care, real estate, team productivity, fan community)");
+      setChatState(ChatState.ASK_INDUSTRY);
     }
   }, [isChatbotOpen, language]);
   
@@ -58,12 +93,49 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  // Show form when in LEAD_FORM state
+  // Handle URL params for email confirmation
   useEffect(() => {
-    if (chatState === ChatState.LEAD_FORM && formContainerRef.current) {
-      formContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+    const params = new URLSearchParams(window.location.search);
+    const confirmed = params.get('quoteConfirmed');
+    const email = params.get('email');
+    
+    if (confirmed === 'true' && email) {
+      // Find the user by email and set as confirmed
+      if (userSelections.contactInfo.email === email || !userSelections.contactInfo.email) {
+        openChatbot();
+        if (!userSelections.contactInfo.email) {
+          // If user refreshed the page, we'll simulate having their data
+          setUserSelections(prev => ({
+            ...prev,
+            industry: 'Pet care',
+            goals: ['Streamline bookings', 'Connect with clients'],
+            features: ['ai-recommendations', 'chatroom'],
+            customizations: {
+              userAccounts: true,
+              integrations: ['Google Calendar'],
+              designStyle: 'Modern',
+            },
+            contactInfo: {
+              name: 'John Doe',
+              company: 'PetStoreX',
+              email: email,
+              phone: '555-1234',
+            },
+            quoteConfirmed: true,
+          }));
+        } else {
+          setUserSelections(prev => ({
+            ...prev,
+            quoteConfirmed: true,
+          }));
+        }
+        
+        setChatState(ChatState.SHOW_QUOTE);
+        sendBotMessage(`Thanks for confirming! Here's your full quote:`);
+        displayQuote();
+      }
     }
-  }, [chatState]);
+  }, [isChatbotOpen]);
 
   const sendBotMessage = (content: string) => {
     setIsTyping(true);
@@ -96,120 +168,327 @@ const Chatbot = () => {
     const lowerInput = input.toLowerCase();
     
     switch (chatState) {
-      case ChatState.ASK_INTENT:
-        if (lowerInput.includes('buy') || lowerInput.includes('purchase') || lowerInput.includes('ready')) {
-          setChatState(ChatState.BUY_FLOW);
-          
-          setTimeout(() => {
-            const appOptions = APPS.map(app => `${app.name} (${formatPrice(app.price)})`).join(', ');
-            sendBotMessage(`${getTranslation('chatbot.whichApp', language)} ${appOptions}`);
-          }, 800);
-        } else if (lowerInput.includes('custom') || lowerInput.includes('build') || lowerInput.includes('tailor')) {
-          setChatState(ChatState.CUSTOM_INDUSTRY);
-          
-          setTimeout(() => {
-            sendBotMessage(getTranslation('chatbot.customIndustry', language));
-          }, 800);
-        } else {
-          sendBotMessage(getTranslation('chatbot.buyOrCustom', language));
-        }
-        break;
-        
-      case ChatState.BUY_FLOW:
-        // Try to match with an app
-        const matchedApp = APPS.find(app => 
-          lowerInput.includes(app.name.toLowerCase()) || 
-          app.id.toLowerCase().includes(lowerInput)
-        );
-        
-        if (matchedApp) {
-          setSelectedApp(matchedApp.id);
-          
-          setTimeout(() => {
-            sendBotMessage(`${matchedApp.name} is ${formatPrice(matchedApp.price)}—one-time fee, ready to use. To proceed with purchase, please share your details.`);
-            setChatState(ChatState.LEAD_FORM);
-          }, 800);
-        } else {
-          const appOptions = APPS.map(app => `${app.name} (${formatPrice(app.price)})`).join(', ');
-          sendBotMessage(`I didn't recognize that app. Please select from: ${appOptions}`);
-        }
-        break;
-        
-      case ChatState.CUSTOM_INDUSTRY:
-        setSelectedIndustry(input);
-        setChatState(ChatState.CUSTOM_FEATURES);
+      case ChatState.ASK_INDUSTRY:
+        setUserSelections(prev => ({
+          ...prev,
+          industry: input,
+        }));
         
         setTimeout(() => {
-          const featureOptions = CUSTOM_FEATURES.map(feature => `${feature.name} (${formatPrice(feature.price)})`).join(', ');
-          sendBotMessage(`${getTranslation('chatbot.customExtras', language)} ${featureOptions}`);
+          sendBotMessage(`Got it! What's the main goal for your app? For example:
+            
+- Streamline bookings and scheduling.
+- Connect with clients through chat.
+- Provide AI-powered recommendations.
+- Send notifications and reminders.
+- Something else?`);
+          
+          setChatState(ChatState.ASK_GOALS);
         }, 800);
         break;
         
-      case ChatState.CUSTOM_FEATURES:
-        // Parse selected features
-        const featuresInput = input.toLowerCase();
-        const selectedFeaturesList = CUSTOM_FEATURES.filter(feature => 
-          featuresInput.includes(feature.name.toLowerCase())
-        ).map(feature => feature.id);
-        
-        setSelectedFeatures(selectedFeaturesList);
-        setChatState(ChatState.QUOTE_GENERATION);
+      case ChatState.ASK_GOALS:
+        // Parse goals from input
+        const goals = input.split(',').map(goal => goal.trim());
+        setUserSelections(prev => ({
+          ...prev,
+          goals,
+        }));
         
         setTimeout(() => {
-          // Calculate quote
-          const basePrice = BASE_PRICE;
-          let totalPrice = basePrice;
+          const featuresList = CUSTOM_FEATURES.map(feature => 
+            `- ${feature.name}: ${feature.name === 'AI Recommendations' ? 'Smart suggestions for bookings.' : 
+              feature.name === 'Chatroom' ? 'Real-time communication with clients.' :
+              feature.name === 'AI Chatbot' ? '24/7 automated support.' :
+              feature.name === 'Notifications' ? 'Reminders for appointments.' :
+              'Reach a global audience.'}`
+          ).join('\n');
           
-          const selectedFeaturesDetails = CUSTOM_FEATURES.filter(feature => 
-            selectedFeaturesList.includes(feature.id)
-          );
+          sendBotMessage(`Great! Here are some features that might help:\n\n${featuresList}\n\nWhich ones would you like to include?`);
+          setChatState(ChatState.ASK_FEATURES);
+        }, 800);
+        break;
+        
+      case ChatState.ASK_FEATURES:
+        // Parse selected features
+        const selectedFeatures = CUSTOM_FEATURES
+          .filter(feature => input.toLowerCase().includes(feature.name.toLowerCase()))
+          .map(feature => feature.id);
+        
+        setUserSelections(prev => ({
+          ...prev,
+          features: selectedFeatures,
+        }));
+        
+        setTimeout(() => {
+          sendBotMessage(`Almost done! A few more questions to tailor your app:
+
+- Do you need user accounts or profiles?
+- Should the app integrate with any existing tools (e.g., calendars, payment systems)?
+- Do you have a preferred design style (e.g., modern, minimalist, bold)?`);
           
-          selectedFeaturesDetails.forEach(feature => {
-            totalPrice += feature.price;
-          });
+          setChatState(ChatState.ASK_CUSTOMIZATION);
+        }, 800);
+        break;
+        
+      case ChatState.ASK_CUSTOMIZATION:
+        // Parse customization options
+        const userAccounts = lowerInput.includes('yes') || lowerInput.includes('account');
+        const integrations = [];
+        if (lowerInput.includes('google') || lowerInput.includes('calendar')) {
+          integrations.push('Google Calendar');
+        }
+        if (lowerInput.includes('payment') || lowerInput.includes('stripe')) {
+          integrations.push('Payment System');
+        }
+        
+        let designStyle = '';
+        if (lowerInput.includes('modern')) designStyle = 'Modern';
+        else if (lowerInput.includes('minimalist')) designStyle = 'Minimalist';
+        else if (lowerInput.includes('bold')) designStyle = 'Bold';
+        else designStyle = 'Standard';
+        
+        setUserSelections(prev => ({
+          ...prev,
+          customizations: {
+            userAccounts,
+            integrations,
+            designStyle,
+          },
+        }));
+        
+        setTimeout(() => {
+          sendBotMessage(`Thanks for sharing! To send your custom quote, I'll need:
+
+- Your name.
+- Company name.
+- Email address.
+- Phone number (optional).
+
+Let me know when you're ready!`);
           
-          // Format quote details
-          let quoteMessage = `${getTranslation('chatbot.quote', language)}\n\n`;
-          quoteMessage += `Base: ${formatPrice(basePrice)}\n`;
+          setChatState(ChatState.COLLECT_DETAILS);
+        }, 800);
+        break;
+        
+      case ChatState.COLLECT_DETAILS:
+        // Check if input looks like it contains basic contact info
+        if (input.includes(',')) {
+          // Try to parse contact details from comma-separated input
+          const parts = input.split(',').map(part => part.trim());
           
-          selectedFeaturesDetails.forEach(feature => {
-            quoteMessage += `${feature.name}: ${formatPrice(feature.price)}\n`;
-          });
+          if (parts.length >= 3) {
+            const contactInfo = {
+              name: parts[0],
+              company: parts[1],
+              email: parts[2],
+              phone: parts.length > 3 ? parts[3] : '',
+            };
+            
+            setUserSelections(prev => ({
+              ...prev,
+              contactInfo,
+            }));
+            
+            // Simulate sending email
+            setTimeout(() => {
+              sendBotMessage(`Got it, ${contactInfo.name}! I'm preparing your custom quote for ${contactInfo.company}. Check your email at ${contactInfo.email} in a moment. Once you've reviewed it, click 'Confirm' on the email, and I'll show you the full quote here!`);
+              
+              // Show email sent notification
+              toast({
+                title: "Quote Sent!",
+                description: `An email has been sent to ${contactInfo.email} with your custom quote.`,
+              });
+              
+              setChatState(ChatState.EMAIL_SENT);
+              
+              // For demo purposes, show a message about how to simulate confirmation
+              setTimeout(() => {
+                sendBotMessage("For this demo, you can simulate confirming the quote by clicking the button below:");
+                
+                // In a real app, this would be handled by the user clicking a link in the actual email
+                setTimeout(() => {
+                  setMessages(prev => [
+                    ...prev,
+                    { 
+                      id: Date.now().toString(), 
+                      content: `
+                      <div class="flex justify-center mt-2">
+                        <a href="?quoteConfirmed=true&email=${encodeURIComponent(contactInfo.email)}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                          <Mail class="w-4 h-4" /> Simulate Email Confirmation
+                        </a>
+                      </div>
+                      `, 
+                      sender: 'bot' 
+                    },
+                  ]);
+                }, 500);
+              }, 1500);
+            }, 1500);
+          } else {
+            sendBotMessage("I need at least your name, company, and email. Please provide all three separated by commas.");
+          }
+        } else {
+          sendBotMessage("Please provide your name, company, email, and optional phone separated by commas. For example: John Doe, PetStoreX, john@petstorex.com, 555-1234");
+        }
+        break;
+      
+      case ChatState.SHOW_QUOTE:
+        // After showing the quote, present payment options
+        if (lowerInput.includes('ready') || lowerInput.includes('proceed') || lowerInput.includes('yes')) {
+          setTimeout(() => {
+            const splitAmount = calculateTotalPrice() * 0.6;
+            const fullAmount = calculateTotalPrice() * 0.95;
+            
+            sendBotMessage(`To get started, choose your payment option:
+
+- Split: ${formatPrice(splitAmount)} now, ${formatPrice(calculateTotalPrice() - splitAmount)} later.
+- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(calculateTotalPrice() - fullAmount)}).
+
+Which works for you?`);
+            
+            setChatState(ChatState.PAYMENT_OPTIONS);
+          }, 800);
+        }
+        break;
+        
+      case ChatState.PAYMENT_OPTIONS:
+        let paymentOption: 'split' | 'full' | null = null;
+        
+        if (lowerInput.includes('split')) {
+          paymentOption = 'split';
+        } else if (lowerInput.includes('full')) {
+          paymentOption = 'full';
+        }
+        
+        if (paymentOption) {
+          setUserSelections(prev => ({
+            ...prev,
+            paymentOption,
+          }));
           
-          quoteMessage += `\nTotal: ${formatPrice(totalPrice)}\n`;
-          quoteMessage += `Timeline: 3-6 months\n\n`;
-          quoteMessage += `Payment options:\n`;
-          quoteMessage += `- Split: 60% now (${formatPrice(totalPrice * 0.6)}), 40% on completion (${formatPrice(totalPrice * 0.4)})\n`;
-          quoteMessage += `- Full: 5% off (${formatPrice(totalPrice * 0.95)}, save ${formatPrice(totalPrice * 0.05)})\n\n`;
-          quoteMessage += `To proceed with this custom quote, please share your details.`;
-          
-          sendBotMessage(quoteMessage);
-          setChatState(ChatState.LEAD_FORM);
-        }, 1200);
+          setTimeout(() => {
+            sendBotMessage(`Great! Here's your payment link: [Stripe Payment Link]. Once payment is confirmed, we'll get started on your app!`);
+            
+            // In a real app, this would be a link to Stripe checkout
+            setTimeout(() => {
+              setMessages(prev => [
+                ...prev,
+                { 
+                  id: Date.now().toString(), 
+                  content: `
+                  <div class="flex justify-center mt-2">
+                    <button class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                      <Check class="w-4 h-4" /> Proceed to Payment
+                    </button>
+                  </div>
+                  `, 
+                  sender: 'bot' 
+                },
+              ]);
+              
+              setChatState(ChatState.PAYMENT_LINK);
+            }, 500);
+          }, 800);
+        } else {
+          sendBotMessage("Please choose either 'Split' or 'Full' payment option.");
+        }
         break;
         
       default:
+        sendBotMessage("I'm not sure what to do next. Let's start over. What industry are you in?");
+        setChatState(ChatState.ASK_INDUSTRY);
         break;
     }
   };
 
+  const calculateTotalPrice = () => {
+    let total = BASE_PRICE;
+    
+    userSelections.features.forEach(featureId => {
+      const feature = CUSTOM_FEATURES.find(f => f.id === featureId);
+      if (feature) {
+        total += feature.price;
+      }
+    });
+    
+    return total;
+  };
+
+  const displayQuote = () => {
+    const total = calculateTotalPrice();
+    const splitAmount = total * 0.6;
+    const fullAmount = total * 0.95;
+    
+    // Get selected features details
+    const selectedFeatures = CUSTOM_FEATURES.filter(feature => 
+      userSelections.features.includes(feature.id)
+    );
+    
+    let quoteMessage = `Base (${userSelections.industry} App): ${formatPrice(BASE_PRICE)}\n`;
+    
+    selectedFeatures.forEach(feature => {
+      quoteMessage += `${feature.name}: ${formatPrice(feature.price)}\n`;
+    });
+    
+    quoteMessage += `\nTotal: ${formatPrice(total)}\n`;
+    quoteMessage += `Timeline: 3-6 months\n\n`;
+    quoteMessage += `Payment Options:\n`;
+    quoteMessage += `- Split: 60% now (${formatPrice(splitAmount)}), 40% on completion (${formatPrice(total - splitAmount)})\n`;
+    quoteMessage += `- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(total - fullAmount)} with 5% off)\n\n`;
+    quoteMessage += `Ready to proceed? Let me know!`;
+    
+    sendBotMessage(quoteMessage);
+  };
+
   const handleFormSubmit = (formData: any) => {
     console.log('Form submitted:', formData);
-    setChatState(ChatState.THANK_YOU);
     
-    // Append user info to chat
-    setMessages((prev) => [
+    setUserSelections(prev => ({
       ...prev,
-      { 
-        id: Date.now().toString(), 
-        content: `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'Not provided'}\nIndustry: ${formData.industry || 'Not provided'}`, 
-        sender: 'user' 
+      contactInfo: {
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone || '',
       },
-    ]);
+    }));
     
+    // Simulate sending email
     setTimeout(() => {
-      sendBotMessage(`Thanks, ${formData.name}! Your ${selectedApp ? 'purchase' : 'custom quote'} for ${formData.company} has been processed. Please check your email for next steps and confirmation details.`);
-    }, 1000);
+      sendBotMessage(`Got it, ${formData.name}! I'm preparing your custom quote for ${formData.company}. Check your email at ${formData.email} in a moment. Once you've reviewed it, click 'Confirm' on the email, and I'll show you the full quote here!`);
+      
+      // Show email sent notification
+      toast({
+        title: "Quote Sent!",
+        description: `An email has been sent to ${formData.email} with your custom quote.`,
+      });
+      
+      setChatState(ChatState.EMAIL_SENT);
+      
+      // For demo purposes, show a message about how to simulate confirmation
+      setTimeout(() => {
+        sendBotMessage("For this demo, you can simulate confirming the quote by clicking the button below:");
+        
+        // In a real app, this would be handled by the user clicking a link in the actual email
+        setTimeout(() => {
+          setMessages(prev => [
+            ...prev,
+            { 
+              id: Date.now().toString(), 
+              content: `
+              <div class="flex justify-center mt-2">
+                <a href="?quoteConfirmed=true&email=${encodeURIComponent(formData.email)}" class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                  <Mail class="w-4 h-4" /> Simulate Email Confirmation
+                </a>
+              </div>
+              `, 
+              sender: 'bot' 
+            },
+          ]);
+        }, 500);
+      }, 1500);
+    }, 800);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -260,7 +539,11 @@ const Chatbot = () => {
                       : "bg-gray-100 text-gray-800 rounded-tl-none"
                   )}
                 >
-                  <div className="whitespace-pre-line">{message.content}</div>
+                  {message.content.includes('<div') ? (
+                    <div dangerouslySetInnerHTML={{ __html: message.content }} />
+                  ) : (
+                    <div className="whitespace-pre-line">{message.content}</div>
+                  )}
                 </div>
               </div>
             ))}
@@ -281,19 +564,8 @@ const Chatbot = () => {
           </div>
         </div>
         
-        {/* Lead form (when in LEAD_FORM state) */}
-        {chatState === ChatState.LEAD_FORM && (
-          <div ref={formContainerRef} className="bg-gray-50 border-t border-gray-200 p-4">
-            <h4 className="text-sm font-medium text-gray-700 mb-3">Please complete this form to proceed:</h4>
-            <LeadForm 
-              onSubmit={handleFormSubmit} 
-              isCustom={selectedApp === null}
-            />
-          </div>
-        )}
-        
-        {/* Input area (hidden in LEAD_FORM and THANK_YOU states) */}
-        {chatState !== ChatState.LEAD_FORM && chatState !== ChatState.THANK_YOU && (
+        {/* Input area (hidden in certain states) */}
+        {chatState !== ChatState.COLLECT_DETAILS && chatState !== ChatState.THANK_YOU && (
           <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4 flex gap-2">
             <Input
               type="text"
