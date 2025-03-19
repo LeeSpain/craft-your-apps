@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
 import { CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
@@ -639,40 +640,42 @@ Which works for you?`);
   }
 
   return (
-    <div className="fixed bottom-0 right-0 w-full sm:w-96 h-[80vh] bg-white rounded-t-lg shadow-lg flex flex-col z-50">
-      {/* Chat header */}
-      <div className="flex items-center justify-between p-4 border-b">
-        <h3 className="font-semibold">AIAppCrafter</h3>
-        <button 
-          onClick={closeChatbot}
-          className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100"
-        >
-          <X className="h-4 w-4" />
-        </button>
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl h-[80vh] bg-white rounded-lg shadow-xl flex flex-col glass-card animate-scale-in">
+        {/* Chat header */}
+        <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg">
+          <h3 className="font-semibold text-lg">AIAppCrafter</h3>
+          <button 
+            onClick={closeChatbot}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        
+        {/* Chat messages */}
+        <ChatContainer 
+          messages={messages}
+          isTyping={isTyping}
+          messagesEndRef={messagesEndRef}
+          chatState={chatState}
+          handleOption={handleOption}
+          selectedOptions={selectedOptions}
+          submitGoals={submitGoals}
+          submitFeatures={submitFeatures}
+          submitCustomizations={submitCustomizations}
+          customGoal={customGoal}
+          setCustomGoal={setCustomGoal}
+          onContactFormSubmit={onContactFormSubmit}
+        />
+        
+        {/* Input area */}
+        <ChatInput 
+          onSubmit={sendUserMessage} 
+          options={currentOptions} 
+          allowMultipleSelection={allowMultipleSelection}
+        />
       </div>
-      
-      {/* Chat messages */}
-      <ChatContainer 
-        messages={messages}
-        isTyping={isTyping}
-        messagesEndRef={messagesEndRef}
-        chatState={chatState}
-        handleOption={handleOption}
-        selectedOptions={selectedOptions}
-        submitGoals={submitGoals}
-        submitFeatures={submitFeatures}
-        submitCustomizations={submitCustomizations}
-        customGoal={customGoal}
-        setCustomGoal={setCustomGoal}
-        onContactFormSubmit={onContactFormSubmit}
-      />
-      
-      {/* Input area */}
-      <ChatInput 
-        onSubmit={sendUserMessage} 
-        options={currentOptions} 
-        allowMultipleSelection={allowMultipleSelection}
-      />
     </div>
   );
 };

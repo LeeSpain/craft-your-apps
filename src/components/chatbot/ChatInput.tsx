@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -61,7 +62,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   };
 
   return (
-    <div className="border-t">
+    <div className="border-t bg-gray-50">
       {options.length > 0 && (
         <div className="p-4 pb-0">
           {allowMultipleSelection ? (
@@ -71,7 +72,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   key={option.id}
                   value={option.id}
                   aria-label={option.label}
-                  className="w-full justify-start text-left px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors"
+                  className="w-full justify-start text-left px-3 py-2 rounded-md border border-gray-300 bg-white shadow-sm hover:bg-blue-50 transition-colors"
                   onClick={() => handleOptionToggle(option.id)}
                   data-state={selectedOptions.includes(option.id) ? "on" : "off"}
                 >
@@ -84,7 +85,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               {options.map(option => (
                 <div 
                   key={option.id}
-                  className="flex items-center space-x-2 cursor-pointer w-full px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors"
+                  className="flex items-center space-x-2 cursor-pointer w-full px-3 py-2 rounded-md border border-gray-300 bg-white shadow-sm hover:bg-blue-50 transition-colors"
                   onClick={() => handleOptionToggle(option.id)}
                 >
                   <RadioGroupItem 
@@ -104,6 +105,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               <Button 
                 size="sm"
                 onClick={handleSubmit}
+                className="bg-blue-600 hover:bg-blue-700"
               >
                 Submit
               </Button>
@@ -118,9 +120,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 mr-2"
+          className="flex-1 mr-2 border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
         />
-        <Button type="submit" size="icon">
+        <Button type="submit" size="icon" className="bg-blue-600 hover:bg-blue-700">
           <Send className="h-4 w-4" />
         </Button>
       </form>
