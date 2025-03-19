@@ -14,12 +14,12 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const menuItems = [
-    { label: 'Home', href: '#' },
-    { label: 'Features', href: '#features' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '/' },
+    { label: 'Features', href: '/#features' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Portfolio', href: '/#portfolio' },
+    { label: 'Blog', href: '/#blog' },
+    { label: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -33,13 +33,13 @@ const Header = () => {
         
         <nav className="hidden md:flex items-center space-x-6">
           {menuItems.map((item) => (
-            <a
+            <Link
               key={item.label}
-              href={item.href}
+              to={item.href.startsWith('/') ? item.href : item.href}
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           
           {isAuthenticated ? (
@@ -83,14 +83,14 @@ const Header = () => {
           <div className="absolute top-16 left-0 right-0 bg-white md:hidden border-b shadow-lg">
             <div className="flex flex-col space-y-4 p-4">
               {menuItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href.startsWith('/') ? item.href : item.href}
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               {isAuthenticated ? (
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
