@@ -1,6 +1,7 @@
+
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
-import { ChevronRight, Building, Building2, Buildings, LineChart, ShieldCheck, Zap } from 'lucide-react';
+import { ChevronRight, Building, Building2, LineChart, ShieldCheck, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 const Business = () => {
