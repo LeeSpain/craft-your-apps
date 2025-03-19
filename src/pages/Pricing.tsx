@@ -1,25 +1,29 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Chatbot from '@/components/Chatbot';
 import { Check, Info } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Pricing = () => {
-  const { formatPrice } = useApp();
+  const { formatPrice, openChatbot } = useApp();
   const { toast } = useToast();
   const [paymentType, setPaymentType] = useState<'monthly' | 'milestone' | 'hybrid'>('monthly');
   
   const handleContactClick = () => {
-    toast({
-      title: "Contact request sent!",
-      description: "We'll be in touch with you shortly to discuss your project needs.",
-    });
+    // Open the chatbot when "Request Quote" is clicked
+    openChatbot();
   };
+  
+  // Automatically open the chatbot when the pricing page loads
+  useEffect(() => {
+    openChatbot();
+  }, [openChatbot]);
   
   // Standard industry packages based on the provided information
   const industryPackages = [
@@ -92,11 +96,18 @@ const Pricing = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">Transparent & Flexible Pricing</h1>
+            <h1 className="text-4xl font-bold mb-4">Get Your Personalized Quote</h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Choose from standardized industry packages or request a custom quote. 
-              All projects include multiple payment options to fit your budget.
+              Use our AI assistant to get a custom quote based on your specific needs,
+              or browse our standard industry packages below.
             </p>
+            <Button 
+              onClick={handleContactClick}
+              size="lg" 
+              className="mt-6 bg-white text-blue-600 hover:bg-gray-100"
+            >
+              Open AI Quote Builder
+            </Button>
           </div>
         </section>
         
@@ -356,10 +367,10 @@ const Pricing = () => {
             <h2 className="text-3xl font-bold mb-4">Need a Custom Solution?</h2>
             <p className="text-xl max-w-3xl mx-auto mb-8">
               Don't see your industry listed, or need a highly specialized app? 
-              We'll work with you to create a tailored solution that meets your exact needs.
+              Our AI assistant will help create a tailored solution that meets your exact needs.
             </p>
             <Button size="lg" onClick={handleContactClick}>
-              Request Custom Quote
+              Get AI-Powered Quote
             </Button>
           </div>
         </section>
@@ -415,6 +426,9 @@ const Pricing = () => {
         </section>
       </main>
       <Footer />
+      
+      {/* Include the Chatbot component directly in the page */}
+      <Chatbot />
     </div>
   );
 };
