@@ -63,31 +63,31 @@ export const CUSTOM_FEATURES: CustomFeature[] = [
     id: 'ai-recommendations',
     name: 'AI Recommendations',
     price: 20000,
-    description: 'Smart suggestions for bookings and services based on user preferences and behavior.'
+    description: 'Smart personalized suggestions based on user preferences and behavior patterns.'
   },
   {
     id: 'chatroom',
     name: 'Chatroom',
     price: 10000,
-    description: 'Real-time communication between users and service providers.'
+    description: 'Real-time messaging system between users and service providers.'
   },
   {
     id: 'ai-chatbot',
     name: 'AI Chatbot',
     price: 20000,
-    description: '24/7 automated customer support to answer questions and assist users.'
+    description: 'Intelligent automated assistant providing 24/7 customer support.'
   },
   {
     id: 'notifications',
     name: 'Notifications',
     price: 5000,
-    description: 'Reminders for appointments and important updates via push, email, or SMS.'
+    description: 'Timely alerts and reminders via push notifications, email, or SMS.'
   },
   {
     id: 'multilingual',
-    name: 'Multilingual',
+    name: 'Multilingual Support',
     price: 10000,
-    description: 'Support for multiple languages to reach a global audience.'
+    description: 'Multiple language options to expand your reach to international markets.'
   }
 ];
 

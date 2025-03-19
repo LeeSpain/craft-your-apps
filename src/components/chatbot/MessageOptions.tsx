@@ -60,7 +60,8 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             {options.filter(o => o.id !== 'other').map(option => (
               <div 
                 key={option.id}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleOption({...option, selected: !selectedOptions.goals.includes(option.value)})}
               >
                 <Checkbox 
                   id={`goal-${option.id}`}
@@ -69,7 +70,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
                 />
                 <label 
                   htmlFor={`goal-${option.id}`}
-                  className="text-sm cursor-pointer"
+                  className="cursor-pointer flex-1"
                 >
                   {option.label}
                 </label>
@@ -77,7 +78,9 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             ))}
             
             {/* Custom goal option */}
-            <div className="flex items-start space-x-2 mt-2">
+            <div 
+              className="flex items-start space-x-2 mt-2 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50"
+            >
               <Checkbox 
                 id="goal-other"
                 checked={!!customGoal}
@@ -90,7 +93,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
               <div className="flex-1">
                 <label 
                   htmlFor="goal-other"
-                  className="text-sm cursor-pointer"
+                  className="cursor-pointer"
                 >
                   Something else
                 </label>
@@ -110,6 +113,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             <Button 
               size="sm"
               onClick={submitGoals}
+              className="bg-blue-600 hover:bg-blue-700"
             >
               Next
             </Button>
@@ -124,7 +128,8 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             {options.map(option => (
               <div 
                 key={option.id}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleOption({...option, selected: !selectedOptions.features.includes(option.id)})}
               >
                 <Checkbox 
                   id={`feature-${option.id}`}
@@ -133,7 +138,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
                 />
                 <label 
                   htmlFor={`feature-${option.id}`}
-                  className="text-sm cursor-pointer"
+                  className="cursor-pointer flex-1"
                 >
                   {option.label}
                 </label>
@@ -145,6 +150,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             <Button 
               size="sm"
               onClick={submitFeatures}
+              className="bg-blue-600 hover:bg-blue-700"
             >
               Next
             </Button>
@@ -161,7 +167,10 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
         <div className="space-y-4 mt-2">
           {/* User accounts option */}
           {userAccountsOption && (
-            <div className="flex items-center space-x-2">
+            <div 
+              className="flex items-center space-x-2 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50 cursor-pointer"
+              onClick={() => handleOption({...userAccountsOption, selected: !selectedOptions.userAccounts})}
+            >
               <Checkbox 
                 id={`customization-${userAccountsOption.id}`}
                 checked={selectedOptions.userAccounts}
@@ -169,7 +178,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
               />
               <label 
                 htmlFor={`customization-${userAccountsOption.id}`}
-                className="text-sm cursor-pointer"
+                className="cursor-pointer flex-1"
               >
                 {userAccountsOption.label}
               </label>
@@ -178,11 +187,12 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
           
           {/* Integrations section */}
           <div className="space-y-2">
-            <p className="text-sm font-medium">Integrations:</p>
+            <p className="text-sm font-medium px-1">Integrations:</p>
             {integrationOptions.map(option => (
               <div 
                 key={option.id}
-                className="flex items-center space-x-2 ml-4"
+                className="flex items-center space-x-2 ml-4 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleOption({...option, selected: !selectedOptions.integrations.includes(option.value)})}
               >
                 <Checkbox 
                   id={`integration-${option.id}`}
@@ -191,7 +201,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
                 />
                 <label 
                   htmlFor={`integration-${option.id}`}
-                  className="text-sm cursor-pointer"
+                  className="cursor-pointer flex-1"
                 >
                   {option.label}
                 </label>
@@ -201,11 +211,12 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
           
           {/* Design style section */}
           <div className="space-y-2">
-            <p className="text-sm font-medium">Design Style:</p>
+            <p className="text-sm font-medium px-1">Design Style:</p>
             {designOptions.map(option => (
               <div 
                 key={option.id}
-                className="flex items-center space-x-2 ml-4"
+                className="flex items-center space-x-2 ml-4 px-3 py-2 rounded-md border border-gray-200 hover:bg-gray-50 cursor-pointer"
+                onClick={() => handleOption({...option, selected: selectedOptions.designStyle !== option.value})}
               >
                 <Checkbox 
                   id={`design-${option.id}`}
@@ -214,7 +225,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
                 />
                 <label 
                   htmlFor={`design-${option.id}`}
-                  className="text-sm cursor-pointer"
+                  className="cursor-pointer flex-1"
                 >
                   {option.label}
                 </label>
@@ -226,6 +237,7 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
             <Button 
               size="sm"
               onClick={submitCustomizations}
+              className="bg-blue-600 hover:bg-blue-700"
             >
               Next
             </Button>

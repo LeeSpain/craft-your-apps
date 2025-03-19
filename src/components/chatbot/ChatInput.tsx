@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -62,59 +61,81 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   };
 
   return (
-    <div className="border-t bg-gray-50">
+    <div className="border-t bg-gray-50 p-4">
       {options.length > 0 && (
-        <div className="p-4 pb-0">
+        <div className="pb-4">
           {allowMultipleSelection ? (
-            <ToggleGroup type="multiple" className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               {options.map(option => (
-                <ToggleGroupItem
+                <div
                   key={option.id}
-                  value={option.id}
-                  aria-label={option.label}
-                  className="w-full justify-start text-left px-4 py-3 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-blue-50 transition-colors"
-                  onClick={() => handleOptionToggle(option.id)}
-                  data-state={selectedOptions.includes(option.id) ? "on" : "off"}
-                >
-                  {option.label}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
-          ) : (
-            <RadioGroup className="flex flex-col gap-2">
-              {options.map(option => (
-                <div 
-                  key={option.id}
-                  className="flex items-center space-x-2 cursor-pointer w-full px-4 py-3 rounded-md border border-gray-200 bg-white shadow-sm hover:bg-blue-50 transition-colors"
+                  className={`relative flex items-center w-full px-4 py-3 rounded-md border ${
+                    selectedOptions.includes(option.id) 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 bg-white'
+                  } shadow-sm hover:bg-blue-50 transition-colors cursor-pointer`}
                   onClick={() => handleOptionToggle(option.id)}
                 >
-                  <RadioGroupItem 
-                    value={option.id} 
-                    id={option.id}
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                     checked={selectedOptions.includes(option.id)}
+                    onChange={() => {}} // Handle through parent div click
+                    id={`option-${option.id}`}
                   />
-                  <label htmlFor={option.id} className="w-full cursor-pointer">
+                  <label 
+                    htmlFor={`option-${option.id}`}
+                    className="ml-2 w-full cursor-pointer text-sm"
+                  >
                     {option.label}
                   </label>
                 </div>
               ))}
-            </RadioGroup>
-          )}
-          {allowMultipleSelection && selectedOptions.length > 0 && (
-            <div className="flex justify-end mt-3 mb-4">
-              <Button 
-                size="sm"
-                onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-md px-4 py-2"
-              >
-                Submit
-              </Button>
+              {selectedOptions.length > 0 && (
+                <div className="flex justify-end mt-3">
+                  <Button 
+                    size="sm"
+                    onClick={handleSubmit}
+                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-md px-4 py-2"
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {options.map(option => (
+                <div 
+                  key={option.id}
+                  className={`relative flex items-center w-full px-4 py-3 rounded-md border ${
+                    selectedOptions.includes(option.id) 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 bg-white'
+                  } shadow-sm hover:bg-blue-50 transition-colors cursor-pointer`}
+                  onClick={() => handleOptionToggle(option.id)}
+                >
+                  <input
+                    type="radio"
+                    className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    checked={selectedOptions.includes(option.id)}
+                    onChange={() => {}} // Handle through parent div click
+                    id={`option-${option.id}`}
+                  />
+                  <label 
+                    htmlFor={`option-${option.id}`}
+                    className="ml-2 w-full cursor-pointer text-sm"
+                  >
+                    {option.label}
+                  </label>
+                </div>
+              ))}
             </div>
           )}
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="flex items-center p-4">
+      <form onSubmit={handleSubmit} className="flex items-center">
         <Input
           type="text"
           value={userInput}

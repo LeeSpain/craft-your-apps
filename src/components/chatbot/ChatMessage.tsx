@@ -39,11 +39,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     
     // Process markdown headings and bold text
     let formatted = content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/^## (.*?)$/gm, '<h2 class="text-lg font-bold mt-3 mb-2">$1</h2>')
-      .replace(/^### (.*?)$/gm, '<h3 class="text-md font-bold mt-2 mb-1">$1</h3>');
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+      .replace(/^## (.*?)$/gm, '<h2 class="text-xl font-bold mt-4 mb-2 text-blue-800">$1</h2>')
+      .replace(/^### (.*?)$/gm, '<h3 class="text-lg font-bold mt-3 mb-1 text-blue-700">$1</h3>');
     
-    // Convert line breaks to <br> tags
+    // Format lists
+    formatted = formatted.replace(/^- (.*?)$/gm, '<div class="flex gap-2 py-1"><span class="text-blue-600">•</span><span>$1</span></div>');
+    
+    // Format line breaks
+    formatted = formatted.replace(/\n\n/g, '<div class="my-2"></div>');
     formatted = formatted.replace(/\n/g, '<br>');
     
     return formatted;
@@ -61,7 +65,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         {message.content.includes('<div') || message.content.includes('<button') ? (
           <div dangerouslySetInnerHTML={createMarkup(message.content)} />
         ) : (
-          <div dangerouslySetInnerHTML={createMarkup(formatContent(message.content))} />
+          <div dangerouslySetInnerHTML={createMarkup(formatContent(message.content))} className="chat-message-content" />
         )}
         
         {message.options && (

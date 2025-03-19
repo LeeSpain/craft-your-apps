@@ -6,6 +6,7 @@ import { UserSelections } from './types';
 export const calculateTotalPrice = (userSelections: UserSelections): number => {
   let total = BASE_PRICE;
   
+  // Add selected features
   userSelections.features.forEach(featureId => {
     const feature = CUSTOM_FEATURES.find(f => f.id === featureId);
     if (feature) {
@@ -38,21 +39,29 @@ export const generateQuoteText = (userSelections: UserSelections, formatPrice: (
   
   let quoteMessage = `## Your Custom App Quote\n\n`;
   quoteMessage += `**Industry:** ${userSelections.industry}\n`;
-  quoteMessage += `**Main Goals:** ${userSelections.goals.join(', ')}\n\n`;
+  
+  if (userSelections.goals.length > 0) {
+    quoteMessage += `**Main Goals:** ${userSelections.goals.join(', ')}\n\n`;
+  }
   
   quoteMessage += `### Price Breakdown\n\n`;
-  quoteMessage += `- Base App: ${formatPrice(BASE_PRICE)}\n`;
+  quoteMessage += `- **Base App Development:** ${formatPrice(BASE_PRICE)}\n`;
   
-  selectedFeatures.forEach(feature => {
-    quoteMessage += `- ${feature.name}: ${formatPrice(feature.price)}\n`;
-  });
+  if (selectedFeatures.length > 0) {
+    quoteMessage += `\n**Selected Features:**\n`;
+    selectedFeatures.forEach(feature => {
+      quoteMessage += `- **${feature.name}:** ${formatPrice(feature.price)}\n  _${feature.description}_\n`;
+    });
+  }
   
+  quoteMessage += `\n**Customizations:**\n`;
   if (userSelections.customizations.userAccounts) {
-    quoteMessage += `- User Account System: ${formatPrice(3000)}\n`;
+    quoteMessage += `- **User Account System:** ${formatPrice(3000)}\n`;
   }
   
   if (userSelections.customizations.integrations.length > 0) {
-    quoteMessage += `- Integrations (${userSelections.customizations.integrations.join(', ')}): ${formatPrice(userSelections.customizations.integrations.length * 1500)}\n`;
+    const integrationCost = userSelections.customizations.integrations.length * 1500;
+    quoteMessage += `- **Integrations:** ${formatPrice(integrationCost)}\n  _${userSelections.customizations.integrations.join(', ')}_\n`;
   }
   
   quoteMessage += `\n**Design Style:** ${userSelections.customizations.designStyle}\n\n`;

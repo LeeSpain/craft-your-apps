@@ -208,7 +208,7 @@ const Chatbot = () => {
         break;
         
       case ChatState.ASK_FEATURES:
-        const featureId = CUSTOM_FEATURES.find(f => f.name === option.value)?.id || '';
+        const featureId = option.id;
         const newFeatures = option.selected
           ? [...selectedOptions.features.filter(f => f !== featureId), featureId]
           : selectedOptions.features.filter(f => f !== featureId);
@@ -251,11 +251,14 @@ const Chatbot = () => {
         goals: selectedGoalsList,
       }));
       
-      // Move to next state
+      // Move to next state - without duplicating the options display
+      setChatState(ChatState.ASK_FEATURES);
+      
+      // Prepare and display next message
       setTimeout(() => {
         const featureOptions = CUSTOM_FEATURES.map(feature => ({
           id: feature.id,
-          label: `${feature.name}: ${formatPrice(feature.price)}`,
+          label: `${feature.name}`,
           value: feature.name,
         }));
         
@@ -263,7 +266,6 @@ const Chatbot = () => {
           "Great! Here are some features that might help. Which ones would you like to include?",
           featureOptions
         );
-        setChatState(ChatState.ASK_FEATURES);
       }, 800);
     } else {
       // Prompt user to select at least one goal
@@ -294,6 +296,9 @@ const Chatbot = () => {
       }));
       
       // Move to next state
+      setChatState(ChatState.ASK_CUSTOMIZATION);
+      
+      // Prepare and display next message
       setTimeout(() => {
         const customizationOptions = [
           { id: 'userAccounts', label: 'User accounts or profiles', value: 'User accounts' },
@@ -305,7 +310,6 @@ const Chatbot = () => {
           "Almost done! A few more questions to tailor your app:",
           customizationOptions
         );
-        setChatState(ChatState.ASK_CUSTOMIZATION);
       }, 800);
     } else {
       toast({
@@ -348,11 +352,13 @@ const Chatbot = () => {
     }));
     
     // Move to next state
+    setChatState(ChatState.COLLECT_DETAILS);
+    
+    // Prepare and display next message
     setTimeout(() => {
       sendBotMessage(
         "Thanks for sharing! To send your custom quote, I'll need your contact details:"
       );
-      setChatState(ChatState.COLLECT_DETAILS);
     }, 800);
   };
 
@@ -377,12 +383,14 @@ const Chatbot = () => {
           }
         }
         
+        // Move to next state
+        setChatState(ChatState.ASK_GOALS);
+        
         setTimeout(() => {
           sendBotMessageWithOptions(
             "Got it! What's the main goal for your app?",
             GOALS_OPTIONS
           );
-          setChatState(ChatState.ASK_GOALS);
         }, 800);
         break;
         
@@ -394,17 +402,20 @@ const Chatbot = () => {
           goals,
         }));
         
+        // Move to next state
+        setChatState(ChatState.ASK_FEATURES);
+        
         setTimeout(() => {
-          const featuresList = CUSTOM_FEATURES.map(feature => 
-            `- ${feature.name}: ${feature.name === 'AI Recommendations' ? 'Smart suggestions for bookings.' : 
-              feature.name === 'Chatroom' ? 'Real-time communication with clients.' :
-              feature.name === 'AI Chatbot' ? '24/7 automated support.' :
-              feature.name === 'Notifications' ? 'Reminders for appointments.' :
-              'Reach a global audience.'}`
-          ).join('\n');
+          const featureOptions = CUSTOM_FEATURES.map(feature => ({
+            id: feature.id,
+            label: `${feature.name}`,
+            value: feature.name,
+          }));
           
-          sendBotMessage(`Great! Here are some features that might help:\n\n${featuresList}\n\nWhich ones would you like to include?`);
-          setChatState(ChatState.ASK_FEATURES);
+          sendBotMessageWithOptions(
+            "Great! Here are some features that might help. Which ones would you like to include?",
+            featureOptions
+          );
         }, 800);
         break;
         
@@ -419,14 +430,20 @@ const Chatbot = () => {
           features: selectedFeatures,
         }));
         
+        // Move to next state
+        setChatState(ChatState.ASK_CUSTOMIZATION);
+        
         setTimeout(() => {
-          sendBotMessage(`Almost done! A few more questions to tailor your app:
-
-- Do you need user accounts or profiles?
-- Should the app integrate with any existing tools (e.g., calendars, payment systems)?
-- Do you have a preferred design style (e.g., modern, minimalist, bold)?`);
+          const customizationOptions = [
+            { id: 'userAccounts', label: 'User accounts or profiles', value: 'User accounts' },
+            ...INTEGRATION_OPTIONS,
+            ...DESIGN_STYLE_OPTIONS,
+          ];
           
-          setChatState(ChatState.ASK_CUSTOMIZATION);
+          sendBotMessageWithOptions(
+            "Almost done! A few more questions to tailor your app:",
+            customizationOptions
+          );
         }, 800);
         break;
         
@@ -456,6 +473,9 @@ const Chatbot = () => {
           },
         }));
         
+        // Move to next state
+        setChatState(ChatState.COLLECT_DETAILS);
+        
         setTimeout(() => {
           sendBotMessage(`Thanks for sharing! To send your custom quote, I'll need:
 
@@ -465,14 +485,14 @@ const Chatbot = () => {
 - Phone number (optional).
 
 Let me know when you're ready!`);
-          
-          setChatState(ChatState.COLLECT_DETAILS);
         }, 800);
         break;
         
       case ChatState.SHOW_QUOTE:
         // After showing the quote, present payment options
         if (lowerInput.includes('ready') || lowerInput.includes('proceed') || lowerInput.includes('yes')) {
+          setChatState(ChatState.PAYMENT_OPTIONS);
+          
           setTimeout(() => {
             const splitAmount = calculateTotalPrice(userSelections) * 0.6;
             const fullAmount = calculateTotalPrice(userSelections) * 0.95;
@@ -483,8 +503,6 @@ Let me know when you're ready!`);
 - Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(calculateTotalPrice(userSelections) - fullAmount)}).
 
 Which works for you?`);
-            
-            setChatState(ChatState.PAYMENT_OPTIONS);
           }, 800);
         }
         break;
@@ -503,6 +521,8 @@ Which works for you?`);
             ...prev,
             paymentOption,
           }));
+          
+          setChatState(ChatState.PAYMENT_LINK);
           
           setTimeout(() => {
             sendBotMessage(`Great! Here's your payment link: [Stripe Payment Link]. Once payment is confirmed, we'll get started on your app!`);
@@ -523,8 +543,6 @@ Which works for you?`);
                   sender: 'bot' 
                 },
               ]);
-              
-              setChatState(ChatState.PAYMENT_LINK);
             }, 500);
           }, 800);
         } else {
@@ -552,7 +570,7 @@ Which works for you?`);
       case ChatState.ASK_FEATURES:
         setCurrentOptions(CUSTOM_FEATURES.map(feature => ({
           id: feature.id,
-          label: `${feature.name}: ${formatPrice(feature.price)}`,
+          label: `${feature.name}`,
           value: feature.name,
         })));
         setAllowMultipleSelection(true);
@@ -592,6 +610,8 @@ Which works for you?`);
     sendUserMessage(`Name: ${values.name}, Company: ${values.company}, Email: ${values.email}${values.phone ? `, Phone: ${values.phone}` : ''}`);
     
     // Simulate sending email
+    setChatState(ChatState.EMAIL_SENT);
+    
     setTimeout(() => {
       sendBotMessage(`Got it, ${values.name}! I'm preparing your custom quote for ${values.company}. Check your email at ${values.email} in a moment. Once you've reviewed it, click 'Confirm' on the email, and I'll show you the full quote here!`);
       
@@ -600,8 +620,6 @@ Which works for you?`);
         title: "Quote Sent!",
         description: `An email has been sent to ${values.email} with your custom quote.`,
       });
-      
-      setChatState(ChatState.EMAIL_SENT);
       
       // For demo purposes, show a message about how to simulate confirmation
       setTimeout(() => {
