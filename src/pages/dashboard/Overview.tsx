@@ -1,8 +1,15 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  Clock, 
+  AlertCircle, 
+  MessageSquare, 
+  CreditCard, 
+  FileText, 
+  Settings 
+} from 'lucide-react';
 
 const Overview = () => {
   // Mock project data
