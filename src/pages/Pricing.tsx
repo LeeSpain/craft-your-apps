@@ -30,7 +30,9 @@ const Pricing = () => {
         { name: "Loyalty Program", price: 3500, description: "Points system for discounts or free services" },
         { name: "Virtual Try-On", price: 9000, description: "AR feature to test hairstyles using client photos" },
         { name: "Staff Management", price: 4500, description: "Assign bookings, track schedules & performance" }
-      ]
+      ],
+      bgColor: "from-blue-50 to-indigo-50",
+      accentColor: "blue-600"
     },
     {
       name: "Pet Care Services",
@@ -40,7 +42,9 @@ const Pricing = () => {
         { name: "GPS Tracking", price: 6000, description: "Real-time location updates during walks" },
         { name: "Photo Updates", price: 2500, description: "Send pet photos/videos to owners" },
         { name: "AI Chatbot", price: 7000, description: "Answer FAQs automatically" }
-      ]
+      ],
+      bgColor: "from-purple-50 to-pink-50",
+      accentColor: "purple-600"
     },
     {
       name: "Real Estate Agents",
@@ -50,7 +54,9 @@ const Pricing = () => {
         { name: "AI Recommendations", price: 9000, description: "Suggest properties based on client behavior" },
         { name: "Mortgage Calculator", price: 4500, description: "Estimate payments based on income/credit" },
         { name: "Document Hub", price: 6000, description: "Secure uploads for contracts or ID verification" }
-      ]
+      ],
+      bgColor: "from-green-50 to-emerald-50",
+      accentColor: "emerald-600"
     },
     {
       name: "Cafés & Small Restaurants",
@@ -60,7 +66,9 @@ const Pricing = () => {
         { name: "Loyalty Program", price: 3500, description: "Buy 10 coffees, get 1 free rewards" },
         { name: "Delivery Integration", price: 6000, description: "Partner with Glovo/Just Eat for delivery" },
         { name: "QR Code Ordering", price: 2500, description: "Scan-to-order at tables" }
-      ]
+      ],
+      bgColor: "from-orange-50 to-amber-50",
+      accentColor: "amber-600"
     },
     {
       name: "Fitness Trainers & Small Gyms",
@@ -70,7 +78,9 @@ const Pricing = () => {
         { name: "Live Streaming", price: 6000, description: "Broadcast classes in real-time" },
         { name: "AI Workout Plans", price: 7000, description: "Generate personalized routines" },
         { name: "Community Feed", price: 3500, description: "Clients share progress and interact" }
-      ]
+      ],
+      bgColor: "from-red-50 to-orange-50",
+      accentColor: "red-600"
     },
     {
       name: "Event Planners",
@@ -80,7 +90,9 @@ const Pricing = () => {
         { name: "Seating Planner", price: 7000, description: "Drag-and-drop table arrangements" },
         { name: "Vendor Marketplace", price: 9000, description: "Connect with local photographers, caterers, etc." },
         { name: "Wedding Website", price: 4500, description: "Custom domain for the event" }
-      ]
+      ],
+      bgColor: "from-sky-50 to-blue-50",
+      accentColor: "sky-600"
     }
   ];
   
@@ -102,32 +114,32 @@ const Pricing = () => {
         {/* Main content area */}
         <div className="container mx-auto px-4 py-12">
           {/* Payment Plans Section */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">Payment Options</h2>
-            <p className="text-gray-600 mb-6">
+          <div className="mb-16 bg-gradient-to-br from-slate-50 to-slate-100 p-8 rounded-2xl shadow-sm">
+            <h2 className="text-2xl font-bold mb-4 text-slate-800">Payment Options</h2>
+            <p className="text-gray-600 mb-8 max-w-3xl">
               We offer flexible payment plans for small businesses and individual entrepreneurs.
               All projects start with a 30% non-refundable deposit.
             </p>
             
             <div className="grid md:grid-cols-3 gap-6">
               {/* Monthly Payment Plan */}
-              <Card className={`border-2 ${paymentType === 'monthly' ? 'border-blue-500' : 'border-gray-200'} hover:shadow-lg transition-all`}>
+              <Card className={`border-2 ${paymentType === 'monthly' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'} hover:shadow-lg transition-all`}>
                 <CardHeader className="text-center pb-2">
                   <CardTitle className="text-xl">Monthly Plan</CardTitle>
                   <CardDescription>Split payments over time</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <ul className="space-y-1">
+                  <ul className="space-y-2">
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">30% deposit to start</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">Monthly installments</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">6-12 month terms</span>
                     </li>
                   </ul>
@@ -145,23 +157,23 @@ const Pricing = () => {
               </Card>
               
               {/* Milestone-Based Plan */}
-              <Card className={`border-2 ${paymentType === 'milestone' ? 'border-blue-500' : 'border-gray-200'} hover:shadow-lg transition-all`}>
+              <Card className={`border-2 ${paymentType === 'milestone' ? 'border-purple-500 bg-purple-50' : 'border-gray-200'} hover:shadow-lg transition-all`}>
                 <CardHeader className="text-center pb-2">
                   <CardTitle className="text-xl">Stage-Based</CardTitle>
                   <CardDescription>Pay as you progress</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <ul className="space-y-1">
+                  <ul className="space-y-2">
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">30% deposit to start</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">Milestone payments</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">Tied to deliverables</span>
                     </li>
                   </ul>
@@ -179,23 +191,23 @@ const Pricing = () => {
               </Card>
               
               {/* Hybrid Plan */}
-              <Card className={`border-2 ${paymentType === 'hybrid' ? 'border-blue-500' : 'border-gray-200'} hover:shadow-lg transition-all`}>
+              <Card className={`border-2 ${paymentType === 'hybrid' ? 'border-teal-500 bg-teal-50' : 'border-gray-200'} hover:shadow-lg transition-all`}>
                 <CardHeader className="text-center pb-2">
                   <CardTitle className="text-xl">Hybrid Plan</CardTitle>
                   <CardDescription>Best of both worlds</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <ul className="space-y-1">
+                  <ul className="space-y-2">
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">30% deposit to start</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">Monthly + milestone</span>
                     </li>
                     <li className="flex items-start">
-                      <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                       <span className="text-sm">Customizable</span>
                     </li>
                   </ul>
@@ -213,12 +225,12 @@ const Pricing = () => {
               </Card>
             </div>
             
-            <div className="mt-6 bg-white p-4 rounded-lg shadow border">
+            <div className="mt-6 bg-white p-4 rounded-lg shadow border border-blue-100">
               <div className="flex items-start">
-                <Info className="h-4 w-4 text-blue-500 mr-2 flex-shrink-0 mt-1" />
+                <Info className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-bold text-base mb-1">About the 30% Non-Refundable Deposit</h3>
-                  <p className="text-sm text-gray-700">
+                  <h3 className="font-bold text-base mb-1 text-blue-800">About the 30% Non-Refundable Deposit</h3>
+                  <p className="text-sm text-slate-700">
                     This covers initial discovery, planning, and design costs, demonstrates client commitment, 
                     and reduces the risk of project abandonment mid-development.
                   </p>
@@ -228,18 +240,19 @@ const Pricing = () => {
           </div>
           
           {/* Industry Packages Section */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">Popular Industry Solutions</h2>
-            <p className="text-gray-600 mb-6">
+          <div className="mb-12 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-sm">
+            <h2 className="text-2xl font-bold mb-4 text-indigo-900">Popular Industry Solutions</h2>
+            <p className="text-gray-600 mb-8 max-w-3xl">
               Browse our most popular industry packages that can be customized to your needs.
             </p>
             
-            <Tabs defaultValue={industryPackages[0].name.toLowerCase().replace(/\s+/g, '-')}>
-              <TabsList className="grid grid-cols-3 mb-6">
+            <Tabs defaultValue={industryPackages[0].name.toLowerCase().replace(/\s+/g, '-')} className="w-full">
+              <TabsList className="grid grid-cols-3 mb-6 bg-white/50 backdrop-blur-sm p-1 w-full mx-auto max-w-2xl">
                 {industryPackages.slice(0, 3).map((pkg) => (
                   <TabsTrigger 
                     key={pkg.name} 
                     value={pkg.name.toLowerCase().replace(/\s+/g, '-')}
+                    className="text-gray-700 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white"
                   >
                     {pkg.name.split(' ')[0]}
                   </TabsTrigger>
@@ -248,25 +261,27 @@ const Pricing = () => {
               
               {industryPackages.slice(0, 3).map((pkg) => (
                 <TabsContent key={pkg.name} value={pkg.name.toLowerCase().replace(/\s+/g, '-')}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{pkg.name}</CardTitle>
-                      <CardDescription>Base Price: {formatPrice(pkg.basePrice)}</CardDescription>
+                  <Card className={`overflow-hidden shadow-md border-0 bg-gradient-to-br ${pkg.bgColor}`}>
+                    <CardHeader className="pb-2 border-b border-gray-100">
+                      <CardTitle className={`text-${pkg.accentColor}`}>{pkg.name}</CardTitle>
+                      <CardDescription className="text-gray-700 font-medium">
+                        Base Price: {formatPrice(pkg.basePrice)}
+                      </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-4 pt-6">
                       <div>
-                        <h4 className="font-medium mb-2">What's Included:</h4>
-                        <p className="text-gray-700">{pkg.description}</p>
+                        <h4 className="font-medium mb-2 text-gray-800">What's Included:</h4>
+                        <p className="text-gray-700 bg-white/60 p-3 rounded-lg">{pkg.description}</p>
                       </div>
                       
                       <div>
-                        <h4 className="font-medium mb-2">Top Add-Ons:</h4>
+                        <h4 className="font-medium mb-2 text-gray-800">Top Add-Ons:</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {pkg.addOns.slice(0, 2).map((addon) => (
-                            <div key={addon.name} className="border rounded-lg p-3">
+                            <div key={addon.name} className="bg-white/75 backdrop-blur-sm rounded-lg p-3 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                               <div className="flex justify-between items-start">
                                 <h5 className="font-medium text-sm">{addon.name}</h5>
-                                <span className="font-medium text-blue-600 text-sm">{formatPrice(addon.price)}</span>
+                                <span className={`font-medium text-${pkg.accentColor} text-sm`}>{formatPrice(addon.price)}</span>
                               </div>
                               <p className="text-xs text-gray-600 mt-1">{addon.description}</p>
                             </div>
@@ -274,18 +289,32 @@ const Pricing = () => {
                         </div>
                       </div>
                       
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <p className="text-sm font-medium">Example with {paymentType === 'monthly' ? 'Monthly' : paymentType === 'milestone' ? 'Stage-Based' : 'Hybrid'} Payment:</p>
-                        <p className="text-sm">Deposit: {formatPrice(pkg.basePrice * 0.3)}</p>
-                        {paymentType === 'monthly' && (
-                          <p className="text-sm">12 payments: {formatPrice(pkg.basePrice * 0.7 / 12)}/month</p>
-                        )}
-                        {paymentType === 'milestone' && (
-                          <p className="text-sm">3 milestone payments of {formatPrice(pkg.basePrice * 0.7 / 3)} each</p>
-                        )}
-                        {paymentType === 'hybrid' && (
-                          <p className="text-sm">6 payments of {formatPrice(pkg.basePrice * 0.35 / 6)}/month + 2 milestones</p>
-                        )}
+                      <div className="bg-white/80 p-4 rounded-lg shadow-sm border border-gray-100">
+                        <p className="text-sm font-medium text-gray-800">Example with {paymentType === 'monthly' ? 'Monthly' : paymentType === 'milestone' ? 'Stage-Based' : 'Hybrid'} Payment:</p>
+                        <div className="mt-2 space-y-1">
+                          <p className="text-sm flex justify-between">
+                            <span>Deposit:</span> 
+                            <span className="font-medium">{formatPrice(pkg.basePrice * 0.3)}</span>
+                          </p>
+                          {paymentType === 'monthly' && (
+                            <p className="text-sm flex justify-between">
+                              <span>12 payments:</span> 
+                              <span className="font-medium">{formatPrice(pkg.basePrice * 0.7 / 12)}/month</span>
+                            </p>
+                          )}
+                          {paymentType === 'milestone' && (
+                            <p className="text-sm flex justify-between">
+                              <span>3 milestone payments:</span> 
+                              <span className="font-medium">{formatPrice(pkg.basePrice * 0.7 / 3)} each</span>
+                            </p>
+                          )}
+                          {paymentType === 'hybrid' && (
+                            <p className="text-sm flex justify-between">
+                              <span>6 payments + 2 milestones:</span> 
+                              <span className="font-medium">{formatPrice(pkg.basePrice * 0.35 / 6)}/month</span>
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
