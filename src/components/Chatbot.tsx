@@ -38,47 +38,30 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  // When on the pricing page, use a different styling approach
+  // When on the pricing page, we'll let the Pricing component handle the display
   if (isPricingPage) {
-    if (!isChatbotOpen) {
-      return null; // Don't show the chat button on pricing page if closed
-    }
-
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
-        <div className="relative w-full max-w-3xl h-[80vh] bg-white rounded-lg shadow-xl flex flex-col glass-card animate-scale-in">
-          {/* Chat header */}
-          <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg">
-            <h3 className="font-semibold text-lg">Get Your Custom App Quote</h3>
-            <button 
-              onClick={closeChatbot}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-          
-          {/* Chat messages */}
-          <ChatContainer 
-            messages={messages}
-            isTyping={isTyping}
-            messagesEndRef={messagesEndRef}
-            chatState={chatState}
-            onContactFormSubmit={onContactFormSubmit}
-            currentOptions={currentOptions}
-            allowMultipleSelection={allowMultipleSelection}
-            selectedOptions={selectedOptions}
-            customGoal={customGoal}
-            setCustomGoal={setCustomGoal}
-            submitGoals={submitGoals}
-            submitFeatures={submitFeatures}
-            submitCustomizations={submitCustomizations}
-            handleOption={handleOption}
-          />
-          
-          {/* Input area */}
-          <ChatInput onSubmit={sendUserMessage} />
-        </div>
+      <div className="w-full h-full rounded-lg flex flex-col">
+        {/* Chat messages */}
+        <ChatContainer 
+          messages={messages}
+          isTyping={isTyping}
+          messagesEndRef={messagesEndRef}
+          chatState={chatState}
+          onContactFormSubmit={onContactFormSubmit}
+          currentOptions={currentOptions}
+          allowMultipleSelection={allowMultipleSelection}
+          selectedOptions={selectedOptions}
+          customGoal={customGoal}
+          setCustomGoal={setCustomGoal}
+          submitGoals={submitGoals}
+          submitFeatures={submitFeatures}
+          submitCustomizations={submitCustomizations}
+          handleOption={handleOption}
+        />
+        
+        {/* Input area */}
+        <ChatInput onSubmit={sendUserMessage} />
       </div>
     );
   }
