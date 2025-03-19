@@ -48,7 +48,8 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
         />
       ))}
       
-      {currentOptions.length > 0 && (
+      {/* Options are now only shown after the last message with no duplication */}
+      {messages.length > 0 && currentOptions.length > 0 && (
         <MessageOptions
           options={currentOptions}
           chatState={chatState}

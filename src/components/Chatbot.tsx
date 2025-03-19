@@ -28,6 +28,10 @@ const Chatbot = () => {
   const [chatState, setChatState] = useState<ChatState>(ChatState.START);
   const [isTyping, setIsTyping] = useState(false);
   const [customGoal, setCustomGoal] = useState('');
+  const [currentOptions, setCurrentOptions] = useState<ChatOption[]>([]);
+  const [allowMultipleSelection, setAllowMultipleSelection] = useState(false);
+  const [processingUserInput, setProcessingUserInput] = useState(false);
+  
   const [selectedOptions, setSelectedOptions] = useState<{
     industry: string | null;
     goals: string[];
@@ -132,22 +136,26 @@ const Chatbot = () => {
     const typingDelay = Math.max(500, Math.min(content.length * 20, 2000));
     
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), content, sender: 'bot' },
-      ]);
+      // Check if this exact message already exists to prevent duplicates
+      const isDuplicate = messages.some(msg => 
+        msg.sender === 'bot' && msg.content === content
+      );
+      
+      if (!isDuplicate) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now().toString(), content, sender: 'bot' },
+        ]);
+      }
       setIsTyping(false);
     }, typingDelay);
   };
 
-  const sendBotMessageWithOptions = (content: string, options: ChatOption[]) => {
-    // Now just call the normal sendBotMessage, but set the current options for the input field
-    sendBotMessage(content);
-    setCurrentOptions(options);
-  };
-
   const sendUserMessage = (content: string) => {
-    if (!content.trim()) return;
+    if (!content.trim() || processingUserInput) return;
+    
+    // Set processing flag to prevent duplicate messages
+    setProcessingUserInput(true);
     
     setMessages((prev) => [
       ...prev,
@@ -155,10 +163,10 @@ const Chatbot = () => {
     ]);
     
     handleUserInput(content);
+    
+    // Reset processing flag after a short delay
+    setTimeout(() => setProcessingUserInput(false), 1000);
   };
-
-  const [currentOptions, setCurrentOptions] = useState<ChatOption[]>([]);
-  const [allowMultipleSelection, setAllowMultipleSelection] = useState(false);
 
   const handleOption = (option: ChatOption) => {
     // Update the selected option in the message
@@ -246,6 +254,9 @@ const Chatbot = () => {
       // Move to next state - without duplicating the options display
       setChatState(ChatState.ASK_FEATURES);
       
+      // Clear current options before setting new ones
+      setCurrentOptions([]);
+      
       // Prepare and display next message
       setTimeout(() => {
         const featureOptions = CUSTOM_FEATURES.map(feature => ({
@@ -254,10 +265,14 @@ const Chatbot = () => {
           value: feature.name,
         }));
         
-        sendBotMessageWithOptions(
-          "Great! Here are some features that might help. Which ones would you like to include?",
-          featureOptions
+        sendBotMessage(
+          "Great! Here are some features that might help. Which ones would you like to include?"
         );
+        
+        // Set options after the message is sent
+        setTimeout(() => {
+          setCurrentOptions(featureOptions);
+        }, 300);
       }, 800);
     } else {
       // Prompt user to select at least one goal
@@ -290,6 +305,9 @@ const Chatbot = () => {
       // Move to next state
       setChatState(ChatState.ASK_CUSTOMIZATION);
       
+      // Clear current options before setting new ones
+      setCurrentOptions([]);
+      
       // Prepare and display next message
       setTimeout(() => {
         const customizationOptions = [
@@ -298,10 +316,14 @@ const Chatbot = () => {
           ...DESIGN_STYLE_OPTIONS,
         ];
         
-        sendBotMessageWithOptions(
-          "Almost done! A few more questions to tailor your app:",
-          customizationOptions
+        sendBotMessage(
+          "Almost done! A few more questions to tailor your app:"
         );
+        
+        // Set options after the message is sent
+        setTimeout(() => {
+          setCurrentOptions(customizationOptions);
+        }, 300);
       }, 800);
     } else {
       toast({
@@ -345,6 +367,9 @@ const Chatbot = () => {
     
     // Move to next state
     setChatState(ChatState.COLLECT_DETAILS);
+    
+    // Clear current options
+    setCurrentOptions([]);
     
     // Prepare and display next message
     setTimeout(() => {
