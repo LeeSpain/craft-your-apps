@@ -28,7 +28,7 @@ enum ChatState {
 }
 
 const Chatbot = () => {
-  const { language, currency, formatPrice, isChatbotOpen, closeChatbot } = useApp();
+  const { language, currency, formatPrice, isChatbotOpen, closeChatbot, openChatbot } = useApp();
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState('');
   const [chatState, setChatState] = useState<ChatState>(ChatState.START);
@@ -222,7 +222,7 @@ const Chatbot = () => {
   if (!isChatbotOpen) {
     return (
       <button 
-        onClick={() => openChatbot()}
+        onClick={openChatbot}
         className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors z-50"
       >
         <MessageSquare className="h-6 w-6" />
