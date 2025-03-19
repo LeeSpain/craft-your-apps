@@ -55,33 +55,39 @@ export interface CustomFeature {
   id: string;
   name: string;
   price: number;
+  description: string;
 }
 
 export const CUSTOM_FEATURES: CustomFeature[] = [
   {
     id: 'ai-recommendations',
     name: 'AI Recommendations',
-    price: 20000
+    price: 20000,
+    description: 'Smart suggestions for bookings and services based on user preferences and behavior.'
   },
   {
     id: 'chatroom',
     name: 'Chatroom',
-    price: 10000
+    price: 10000,
+    description: 'Real-time communication between users and service providers.'
   },
   {
     id: 'ai-chatbot',
     name: 'AI Chatbot',
-    price: 20000
+    price: 20000,
+    description: '24/7 automated customer support to answer questions and assist users.'
   },
   {
     id: 'notifications',
     name: 'Notifications',
-    price: 5000
+    price: 5000,
+    description: 'Reminders for appointments and important updates via push, email, or SMS.'
   },
   {
     id: 'multilingual',
     name: 'Multilingual',
-    price: 10000
+    price: 10000,
+    description: 'Support for multiple languages to reach a global audience.'
   }
 ];
 

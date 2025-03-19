@@ -68,11 +68,6 @@ export const INDUSTRY_OPTIONS = [
   { id: 'retail', label: 'Retail Shops', value: 'Retail Shops' },
   { id: 'education', label: 'Tutors & Educators', value: 'Tutors & Educators' },
   { id: 'auto', label: 'Auto Repair & Detailing', value: 'Auto Repair & Detailing' },
-  { id: 'nails', label: 'Nail Salons & Beauty Therapists', value: 'Nail Salons & Beauty Therapists' },
-  { id: 'photography', label: 'Photographers', value: 'Photographers' },
-  { id: 'community', label: 'Community Groups', value: 'Community Groups' },
-  { id: 'childcare', label: 'Childcare Providers', value: 'Childcare Providers' },
-  { id: 'emergency', label: 'Emergency Services', value: 'Emergency Services' },
 ];
 
 export const GOALS_OPTIONS = [

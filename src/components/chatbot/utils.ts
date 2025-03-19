@@ -13,32 +13,57 @@ export const calculateTotalPrice = (userSelections: UserSelections): number => {
     }
   });
   
+  // Add additional costs for customizations
+  if (userSelections.customizations.userAccounts) {
+    total += 3000; // Additional cost for user account system
+  }
+  
+  // Each integration adds additional cost
+  total += userSelections.customizations.integrations.length * 1500;
+  
   return total;
 };
 
 // Generate quote message text
 export const generateQuoteText = (userSelections: UserSelections, formatPrice: (price: number) => string): string => {
   const total = calculateTotalPrice(userSelections);
-  const splitAmount = total * 0.6;
-  const fullAmount = total * 0.95;
+  const splitAmount = Math.round(total * 0.6);
+  const fullAmount = Math.round(total * 0.95);
+  const discount = Math.round(total * 0.05);
   
   // Get selected features details
   const selectedFeatures = CUSTOM_FEATURES.filter(feature => 
     userSelections.features.includes(feature.id)
   );
   
-  let quoteMessage = `Base (${userSelections.industry} App): ${formatPrice(BASE_PRICE)}\n`;
+  let quoteMessage = `## Your Custom App Quote\n\n`;
+  quoteMessage += `**Industry:** ${userSelections.industry}\n`;
+  quoteMessage += `**Main Goals:** ${userSelections.goals.join(', ')}\n\n`;
+  
+  quoteMessage += `### Price Breakdown\n\n`;
+  quoteMessage += `- Base App: ${formatPrice(BASE_PRICE)}\n`;
   
   selectedFeatures.forEach(feature => {
-    quoteMessage += `${feature.name}: ${formatPrice(feature.price)}\n`;
+    quoteMessage += `- ${feature.name}: ${formatPrice(feature.price)}\n`;
   });
   
-  quoteMessage += `\nTotal: ${formatPrice(total)}\n`;
-  quoteMessage += `Timeline: 3-6 months\n\n`;
-  quoteMessage += `Payment Options:\n`;
-  quoteMessage += `- Split: 60% now (${formatPrice(splitAmount)}), 40% on completion (${formatPrice(total - splitAmount)})\n`;
-  quoteMessage += `- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(total - fullAmount)} with 5% off)\n\n`;
-  quoteMessage += `Ready to proceed? Let me know!`;
+  if (userSelections.customizations.userAccounts) {
+    quoteMessage += `- User Account System: ${formatPrice(3000)}\n`;
+  }
+  
+  if (userSelections.customizations.integrations.length > 0) {
+    quoteMessage += `- Integrations (${userSelections.customizations.integrations.join(', ')}): ${formatPrice(userSelections.customizations.integrations.length * 1500)}\n`;
+  }
+  
+  quoteMessage += `\n**Design Style:** ${userSelections.customizations.designStyle}\n\n`;
+  
+  quoteMessage += `### Total Investment: ${formatPrice(total)}\n\n`;
+  quoteMessage += `**Estimated Timeline:** 3-6 months\n\n`;
+  quoteMessage += `### Payment Options\n\n`;
+  quoteMessage += `1. **Split Payment:** ${formatPrice(splitAmount)} now, ${formatPrice(total - splitAmount)} on completion\n`;
+  quoteMessage += `2. **Full Payment:** ${formatPrice(fullAmount)} upfront (save ${formatPrice(discount)} with 5% discount)\n\n`;
+  
+  quoteMessage += `Ready to proceed? Let me know which payment option you prefer!`;
   
   return quoteMessage;
 };
