@@ -294,19 +294,21 @@ const Pricing = () => {
             </Tabs>
           </div>
           
-          {/* AI Quote Builder */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">AI Quote Builder</h2>
-            <p className="text-gray-600 mb-6">
-              Get a personalized quote tailored to your specific requirements by chatting with our AI assistant.
+          {/* AI Quote Builder - Now centered and more visually prominent */}
+          <div className="mb-12 max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-4 text-center">AI Quote Builder</h2>
+            <p className="text-gray-600 mb-6 text-center">
+              Tell us about your app idea, and we'll create a personalized quote tailored to your exact needs.
             </p>
             
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[500px] border">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white">
-                <h3 className="font-semibold text-lg">AI Quote Builder</h3>
-                <p className="text-sm text-blue-100">Get a personalized quote for your app</p>
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden border-2 border-purple-200 transform transition-all hover:shadow-2xl">
+              <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-5 text-white">
+                <h3 className="font-semibold text-xl">Tell Us About Your App Idea</h3>
+                <p className="text-purple-100">
+                  No more rigid forms or limiting options - just tell us what you want in your own words!
+                </p>
               </div>
-              <div className="h-[430px]">
+              <div className="h-[450px]">
                 <Chatbot />
               </div>
             </div>

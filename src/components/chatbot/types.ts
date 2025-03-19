@@ -17,7 +17,6 @@ export interface ChatOption {
 
 export enum ChatState {
   START,
-  ASK_INDUSTRY,
   ASK_GOALS,
   ASK_FEATURES,
   ASK_CUSTOMIZATION,
@@ -57,18 +56,7 @@ export const contactFormSchema = z.object({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
-export const INDUSTRY_OPTIONS = [
-  { id: 'hairdresser', label: 'Hairdressers & Barbershops', value: 'Hairdressers & Barbershops' },
-  { id: 'petcare', label: 'Pet Care Services', value: 'Pet Care Services' },
-  { id: 'realestate', label: 'Real Estate Agents', value: 'Real Estate Agents' },
-  { id: 'cafe', label: 'Cafés & Small Restaurants', value: 'Cafés & Small Restaurants' },
-  { id: 'fitness', label: 'Fitness Trainers & Small Gyms', value: 'Fitness Trainers & Small Gyms' },
-  { id: 'events', label: 'Event Planners', value: 'Event Planners' },
-  { id: 'homeservices', label: 'Home Services', value: 'Home Services' },
-  { id: 'retail', label: 'Retail Shops', value: 'Retail Shops' },
-  { id: 'education', label: 'Tutors & Educators', value: 'Tutors & Educators' },
-  { id: 'auto', label: 'Auto Repair & Detailing', value: 'Auto Repair & Detailing' },
-];
+// Removed INDUSTRY_OPTIONS as they won't be used in the initial flow anymore
 
 export const GOALS_OPTIONS = [
   { id: 'bookings', label: 'Streamline bookings and scheduling', value: 'Streamline bookings and scheduling' },

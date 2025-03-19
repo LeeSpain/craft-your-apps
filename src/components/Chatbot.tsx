@@ -36,6 +36,7 @@ const Chatbot = () => {
     if (isPricingPage && isChatbotOpen && messages.length === 0) {
       // This will override the initial message in useChatbotState with a simpler prompt
       const timer = setTimeout(() => {
+        // Send initial greeting that encourages open-ended input
         sendUserMessage("I need a custom app quote");
       }, 500);
       

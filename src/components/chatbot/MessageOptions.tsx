@@ -34,25 +34,9 @@ export const MessageOptions: React.FC<MessageOptionsProps> = ({
   submitFeatures,
   submitCustomizations
 }) => {
-  switch (chatState) {
-    case ChatState.ASK_INDUSTRY:
-      return (
-        <div className="grid grid-cols-1 gap-2 mt-2">
-          {options.map(option => (
-            <button
-              key={option.id}
-              onClick={() => handleOption(option)}
-              className={cn(
-                "text-left px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors",
-                selectedOptions.industry === option.value && "bg-blue-100 border-blue-300"
-              )}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      );
-      
+  // Industry selection has been removed since we're skipping that step
+  
+  switch (chatState) {     
     case ChatState.ASK_GOALS:
       return (
         <div className="space-y-4 mt-2">
