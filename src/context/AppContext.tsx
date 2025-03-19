@@ -66,7 +66,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const savedCurrency = localStorage.getItem('currency') as Currency;
     const savedLanguage = localStorage.getItem('language') as Language;
     
-    if (savedCurrency) setCurrency(savedCurrency);
+    if (savedCurrency && Object.keys(defaultExchangeRates).includes(savedCurrency)) {
+      setCurrency(savedCurrency);
+    }
     if (savedLanguage) setLanguage(savedLanguage);
   }, []);
 

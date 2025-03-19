@@ -5,6 +5,7 @@ import { useApp } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { LogIn, User } from 'lucide-react';
+import CurrencySelector from './CurrencySelector';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,21 +43,25 @@ const Header = () => {
             </Link>
           ))}
           
-          {isAuthenticated ? (
-            <Link to="/dashboard">
-              <Button variant="outline" className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                Dashboard
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/login">
-              <Button variant="outline" className="flex items-center gap-2">
-                <LogIn className="h-4 w-4" />
-                Client Login
-              </Button>
-            </Link>
-          )}
+          <div className="flex items-center space-x-3">
+            <CurrencySelector />
+            
+            {isAuthenticated ? (
+              <Link to="/dashboard">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Client Login
+                </Button>
+              </Link>
+            )}
+          </div>
         </nav>
         
         <button
@@ -92,6 +97,9 @@ const Header = () => {
                   {item.label}
                 </Link>
               ))}
+              <div className="flex items-center space-x-3 py-2">
+                <CurrencySelector />
+              </div>
               {isAuthenticated ? (
                 <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="outline" className="flex items-center gap-2 w-full">
