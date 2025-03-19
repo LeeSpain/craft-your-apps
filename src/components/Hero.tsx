@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
 import { getTranslation } from '@/lib/translations';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ChevronRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 const Hero = () => {
@@ -33,10 +33,10 @@ const Hero = () => {
     };
   }, []);
 
-  const scrollToPortfolio = () => {
-    const portfolioSection = document.getElementById('portfolio');
-    if (portfolioSection) {
-      portfolioSection.scrollIntoView({ behavior: 'smooth' });
+  const scrollToServices = () => {
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -54,25 +54,26 @@ const Hero = () => {
       <div className="absolute inset-0 bg-mesh-pattern opacity-30"></div>
       
       <div className="container mx-auto text-center z-10">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="inline-block mb-6 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
-            <p className="text-blue-600 text-sm font-medium">AIAppCrafter.com</p>
+            <p className="text-blue-600 text-sm font-medium">CUSTOM APP DEVELOPMENT</p>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-300">
-            {getTranslation('hero.title', language)}
+            Transforming Business Ideas Into Powerful Applications
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 mb-10 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-500">
-            {getTranslation('hero.subtitle', language)}
+            We build custom apps that drive growth, streamline operations, and create exceptional user experiences.
+            Trusted by startups, SMBs, and enterprise organizations.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-700">
             <Button 
-              onClick={scrollToPortfolio}
+              onClick={scrollToServices}
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all"
             >
-              {getTranslation('hero.exploreButton', language)}
+              Our Services
             </Button>
             
             <Button 
@@ -80,15 +81,28 @@ const Hero = () => {
               variant="outline" 
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-white border-blue-200 hover:bg-blue-50 hover:border-blue-300 shadow-md hover:shadow-lg transition-all"
             >
-              {getTranslation('hero.chatButton', language)}
+              Get a Quote
+              <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-8 mt-12 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-900">
+            <p className="text-gray-500 text-sm">Trusted by innovative companies</p>
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+              {/* Placeholder company logos */}
+              <div className="h-6 w-24 bg-gray-400 rounded-md"></div>
+              <div className="h-6 w-28 bg-gray-400 rounded-md"></div>
+              <div className="h-6 w-20 bg-gray-400 rounded-md"></div>
+              <div className="h-6 w-24 bg-gray-400 rounded-md"></div>
+              <div className="h-6 w-28 bg-gray-400 rounded-md"></div>
+            </div>
           </div>
         </div>
         
         {/* Scroll indicator */}
         <div 
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-pulse cursor-pointer" 
-          onClick={scrollToPortfolio}
+          onClick={scrollToServices}
         >
           <ArrowDown className="h-10 w-10 text-blue-500 opacity-70" />
         </div>
