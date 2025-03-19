@@ -10,13 +10,6 @@ interface ChatContainerProps {
   isTyping: boolean;
   messagesEndRef: React.RefObject<HTMLDivElement>;
   chatState: ChatState;
-  handleOption: (option: any) => void;
-  selectedOptions: any;
-  submitGoals: () => void;
-  submitFeatures: () => void;
-  submitCustomizations: () => void;
-  customGoal: string;
-  setCustomGoal: (value: string) => void;
   onContactFormSubmit: (values: ContactFormData) => void;
 }
 
@@ -33,14 +26,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
         <ChatMessage
           key={msg.id}
           message={msg}
-          handleOption={() => {}}
-          chatState={chatState}
-          selectedOptions={{}}
-          submitGoals={() => {}}
-          submitFeatures={() => {}}
-          submitCustomizations={() => {}}
-          customGoal=""
-          setCustomGoal={() => {}}
         />
       ))}
       

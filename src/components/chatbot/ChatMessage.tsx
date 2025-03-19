@@ -4,19 +4,9 @@ import { Message } from './types';
 
 interface ChatMessageProps {
   message: Message;
-  handleOption: (option: any) => void;
-  chatState: number;
-  selectedOptions: any;
-  submitGoals: () => void;
-  submitFeatures: () => void;
-  submitCustomizations: () => void;
-  customGoal: string;
-  setCustomGoal: (value: string) => void;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ 
-  message
-}) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   // Helper function to render HTML content safely
   const createMarkup = (html: string) => {
     return { __html: html };

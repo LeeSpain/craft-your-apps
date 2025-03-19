@@ -67,11 +67,12 @@ const Chatbot = () => {
   // Initial message
   useEffect(() => {
     if (isChatbotOpen && messages.length === 0) {
-      sendBotMessageWithOptions(
-        "Hi! I'm AIAppCrafter. Let's build your dream app! What industry are you in?",
-        INDUSTRY_OPTIONS
+      sendBotMessage(
+        "Hi! I'm AIAppCrafter. Let's build your dream app! What industry are you in?"
       );
       setChatState(ChatState.ASK_INDUSTRY);
+      setCurrentOptions(INDUSTRY_OPTIONS);
+      setAllowMultipleSelection(false);
     }
   }, [isChatbotOpen, language]);
   
@@ -139,18 +140,9 @@ const Chatbot = () => {
   };
 
   const sendBotMessageWithOptions = (content: string, options: ChatOption[]) => {
-    setIsTyping(true);
-    
-    // Calculate typing delay based on content length, minimum 500ms
-    const typingDelay = Math.max(500, Math.min(content.length * 20, 2000));
-    
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now().toString(), content, sender: 'bot' },
-      ]);
-      setIsTyping(false);
-    }, typingDelay);
+    // Now just call the normal sendBotMessage, but set the current options for the input field
+    sendBotMessage(content);
+    setCurrentOptions(options);
   };
 
   const sendUserMessage = (content: string) => {
@@ -384,11 +376,12 @@ const Chatbot = () => {
         
         // Move to next state
         setChatState(ChatState.ASK_GOALS);
+        setCurrentOptions(GOALS_OPTIONS);
+        setAllowMultipleSelection(true);
         
         setTimeout(() => {
-          sendBotMessageWithOptions(
-            "Got it! What's the main goal for your app?",
-            GOALS_OPTIONS
+          sendBotMessage(
+            "Got it! What's the main goal for your app?"
           );
         }, 800);
         break;
@@ -411,9 +404,11 @@ const Chatbot = () => {
             value: feature.name,
           }));
           
-          sendBotMessageWithOptions(
-            "Great! Here are some features that might help. Which ones would you like to include?",
-            featureOptions
+          setCurrentOptions(featureOptions);
+          setAllowMultipleSelection(true);
+          
+          sendBotMessage(
+            "Great! Here are some features that might help. Which ones would you like to include?"
           );
         }, 800);
         break;
@@ -439,9 +434,11 @@ const Chatbot = () => {
             ...DESIGN_STYLE_OPTIONS,
           ];
           
-          sendBotMessageWithOptions(
-            "Almost done! A few more questions to tailor your app:",
-            customizationOptions
+          setCurrentOptions(customizationOptions);
+          setAllowMultipleSelection(true);
+          
+          sendBotMessage(
+            "Almost done! A few more questions to tailor your app:"
           );
         }, 800);
         break;
@@ -557,6 +554,7 @@ Which works for you?`);
   };
 
   useEffect(() => {
+    // Update current options based on chat state
     switch (chatState) {
       case ChatState.ASK_INDUSTRY:
         setCurrentOptions(INDUSTRY_OPTIONS);
@@ -676,13 +674,6 @@ Which works for you?`);
           isTyping={isTyping}
           messagesEndRef={messagesEndRef}
           chatState={chatState}
-          handleOption={handleOption}
-          selectedOptions={selectedOptions}
-          submitGoals={submitGoals}
-          submitFeatures={submitFeatures}
-          submitCustomizations={submitCustomizations}
-          customGoal={customGoal}
-          setCustomGoal={setCustomGoal}
           onContactFormSubmit={onContactFormSubmit}
         />
         
