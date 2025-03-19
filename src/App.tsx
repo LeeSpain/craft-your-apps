@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
+import PortfolioPage from "./pages/Portfolio";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import Timeline from "./pages/dashboard/Timeline";
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
               
               {/* Dashboard Routes */}
               <Route path="/dashboard" element={<DashboardLayout />}>
