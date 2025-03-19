@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
 import { CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
@@ -675,14 +676,19 @@ Which works for you?`);
           messagesEndRef={messagesEndRef}
           chatState={chatState}
           onContactFormSubmit={onContactFormSubmit}
+          currentOptions={currentOptions}
+          allowMultipleSelection={allowMultipleSelection}
+          selectedOptions={selectedOptions}
+          customGoal={customGoal}
+          setCustomGoal={setCustomGoal}
+          submitGoals={submitGoals}
+          submitFeatures={submitFeatures}
+          submitCustomizations={submitCustomizations}
+          handleOption={handleOption}
         />
         
         {/* Input area */}
-        <ChatInput 
-          onSubmit={sendUserMessage} 
-          options={currentOptions} 
-          allowMultipleSelection={allowMultipleSelection}
-        />
+        <ChatInput onSubmit={sendUserMessage} />
       </div>
     </div>
   );

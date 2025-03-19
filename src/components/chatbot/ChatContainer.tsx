@@ -4,6 +4,7 @@ import { ChatMessage } from './ChatMessage';
 import { Message, ChatState } from './types';
 import { ContactForm } from './ContactForm';
 import { ContactFormData } from './types';
+import { MessageOptions } from './MessageOptions';
 
 interface ChatContainerProps {
   messages: Message[];
@@ -11,6 +12,15 @@ interface ChatContainerProps {
   messagesEndRef: React.RefObject<HTMLDivElement>;
   chatState: ChatState;
   onContactFormSubmit: (values: ContactFormData) => void;
+  currentOptions: any[];
+  allowMultipleSelection: boolean;
+  selectedOptions: any;
+  customGoal: string;
+  setCustomGoal: (value: string) => void;
+  submitGoals: () => void;
+  submitFeatures: () => void;
+  submitCustomizations: () => void;
+  handleOption: (option: any) => void;
 }
 
 export const ChatContainer: React.FC<ChatContainerProps> = ({
@@ -18,7 +28,16 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   isTyping,
   messagesEndRef,
   chatState,
-  onContactFormSubmit
+  onContactFormSubmit,
+  currentOptions,
+  allowMultipleSelection,
+  selectedOptions,
+  customGoal,
+  setCustomGoal,
+  submitGoals,
+  submitFeatures,
+  submitCustomizations,
+  handleOption
 }) => {
   return (
     <div className="flex-1 overflow-y-auto p-4">
@@ -28,6 +47,20 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
           message={msg}
         />
       ))}
+      
+      {currentOptions.length > 0 && (
+        <MessageOptions
+          options={currentOptions}
+          chatState={chatState}
+          handleOption={handleOption}
+          selectedOptions={selectedOptions}
+          customGoal={customGoal}
+          setCustomGoal={setCustomGoal}
+          submitGoals={submitGoals}
+          submitFeatures={submitFeatures}
+          submitCustomizations={submitCustomizations}
+        />
+      )}
       
       {isTyping && (
         <div className="flex justify-start mb-4">
