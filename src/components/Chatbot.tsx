@@ -258,7 +258,7 @@ const Chatbot = () => {
       setTimeout(() => {
         const featureOptions = CUSTOM_FEATURES.map(feature => ({
           id: feature.id,
-          label: `${feature.name}`,
+          label: feature.name,
           value: feature.name,
         }));
         
@@ -279,7 +279,7 @@ const Chatbot = () => {
 
   const submitFeatures = () => {
     if (selectedOptions.features.length > 0) {
-      // Create message content
+      // Create message content without price information
       const features = CUSTOM_FEATURES.filter(f => 
         selectedOptions.features.includes(f.id)
       ).map(f => f.name);
@@ -408,7 +408,7 @@ const Chatbot = () => {
         setTimeout(() => {
           const featureOptions = CUSTOM_FEATURES.map(feature => ({
             id: feature.id,
-            label: `${feature.name}`,
+            label: feature.name,
             value: feature.name,
           }));
           
@@ -570,7 +570,7 @@ Which works for you?`);
       case ChatState.ASK_FEATURES:
         setCurrentOptions(CUSTOM_FEATURES.map(feature => ({
           id: feature.id,
-          label: `${feature.name}`,
+          label: feature.name,
           value: feature.name,
         })));
         setAllowMultipleSelection(true);
