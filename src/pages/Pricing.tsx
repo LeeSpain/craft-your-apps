@@ -1,24 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
+import { QuoteForm } from '@/components/quote/QuoteForm';
 import { Check, Info } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const Pricing = () => {
-  const { formatPrice, openChatbot } = useApp();
+  const { formatPrice } = useApp();
   const { toast } = useToast();
   const [paymentType, setPaymentType] = useState<'monthly' | 'milestone' | 'hybrid'>('monthly');
-  
-  // Automatically open the chatbot when the pricing page loads
-  useEffect(() => {
-    openChatbot();
-  }, [openChatbot]);
   
   // Standard industry packages based on the provided information
   const industryPackages = [
@@ -105,7 +100,7 @@ const Pricing = () => {
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold mb-4">Get Your Personalized Quote</h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Use our AI assistant to get a custom quote based on your specific needs,
+              Use our interactive quote builder to get a custom quote based on your specific needs,
               or browse our standard industry packages below.
             </p>
           </div>
@@ -113,10 +108,20 @@ const Pricing = () => {
         
         {/* Main content area */}
         <div className="container mx-auto px-4 py-12">
+          {/* Quote Builder - Now at the top for prominence */}
+          <div className="mb-16 max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-4 text-center">Build Your Custom Quote</h2>
+            <p className="text-gray-600 mb-6 text-center">
+              Complete this simple form to get an instant, personalized quote for your app.
+            </p>
+            
+            <QuoteForm />
+          </div>
+          
           {/* Payment Plans Section */}
-          <div className="mb-16 bg-gradient-to-br from-slate-50 to-slate-100 p-8 rounded-2xl shadow-sm">
-            <h2 className="text-2xl font-bold mb-4 text-slate-800">Payment Options</h2>
-            <p className="text-gray-600 mb-8 max-w-3xl">
+          <div className="mb-16 bg-gradient-to-br from-indigo-100 to-purple-100 p-8 rounded-2xl shadow-sm">
+            <h2 className="text-2xl font-bold mb-4 text-indigo-900">Payment Options</h2>
+            <p className="text-gray-700 mb-8 max-w-3xl">
               We offer flexible payment plans for small businesses and individual entrepreneurs.
               All projects start with a 30% non-refundable deposit.
             </p>
@@ -240,9 +245,9 @@ const Pricing = () => {
           </div>
           
           {/* Industry Packages Section */}
-          <div className="mb-12 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-sm">
+          <div className="mb-12 bg-gradient-to-br from-purple-100 to-indigo-100 p-8 rounded-2xl shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-indigo-900">Popular Industry Solutions</h2>
-            <p className="text-gray-600 mb-8 max-w-3xl">
+            <p className="text-gray-700 mb-8 max-w-3xl">
               Browse our most popular industry packages that can be customized to your needs.
             </p>
             
@@ -321,26 +326,6 @@ const Pricing = () => {
                 </TabsContent>
               ))}
             </Tabs>
-          </div>
-          
-          {/* AI Quote Builder - Now centered and more visually prominent */}
-          <div className="mb-12 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4 text-center">AI Quote Builder</h2>
-            <p className="text-gray-600 mb-6 text-center">
-              Tell us about your app idea, and we'll create a personalized quote tailored to your exact needs.
-            </p>
-            
-            <div className="bg-white rounded-xl shadow-xl overflow-hidden border-2 border-purple-200 transform transition-all hover:shadow-2xl">
-              <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-5 text-white">
-                <h3 className="font-semibold text-xl">Tell Us About Your App Idea</h3>
-                <p className="text-purple-100">
-                  No more rigid forms or limiting options - just tell us what you want in your own words!
-                </p>
-              </div>
-              <div className="h-[450px]">
-                <Chatbot />
-              </div>
-            </div>
           </div>
           
           {/* FAQ Section */}
