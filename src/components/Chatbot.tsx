@@ -1,125 +1,30 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
-import { getTranslation } from '@/lib/translations';
-import { APPS, CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { X, Send, MessageSquare, Mail, Check, Plus, Minus } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
+import { X, MessageSquare, Mail, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
-interface Message {
-  id: string;
-  content: string;
-  sender: 'bot' | 'user';
-  options?: ChatOption[];
-}
-
-interface ChatOption {
-  id: string;
-  label: string;
-  value: string;
-  selected?: boolean;
-}
-
-enum ChatState {
-  START,
-  ASK_INDUSTRY,
-  ASK_GOALS,
-  ASK_FEATURES,
-  ASK_CUSTOMIZATION,
-  COLLECT_DETAILS,
-  EMAIL_SENT,
-  SHOW_QUOTE,
-  PAYMENT_OPTIONS,
-  PAYMENT_LINK,
-  THANK_YOU,
-}
-
-interface UserSelections {
-  industry: string;
-  goals: string[];
-  features: string[];
-  customizations: {
-    userAccounts: boolean;
-    integrations: string[];
-    designStyle: string;
-  };
-  contactInfo: {
-    name: string;
-    company: string;
-    email: string;
-    phone: string;
-  };
-  quoteConfirmed: boolean;
-  paymentOption: 'split' | 'full' | null;
-}
-
-const contactFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  company: z.string().min(2, { message: "Company name is required." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  phone: z.string().optional(),
-});
-
-const INDUSTRY_OPTIONS = [
-  { id: 'hairdresser', label: 'Hairdressers & Barbershops', value: 'Hairdressers & Barbershops' },
-  { id: 'petcare', label: 'Pet Care Services', value: 'Pet Care Services' },
-  { id: 'realestate', label: 'Real Estate Agents', value: 'Real Estate Agents' },
-  { id: 'cafe', label: 'Cafés & Small Restaurants', value: 'Cafés & Small Restaurants' },
-  { id: 'fitness', label: 'Fitness Trainers & Small Gyms', value: 'Fitness Trainers & Small Gyms' },
-  { id: 'events', label: 'Event Planners', value: 'Event Planners' },
-  { id: 'homeservices', label: 'Home Services', value: 'Home Services' },
-  { id: 'retail', label: 'Retail Shops', value: 'Retail Shops' },
-  { id: 'education', label: 'Tutors & Educators', value: 'Tutors & Educators' },
-  { id: 'auto', label: 'Auto Repair & Detailing', value: 'Auto Repair & Detailing' },
-  { id: 'nails', label: 'Nail Salons & Beauty Therapists', value: 'Nail Salons & Beauty Therapists' },
-  { id: 'photography', label: 'Photographers', value: 'Photographers' },
-  { id: 'community', label: 'Community Groups', value: 'Community Groups' },
-  { id: 'childcare', label: 'Childcare Providers', value: 'Childcare Providers' },
-  { id: 'emergency', label: 'Emergency Services', value: 'Emergency Services' },
-];
-
-const GOALS_OPTIONS = [
-  { id: 'bookings', label: 'Streamline bookings and scheduling', value: 'Streamline bookings and scheduling' },
-  { id: 'connect', label: 'Connect with clients through chat', value: 'Connect with clients through chat' },
-  { id: 'recommendations', label: 'Provide AI-powered recommendations', value: 'Provide AI-powered recommendations' },
-  { id: 'notifications', label: 'Send notifications and reminders', value: 'Send notifications and reminders' },
-  { id: 'other', label: 'Something else (please specify)', value: 'custom' },
-];
-
-const DESIGN_STYLE_OPTIONS = [
-  { id: 'modern', label: 'Modern', value: 'Modern' },
-  { id: 'minimalist', label: 'Minimalist', value: 'Minimalist' },
-  { id: 'bold', label: 'Bold', value: 'Bold' },
-  { id: 'standard', label: 'Standard', value: 'Standard' },
-];
-
-const INTEGRATION_OPTIONS = [
-  { id: 'calendar', label: 'Calendar (Google, Apple, etc.)', value: 'Calendar' },
-  { id: 'payment', label: 'Payment Systems (Stripe, PayPal)', value: 'Payment Systems' },
-  { id: 'social', label: 'Social Media', value: 'Social Media' },
-  { id: 'maps', label: 'Maps & Location Services', value: 'Maps & Location' },
-];
+// Import refactored components
+import { ChatContainer } from './chatbot/ChatContainer';
+import { ChatInput } from './chatbot/ChatInput';
+import { 
+  ChatState, 
+  Message, 
+  UserSelections, 
+  ChatOption,
+  INDUSTRY_OPTIONS,
+  GOALS_OPTIONS,
+  INTEGRATION_OPTIONS,
+  DESIGN_STYLE_OPTIONS, 
+  ContactFormData
+} from './chatbot/types';
+import { calculateTotalPrice, generateQuoteText } from './chatbot/utils';
 
 const Chatbot = () => {
   const { language, currency, formatPrice, isChatbotOpen, closeChatbot, openChatbot } = useApp();
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState('');
   const [chatState, setChatState] = useState<ChatState>(ChatState.START);
   const [isTyping, setIsTyping] = useState(false);
   const [customGoal, setCustomGoal] = useState('');
@@ -156,16 +61,6 @@ const Chatbot = () => {
     },
     quoteConfirmed: false,
     paymentOption: null,
-  });
-  
-  const form = useForm<z.infer<typeof contactFormSchema>>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-    },
   });
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -266,7 +161,6 @@ const Chatbot = () => {
       ...prev,
       { id: Date.now().toString(), content, sender: 'user' },
     ]);
-    setUserInput('');
     
     handleUserInput(content);
   };
@@ -576,13 +470,13 @@ Let me know when you're ready!`);
         // After showing the quote, present payment options
         if (lowerInput.includes('ready') || lowerInput.includes('proceed') || lowerInput.includes('yes')) {
           setTimeout(() => {
-            const splitAmount = calculateTotalPrice() * 0.6;
-            const fullAmount = calculateTotalPrice() * 0.95;
+            const splitAmount = calculateTotalPrice(userSelections) * 0.6;
+            const fullAmount = calculateTotalPrice(userSelections) * 0.95;
             
             sendBotMessage(`To get started, choose your payment option:
 
-- Split: ${formatPrice(splitAmount)} now, ${formatPrice(calculateTotalPrice() - splitAmount)} later.
-- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(calculateTotalPrice() - fullAmount)}).
+- Split: ${formatPrice(splitAmount)} now, ${formatPrice(calculateTotalPrice(userSelections) - splitAmount)} later.
+- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(calculateTotalPrice(userSelections) - fullAmount)}).
 
 Which works for you?`);
             
@@ -641,46 +535,12 @@ Which works for you?`);
     }
   };
 
-  const calculateTotalPrice = () => {
-    let total = BASE_PRICE;
-    
-    userSelections.features.forEach(featureId => {
-      const feature = CUSTOM_FEATURES.find(f => f.id === featureId);
-      if (feature) {
-        total += feature.price;
-      }
-    });
-    
-    return total;
-  };
-
   const displayQuote = () => {
-    const total = calculateTotalPrice();
-    const splitAmount = total * 0.6;
-    const fullAmount = total * 0.95;
-    
-    // Get selected features details
-    const selectedFeatures = CUSTOM_FEATURES.filter(feature => 
-      userSelections.features.includes(feature.id)
-    );
-    
-    let quoteMessage = `Base (${userSelections.industry} App): ${formatPrice(BASE_PRICE)}\n`;
-    
-    selectedFeatures.forEach(feature => {
-      quoteMessage += `${feature.name}: ${formatPrice(feature.price)}\n`;
-    });
-    
-    quoteMessage += `\nTotal: ${formatPrice(total)}\n`;
-    quoteMessage += `Timeline: 3-6 months\n\n`;
-    quoteMessage += `Payment Options:\n`;
-    quoteMessage += `- Split: 60% now (${formatPrice(splitAmount)}), 40% on completion (${formatPrice(total - splitAmount)})\n`;
-    quoteMessage += `- Full: ${formatPrice(fullAmount)} upfront (save ${formatPrice(total - fullAmount)} with 5% off)\n\n`;
-    quoteMessage += `Ready to proceed? Let me know!`;
-    
+    const quoteMessage = generateQuoteText(userSelections, formatPrice);
     sendBotMessage(quoteMessage);
   };
 
-  const onContactFormSubmit = (values: z.infer<typeof contactFormSchema>) => {
+  const onContactFormSubmit = (values: ContactFormData) => {
     setUserSelections(prev => ({
       ...prev,
       contactInfo: {
@@ -731,13 +591,6 @@ Which works for you?`);
     }, 800);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (userInput.trim()) {
-      sendUserMessage(userInput);
-    }
-  };
-
   if (!isChatbotOpen) {
     return (
       <button 
@@ -749,172 +602,39 @@ Which works for you?`);
     );
   }
 
-  // Render chat option buttons
-  const renderOptions = (options: ChatOption[]) => {
-    switch (chatState) {
-      case ChatState.ASK_INDUSTRY:
-        return (
-          <div className="grid grid-cols-1 gap-2 mt-2">
-            {options.map(option => (
-              <button
-                key={option.id}
-                onClick={() => handleOption(option)}
-                className={cn(
-                  "text-left px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100 transition-colors",
-                  selectedOptions.industry === option.value && "bg-blue-100 border-blue-300"
-                )}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        );
-        
-      case ChatState.ASK_GOALS:
-        return (
-          <div className="space-y-4 mt-2">
-            <div className="grid grid-cols-1 gap-2">
-              {options.filter(o => o.id !== 'other').map(option => (
-                <div 
-                  key={option.id}
-                  className="flex items-center space-x-2"
-                >
-                  <Checkbox 
-                    id={`goal-${option.id}`}
-                    checked={selectedOptions.goals.includes(option.value)}
-                    onCheckedChange={() => handleOption({...option, selected: !selectedOptions.goals.includes(option.value)})}
-                  />
-                  <label 
-                    htmlFor={`goal-${option.id}`}
-                    className="text-sm cursor-pointer"
-                  >
-                    {option.label}
-                  </label>
-                </div>
-              ))}
-              
-              {/* Custom goal option */}
-              <div className="flex items-start space-x-2 mt-2">
-                <Checkbox 
-                  id="goal-other"
-                  checked={!!customGoal}
-                  onCheckedChange={(checked) => {
-                    if (!checked) {
-                      setCustomGoal('');
-                    }
-                  }}
-                />
-                <div className="flex-1">
-                  <label 
-                    htmlFor="goal-other"
-                    className="text-sm cursor-pointer"
-                  >
-                    Something else
-                  </label>
-                  {(customGoal || selectedOptions.goals.includes('custom')) && (
-                    <Textarea 
-                      value={customGoal}
-                      onChange={(e) => setCustomGoal(e.target.value)}
-                      className="mt-1 text-sm"
-                      placeholder="Tell us what you need..."
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-end">
-              <Button 
-                size="sm"
-                onClick={submitGoals}
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        );
-        
-      case ChatState.ASK_FEATURES:
-        return (
-          <div className="space-y-4 mt-2">
-            <div className="grid grid-cols-1 gap-2">
-              {options.map(option => (
-                <div 
-                  key={option.id}
-                  className="flex items-center space-x-2"
-                >
-                  <Checkbox 
-                    id={`feature-${option.id}`}
-                    checked={selectedOptions.features.includes(option.id)}
-                    onCheckedChange={() => handleOption({...option, selected: !selectedOptions.features.includes(option.id)})}
-                  />
-                  <label 
-                    htmlFor={`feature-${option.id}`}
-                    className="text-sm cursor-pointer"
-                  >
-                    {option.label}
-                  </label>
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex justify-end">
-              <Button 
-                size="sm"
-                onClick={submitFeatures}
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        );
-        
-      case ChatState.ASK_CUSTOMIZATION:
-        const userAccountsOption = options.find(o => o.id === 'userAccounts');
-        const integrationOptions = options.filter(o => INTEGRATION_OPTIONS.some(i => i.id === o.id));
-        const designOptions = options.filter(o => DESIGN_STYLE_OPTIONS.some(s => s.id === o.id));
-        
-        return (
-          <div className="space-y-4 mt-2">
-            {/* User accounts option */}
-            {userAccountsOption && (
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id={`customization-${userAccountsOption.id}`}
-                  checked={selectedOptions.userAccounts}
-                  onCheckedChange={() => handleOption({...userAccountsOption, selected: !selectedOptions.userAccounts})}
-                />
-                <label 
-                  htmlFor={`customization-${userAccountsOption.id}`}
-                  className="text-sm cursor-pointer"
-                >
-                  {userAccountsOption.label}
-                </label>
-              </div>
-            )}
-            
-            {/* Integrations section */}
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Integrations:</p>
-              {integrationOptions.map(option => (
-                <div 
-                  key={option.id}
-                  className="flex items-center space-x-2 ml-4"
-                >
-                  <Checkbox 
-                    id={`integration-${option.id}`}
-                    checked={selectedOptions.integrations.includes(option.value)}
-                    onCheckedChange={() => handleOption({...option, selected: !selectedOptions.integrations.includes(option.value)})}
-                  />
-                  <label 
-                    htmlFor={`integration-${option.id}`}
-                    className="text-sm cursor-pointer"
-                  >
-                    {option.label}
-                  </label>
-                </div>
-              ))}
-            </div>
-            
-            {/* Design style section */}
-            <div className="
+  return (
+    <div className="fixed bottom-0 right-0 w-full sm:w-96 h-[80vh] bg-white rounded-t-lg shadow-lg flex flex-col z-50">
+      {/* Chat header */}
+      <div className="flex items-center justify-between p-4 border-b">
+        <h3 className="font-semibold">AIAppCrafter</h3>
+        <button 
+          onClick={closeChatbot}
+          className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+      
+      {/* Chat messages */}
+      <ChatContainer 
+        messages={messages}
+        isTyping={isTyping}
+        messagesEndRef={messagesEndRef}
+        chatState={chatState}
+        handleOption={handleOption}
+        selectedOptions={selectedOptions}
+        submitGoals={submitGoals}
+        submitFeatures={submitFeatures}
+        submitCustomizations={submitCustomizations}
+        customGoal={customGoal}
+        setCustomGoal={setCustomGoal}
+        onContactFormSubmit={onContactFormSubmit}
+      />
+      
+      {/* Input area */}
+      <ChatInput onSubmit={sendUserMessage} />
+    </div>
+  );
+};
+
+export default Chatbot;
