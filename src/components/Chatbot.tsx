@@ -31,6 +31,18 @@ const Chatbot = () => {
     onContactFormSubmit
   } = useChatbotState();
   
+  // Simplified first message for pricing page
+  useEffect(() => {
+    if (isPricingPage && isChatbotOpen && messages.length === 0) {
+      // This will override the initial message in useChatbotState with a simpler prompt
+      const timer = setTimeout(() => {
+        sendUserMessage("I need a custom app quote");
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isPricingPage, isChatbotOpen, messages.length]);
+  
   // Scroll to bottom when messages change
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -38,7 +50,7 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  // When on the pricing page, we'll let the Pricing component handle the display
+  // When on the pricing page, we'll render just the chat content without the modal wrapper
   if (isPricingPage) {
     return (
       <div className="w-full h-full rounded-lg flex flex-col">
@@ -66,7 +78,7 @@ const Chatbot = () => {
     );
   }
 
-  // For other pages, use the original behavior
+  // For other pages, use the original behavior with popup
   if (!isChatbotOpen) {
     return (
       <button 
