@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface ChatInputProps {
   onSubmit: (content: string) => void;

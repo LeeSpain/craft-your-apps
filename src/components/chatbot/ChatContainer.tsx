@@ -25,13 +25,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
   isTyping,
   messagesEndRef,
   chatState,
-  handleOption,
-  selectedOptions,
-  submitGoals,
-  submitFeatures,
-  submitCustomizations,
-  customGoal,
-  setCustomGoal,
   onContactFormSubmit
 }) => {
   return (
@@ -40,14 +33,14 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
         <ChatMessage
           key={msg.id}
           message={msg}
-          handleOption={handleOption}
+          handleOption={() => {}}
           chatState={chatState}
-          selectedOptions={selectedOptions}
-          submitGoals={submitGoals}
-          submitFeatures={submitFeatures}
-          submitCustomizations={submitCustomizations}
-          customGoal={customGoal}
-          setCustomGoal={setCustomGoal}
+          selectedOptions={{}}
+          submitGoals={() => {}}
+          submitFeatures={() => {}}
+          submitCustomizations={() => {}}
+          customGoal=""
+          setCustomGoal={() => {}}
         />
       ))}
       

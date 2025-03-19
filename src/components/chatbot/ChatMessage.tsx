@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Message } from './types';
-import { MessageOptions } from './MessageOptions';
 
 interface ChatMessageProps {
   message: Message;
@@ -16,15 +15,7 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ 
-  message, 
-  handleOption, 
-  chatState, 
-  selectedOptions,
-  submitGoals,
-  submitFeatures,
-  submitCustomizations,
-  customGoal,
-  setCustomGoal
+  message
 }) => {
   // Helper function to render HTML content safely
   const createMarkup = (html: string) => {
@@ -69,20 +60,6 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           <div dangerouslySetInnerHTML={createMarkup(message.content)} />
         ) : (
           <div dangerouslySetInnerHTML={createMarkup(formatContent(message.content))} className="chat-message-content" />
-        )}
-        
-        {message.options && (
-          <MessageOptions 
-            options={message.options}
-            chatState={chatState}
-            handleOption={handleOption}
-            selectedOptions={selectedOptions}
-            customGoal={customGoal}
-            setCustomGoal={setCustomGoal}
-            submitGoals={submitGoals}
-            submitFeatures={submitFeatures}
-            submitCustomizations={submitCustomizations}
-          />
         )}
       </div>
     </div>

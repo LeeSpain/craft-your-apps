@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
 import { CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
@@ -148,7 +147,7 @@ const Chatbot = () => {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now().toString(), content, sender: 'bot', options },
+        { id: Date.now().toString(), content, sender: 'bot' },
       ]);
       setIsTyping(false);
     }, typingDelay);
