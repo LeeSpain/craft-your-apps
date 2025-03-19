@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '@/context/AppContext';
 import { CUSTOM_FEATURES, BASE_PRICE } from '@/lib/constants';
@@ -165,6 +164,9 @@ const Chatbot = () => {
     handleUserInput(content);
   };
 
+  const [currentOptions, setCurrentOptions] = useState<ChatOption[]>([]);
+  const [allowMultipleSelection, setAllowMultipleSelection] = useState(false);
+
   const handleOption = (option: ChatOption) => {
     // Update the selected option in the message
     setMessages(prev => 
@@ -189,6 +191,7 @@ const Chatbot = () => {
         setSelectedOptions(prev => ({...prev, industry: option.value}));
         setUserSelections(prev => ({...prev, industry: option.value}));
         sendUserMessage(option.value);
+        setCurrentOptions([]); // Clear current options after selection
         break;
         
       case ChatState.ASK_GOALS:
@@ -535,6 +538,39 @@ Which works for you?`);
     }
   };
 
+  useEffect(() => {
+    switch (chatState) {
+      case ChatState.ASK_INDUSTRY:
+        setCurrentOptions(INDUSTRY_OPTIONS);
+        setAllowMultipleSelection(false);
+        break;
+      case ChatState.ASK_GOALS:
+        setCurrentOptions(GOALS_OPTIONS);
+        setAllowMultipleSelection(true);
+        break;
+      case ChatState.ASK_FEATURES:
+        setCurrentOptions(CUSTOM_FEATURES.map(feature => ({
+          id: feature.id,
+          label: `${feature.name}: ${formatPrice(feature.price)}`,
+          value: feature.name,
+        })));
+        setAllowMultipleSelection(true);
+        break;
+      case ChatState.ASK_CUSTOMIZATION:
+        const customizationOptions = [
+          { id: 'userAccounts', label: 'User accounts or profiles', value: 'User accounts' },
+          ...INTEGRATION_OPTIONS,
+          ...DESIGN_STYLE_OPTIONS,
+        ];
+        setCurrentOptions(customizationOptions);
+        setAllowMultipleSelection(true);
+        break;
+      default:
+        setCurrentOptions([]);
+        setAllowMultipleSelection(false);
+    }
+  }, [chatState, formatPrice]);
+
   const displayQuote = () => {
     const quoteMessage = generateQuoteText(userSelections, formatPrice);
     sendBotMessage(quoteMessage);
@@ -632,7 +668,11 @@ Which works for you?`);
       />
       
       {/* Input area */}
-      <ChatInput onSubmit={sendUserMessage} />
+      <ChatInput 
+        onSubmit={sendUserMessage} 
+        options={currentOptions} 
+        allowMultipleSelection={allowMultipleSelection}
+      />
     </div>
   );
 };
