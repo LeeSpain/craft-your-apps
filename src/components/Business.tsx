@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
 import { ChevronRight, Building, Building2, Buildings, LineChart, ShieldCheck, Zap } from 'lucide-react';
@@ -180,7 +179,7 @@ const Business = () => {
         <div className="order-2 md:order-1">
           <div className="inline-flex items-center p-2 bg-indigo-50 rounded-lg mb-6">
             <div className="p-2 bg-indigo-100 rounded">
-              <Buildings className="h-6 w-6 text-indigo-600" />
+              <Building2 className="h-6 w-6 text-indigo-600" />
             </div>
             <span className="ml-2 text-indigo-600 font-medium">Enterprise Solutions</span>
           </div>
