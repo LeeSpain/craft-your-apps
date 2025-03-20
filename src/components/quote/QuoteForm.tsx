@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -533,7 +534,6 @@ export const QuoteForm = () => {
                                     <FormLabel className="font-medium text-gray-800">
                                       {addon.name}
                                     </FormLabel>
-                                    {/* Removed price display */}
                                   </div>
                                   {addon.description && (
                                     <p className="text-sm text-gray-500">{addon.description.split(':')[0]}</p>
@@ -767,4 +767,63 @@ export const QuoteForm = () => {
                 </div>
                 
                 <div className="bg-gray-50 rounded-lg border border-gray-200 p-4">
-                  <h4 className="
+                  <h4 className="font-medium text-gray-800 mb-3">Payment Details:</h4>
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Initial Deposit (30%):</span>
+                      <span className="font-medium">{formatPrice(quoteDetails.deposit)}</span>
+                    </div>
+                    
+                    {watchPaymentPlan === "full" && (
+                      <div className="flex justify-between text-sm">
+                        <span>Remaining Balance:</span>
+                        <span className="font-medium">{formatPrice(quoteDetails.finalPrice! - quoteDetails.deposit)}</span>
+                      </div>
+                    )}
+                    
+                    {watchPaymentPlan === "monthly" && quoteDetails.monthlyPayment && (
+                      <div className="flex justify-between text-sm">
+                        <span>Monthly Payments (10 months):</span>
+                        <span className="font-medium">{formatPrice(quoteDetails.monthlyPayment)}/month</span>
+                      </div>
+                    )}
+                    
+                    {watchPaymentPlan === "milestone" && (
+                      <div className="flex justify-between text-sm">
+                        <span>Remaining Balance (In milestones):</span>
+                        <span className="font-medium">{formatPrice(quoteDetails.remaining)}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="bg-green-50 rounded-lg border border-green-100 p-4">
+                  <div className="flex items-start space-x-3">
+                    <Mail className="h-5 w-5 text-green-500 mt-0.5" />
+                    <div>
+                      <h4 className="font-medium text-green-800 mb-1">Quote Sent to Your Email</h4>
+                      <p className="text-sm text-green-700">
+                        We've sent a copy of this quote to {form.getValues("email")}. 
+                        One of our representatives will contact you soon to discuss next steps.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-center">
+                  <Button 
+                    variant="default" 
+                    className="w-full md:w-auto"
+                  >
+                    Accept Quote
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
