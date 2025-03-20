@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -491,7 +490,7 @@ export const QuoteForm = () => {
                   <h3 className="text-lg font-medium text-gray-900">Step 2: What features do you need?</h3>
                   
                   <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-4">
-                    <h4 className="font-medium text-blue-800 mb-2">The base app ({formatPrice(selectedIndustry.basePrice)}) includes:</h4>
+                    <h4 className="font-medium text-blue-800 mb-2">The base app includes:</h4>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {selectedIndustry.baseFeatures.map((feature, index) => (
                         <li key={index} className="flex items-center text-gray-700">
@@ -534,10 +533,10 @@ export const QuoteForm = () => {
                                     <FormLabel className="font-medium text-gray-800">
                                       {addon.name}
                                     </FormLabel>
-                                    <span className="text-blue-600 font-medium">{formatPrice(addon.price)}</span>
+                                    {/* Removed price display */}
                                   </div>
                                   {addon.description && (
-                                    <p className="text-sm text-gray-500">{addon.description}</p>
+                                    <p className="text-sm text-gray-500">{addon.description.split(':')[0]}</p>
                                   )}
                                 </div>
                               </div>
@@ -582,8 +581,8 @@ export const QuoteForm = () => {
                               )}
                             </div>
                             <div className="space-y-1 flex-1">
-                              <p className="font-medium text-gray-800">{plan.name}</p>
-                              <p className="text-sm text-gray-500">{plan.description}</p>
+                              <p className="font-medium text-gray-800">{plan.name.split(' (')[0]}</p>
+                              <p className="text-sm text-gray-500">{plan.description.split(' and ')[0]}</p>
                             </div>
                           </div>
                         ))}
@@ -768,43 +767,4 @@ export const QuoteForm = () => {
                 </div>
                 
                 <div className="bg-gray-50 rounded-lg border border-gray-200 p-4">
-                  <h4 className="font-medium text-gray-800 mb-2">Payment Plan:</h4>
-                  
-                  {watchPaymentPlan === "full" ? (
-                    <p className="text-gray-700">
-                      Full payment of {formatPrice(quoteDetails.finalPrice || quoteDetails.totalPrice)} (includes 5% discount)
-                    </p>
-                  ) : watchPaymentPlan === "monthly" ? (
-                    <div className="space-y-1">
-                      <p className="text-gray-700">30% deposit ({formatPrice(quoteDetails.deposit)}), then</p>
-                      <p className="text-gray-700">{formatPrice(quoteDetails.monthlyPayment as number)}/month for 10 months</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-1">
-                      <p className="text-gray-700">30% deposit ({formatPrice(quoteDetails.deposit)}), then</p>
-                      <p className="text-gray-700">Milestone payments at key project stages</p>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex justify-center">
-                  <Button className="w-full md:w-auto">
-                    <Mail className="mr-2 h-4 w-4" /> Accept Quote
-                  </Button>
-                </div>
-                
-                <div className="flex items-start text-sm text-gray-600 bg-yellow-50 p-4 rounded-lg border border-yellow-100">
-                  <Info className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <p>
-                    A copy of this quote has been sent to {form.getValues("email")}. If you have any questions, 
-                    please reply to the email or call us at +34 123 456 789.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+                  <h4 className="

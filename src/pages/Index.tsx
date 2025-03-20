@@ -5,7 +5,6 @@ import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Business from '@/components/Business';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
 
 const Index = () => {
   // Add smooth scrolling for anchor links
@@ -44,7 +43,6 @@ const Index = () => {
         <Business />
       </main>
       <Footer />
-      <Chatbot />
     </div>
   );
 };

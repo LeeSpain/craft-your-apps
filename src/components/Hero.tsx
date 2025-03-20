@@ -1,12 +1,11 @@
 
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
-import { getTranslation } from '@/lib/translations';
 import { ArrowDown, ChevronRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 const Hero = () => {
-  const { language, openChatbot } = useApp();
+  const { openChatbot } = useApp();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const Hero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center py-20 px-6 overflow-hidden bg-gradient-to-b from-blue-50 to-white"
+      className="relative min-h-screen flex items-center justify-center py-20 px-6 overflow-hidden bg-gradient-to-b from-indigo-50 via-blue-50 to-white"
     >
       {/* Background blur effects */}
       <div className="absolute top-20 -left-24 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
@@ -55,15 +54,15 @@ const Hero = () => {
       
       <div className="container mx-auto text-center z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-block mb-6 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
-            <p className="text-blue-600 text-sm font-medium">CUSTOM APP DEVELOPMENT</p>
+          <div className="inline-block mb-6 px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
+            <p className="text-purple-700 text-sm font-medium">CUSTOM APP DEVELOPMENT</p>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-300">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-300 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700">
             Transforming Business Ideas Into Powerful Applications
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-600 mb-10 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-500">
+          <p className="text-lg md:text-xl text-gray-700 mb-10 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-500">
             We build custom apps that drive growth, streamline operations, and create exceptional user experiences.
             Trusted by startups, SMBs, and enterprise organizations.
           </p>
@@ -71,7 +70,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-700">
             <Button 
               onClick={scrollToServices}
-              className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all"
+              className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
             >
               Our Services
             </Button>
@@ -79,40 +78,57 @@ const Hero = () => {
             <Button 
               onClick={openChatbot}
               variant="outline" 
-              className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-white border-blue-200 hover:bg-blue-50 hover:border-blue-300 shadow-md hover:shadow-lg transition-all"
+              className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-white/80 border-purple-200 hover:bg-purple-50 hover:border-purple-300 shadow-md hover:shadow-lg transition-all"
             >
               Get a Quote
               <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-8 mt-12 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-900">
-            <p className="text-gray-500 text-sm">Trusted by innovative companies</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              {/* Placeholder company logos */}
-              <div className="h-6 w-24 bg-gray-400 rounded-md"></div>
-              <div className="h-6 w-28 bg-gray-400 rounded-md"></div>
-              <div className="h-6 w-20 bg-gray-400 rounded-md"></div>
-              <div className="h-6 w-24 bg-gray-400 rounded-md"></div>
-              <div className="h-6 w-28 bg-gray-400 rounded-md"></div>
+          <div className="flex flex-wrap justify-center gap-8 mt-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-900">
+            <p className="text-gray-600 text-sm w-full mb-4">Trusted by innovative companies</p>
+            <div className="flex flex-wrap justify-center items-center gap-8">
+              {/* Company logos with gradient backgrounds */}
+              <div className="h-10 w-28 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center shadow-sm">
+                <div className="h-5 w-20 bg-blue-700 opacity-70 rounded-md"></div>
+              </div>
+              <div className="h-10 w-32 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg flex items-center justify-center shadow-sm">
+                <div className="h-5 w-24 bg-purple-700 opacity-70 rounded-md"></div>
+              </div>
+              <div className="h-10 w-24 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg flex items-center justify-center shadow-sm">
+                <div className="h-5 w-16 bg-teal-700 opacity-70 rounded-md"></div>
+              </div>
+              <div className="h-10 w-28 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg flex items-center justify-center shadow-sm">
+                <div className="h-5 w-20 bg-amber-700 opacity-70 rounded-md"></div>
+              </div>
+              <div className="h-10 w-32 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg flex items-center justify-center shadow-sm">
+                <div className="h-5 w-24 bg-red-700 opacity-70 rounded-md"></div>
+              </div>
             </div>
           </div>
         </div>
         
         {/* Scroll indicator */}
         <div 
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-pulse cursor-pointer" 
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" 
           onClick={scrollToServices}
         >
-          <ArrowDown className="h-10 w-10 text-blue-500 opacity-70" />
+          <ArrowDown className="h-10 w-10 text-purple-500 opacity-70" />
         </div>
       </div>
       
-      {/* Decorative element - Top right */}
-      <div className="absolute top-20 right-20 w-32 h-32 rounded-full border-4 border-blue-100 opacity-30"></div>
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-20 w-32 h-32 rounded-full border-4 border-purple-100 opacity-30"></div>
+      <div className="absolute bottom-20 left-20 w-20 h-20 rounded-xl border-4 border-blue-100 opacity-30"></div>
       
-      {/* Decorative element - Bottom left */}
-      <div className="absolute bottom-20 left-20 w-20 h-20 rounded-xl border-4 border-purple-100 opacity-30"></div>
+      {/* Image elements */}
+      <div className="absolute -right-16 top-32 w-64 h-64 rounded-3xl overflow-hidden rotate-6 shadow-xl opacity-70 hidden lg:block">
+        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=400')" }}></div>
+      </div>
+      
+      <div className="absolute -left-20 bottom-32 w-48 h-48 rounded-3xl overflow-hidden -rotate-6 shadow-xl opacity-70 hidden lg:block">
+        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=400')" }}></div>
+      </div>
     </section>
   );
 };
