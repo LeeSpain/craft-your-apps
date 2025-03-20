@@ -120,15 +120,6 @@ const Hero = () => {
       {/* Decorative elements */}
       <div className="absolute top-20 right-20 w-32 h-32 rounded-full border-4 border-purple-100 opacity-30"></div>
       <div className="absolute bottom-20 left-20 w-20 h-20 rounded-xl border-4 border-blue-100 opacity-30"></div>
-      
-      {/* Image elements */}
-      <div className="absolute -right-16 top-32 w-64 h-64 rounded-3xl overflow-hidden rotate-6 shadow-xl opacity-70 hidden lg:block">
-        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=400')" }}></div>
-      </div>
-      
-      <div className="absolute -left-20 bottom-32 w-48 h-48 rounded-3xl overflow-hidden -rotate-6 shadow-xl opacity-70 hidden lg:block">
-        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=400')" }}></div>
-      </div>
     </section>
   );
 };
