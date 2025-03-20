@@ -84,28 +84,6 @@ const Hero = () => {
               <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </div>
-          
-          <div className="flex flex-wrap justify-center gap-8 mt-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-900">
-            <p className="text-gray-600 text-sm w-full mb-4">Trusted by innovative companies</p>
-            <div className="flex flex-wrap justify-center items-center gap-8">
-              {/* Company logos with gradient backgrounds */}
-              <div className="h-10 w-28 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center shadow-sm">
-                <div className="h-5 w-20 bg-blue-700 opacity-70 rounded-md"></div>
-              </div>
-              <div className="h-10 w-32 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg flex items-center justify-center shadow-sm">
-                <div className="h-5 w-24 bg-purple-700 opacity-70 rounded-md"></div>
-              </div>
-              <div className="h-10 w-24 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg flex items-center justify-center shadow-sm">
-                <div className="h-5 w-16 bg-teal-700 opacity-70 rounded-md"></div>
-              </div>
-              <div className="h-10 w-28 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg flex items-center justify-center shadow-sm">
-                <div className="h-5 w-20 bg-amber-700 opacity-70 rounded-md"></div>
-              </div>
-              <div className="h-10 w-32 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg flex items-center justify-center shadow-sm">
-                <div className="h-5 w-24 bg-red-700 opacity-70 rounded-md"></div>
-              </div>
-            </div>
-          </div>
         </div>
         
         {/* Scroll indicator */}

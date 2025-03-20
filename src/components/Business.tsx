@@ -109,7 +109,7 @@ const Business = () => {
         </div>
         <div className="order-1 md:order-2 bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1200" 
+            src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1200" 
             alt="Small Business Solutions" 
             className="w-full h-auto rounded-xl shadow-lg object-cover" 
           />
@@ -126,7 +126,7 @@ const Business = () => {
       >
         <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200" 
+            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200" 
             alt="Medium Business Solutions" 
             className="w-full h-auto rounded-xl shadow-lg object-cover" 
           />
@@ -215,7 +215,7 @@ const Business = () => {
         </div>
         <div className="order-1 md:order-2 bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" 
+            src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=1200" 
             alt="Enterprise Solutions" 
             className="w-full h-auto rounded-xl shadow-lg object-cover" 
           />
