@@ -12,6 +12,9 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
 import PortfolioPage from "./pages/Portfolio";
+import Features from "./pages/Features";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import Timeline from "./pages/dashboard/Timeline";
@@ -37,6 +40,9 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/contact" element={<Contact />} />
               
               {/* Dashboard Routes */}
               <Route path="/dashboard" element={<DashboardLayout />}>

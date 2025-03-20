@@ -16,11 +16,11 @@ const Header = () => {
 
   const menuItems = [
     { label: 'Home', href: '/' },
-    { label: 'Features', href: '/#features' },
+    { label: 'Features', href: '/features' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Portfolio', href: '/portfolio' },
-    { label: 'Blog', href: '/#blog' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -36,7 +36,7 @@ const Header = () => {
           {menuItems.map((item) => (
             <Link
               key={item.label}
-              to={item.href.startsWith('/') ? item.href : item.href}
+              to={item.href}
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             >
               {item.label}
@@ -90,7 +90,7 @@ const Header = () => {
               {menuItems.map((item) => (
                 <Link
                   key={item.label}
-                  to={item.href.startsWith('/') ? item.href : item.href}
+                  to={item.href}
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
