@@ -5,6 +5,7 @@ import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Business from '@/components/Business';
 import Footer from '@/components/Footer';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const Index = () => {
   // Add smooth scrolling for anchor links
@@ -34,6 +35,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ScrollToTop />
       <Header />
       <main>
         <Hero />
