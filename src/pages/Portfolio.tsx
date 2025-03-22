@@ -9,7 +9,6 @@ import TestimonialsSection from '@/components/portfolio/TestimonialsSection';
 import CTASection from '@/components/portfolio/CTASection';
 import OffTheShelfApps from '@/components/portfolio/OffTheShelfApps';
 import BespokeApps from '@/components/portfolio/BespokeApps';
-import AISection from '@/components/portfolio/AISection';
 import { ShoppingCart, Wrench } from 'lucide-react';
 
 const PortfolioPage = () => {
@@ -20,9 +19,6 @@ const PortfolioPage = () => {
       <main className="flex-1">
         {/* Hero Section */}
         <HeroSection />
-        
-        {/* AI Section */}
-        <AISection />
         
         {/* Off-the-Shelf Apps Section */}
         <PortfolioSection 

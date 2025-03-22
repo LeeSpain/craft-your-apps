@@ -6,6 +6,7 @@ import Services from '@/components/Services';
 import Business from '@/components/Business';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
+import AISection from '@/components/portfolio/AISection';
 
 const Index = () => {
   // Add smooth scrolling for anchor links
@@ -39,6 +40,7 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <AISection />
         <div id="services">
           <Services />
         </div>
