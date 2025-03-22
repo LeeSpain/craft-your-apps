@@ -5,12 +5,14 @@ import BusinessSection from './business/BusinessSection';
 import SmallBusinessSection from './business/SmallBusinessSection';
 import MediumBusinessSection from './business/MediumBusinessSection';
 import EnterpriseSection from './business/EnterpriseSection';
+import { useNavigate } from 'react-router-dom';
 
 const Business = () => {
   const { language } = useApp();
+  const navigate = useNavigate();
 
   const handleContact = () => {
-    window.location.href = '/contact';
+    navigate('/contact');
   };
 
   return (

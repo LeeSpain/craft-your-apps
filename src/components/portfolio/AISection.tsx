@@ -106,7 +106,7 @@ const AISection = () => {
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-purple-100 rounded-full opacity-70"></div>
               <div className="relative bg-white p-6 rounded-2xl shadow-xl">
                 <img 
-                  src="/public/lovable-uploads/7cede170-9628-47fa-b6b2-c83b32359d30.png"
+                  src="/lovable-uploads/7cede170-9628-47fa-b6b2-c83b32359d30.png"
                   alt="AI Dashboard" 
                   className="w-full h-auto rounded-lg object-cover"
                 />
