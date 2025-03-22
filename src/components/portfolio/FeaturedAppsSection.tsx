@@ -6,7 +6,7 @@ import AppCard from '@/components/AppCard';
 
 const FeaturedAppsSection = () => {
   const { openChatbot } = useApp();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Default to visible for faster initial render
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,15 +38,15 @@ const FeaturedAppsSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="py-16 px-6 bg-gray-50"
+      className="py-10 px-6 bg-gray-50"
     >
       <div className="container mx-auto">
         <div 
-          className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          className={`text-center max-w-2xl mx-auto mb-8 transition-all duration-300 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           }`}
         >
-          <h2 className="text-3xl font-bold mb-6">
+          <h2 className="text-3xl font-bold mb-4">
             Featured Applications
           </h2>
           <p className="text-gray-600">

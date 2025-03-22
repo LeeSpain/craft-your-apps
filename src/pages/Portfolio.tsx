@@ -12,6 +12,7 @@ import CTASection from '@/components/portfolio/CTASection';
 import OffTheShelfApps from '@/components/portfolio/OffTheShelfApps';
 import BespokeApps from '@/components/portfolio/BespokeApps';
 import StartupApps from '@/components/portfolio/StartupApps';
+import { QuoteForm } from '@/components/quote/QuoteForm';
 import { ShoppingCart, Wrench, Rocket } from 'lucide-react';
 
 const PortfolioPage = () => {
@@ -55,6 +56,20 @@ const PortfolioPage = () => {
         >
           <StartupApps />
         </PortfolioSection>
+        
+        {/* Quote Builder Section */}
+        <section id="quote-builder" className="py-12 px-6 bg-gray-50">
+          <div className="container mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-8">
+              <h2 className="text-3xl font-bold mb-4">AI Quote Builder</h2>
+              <p className="text-gray-600">
+                Get an instant quote for your project using our interactive AI-powered quote builder. 
+                Customize features, payments, and more.
+              </p>
+            </div>
+            <QuoteForm />
+          </div>
+        </section>
         
         {/* Featured Apps Grid Section */}
         <FeaturedAppsSection />
