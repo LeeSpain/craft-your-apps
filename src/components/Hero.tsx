@@ -70,10 +70,12 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-400">
             <Button 
-              onClick={scrollToServices}
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
+              asChild
             >
-              Our Services
+              <Link to="/pricing">
+                Get Started
+              </Link>
             </Button>
             
             <Button 
@@ -82,7 +84,7 @@ const Hero = () => {
               asChild
             >
               <Link to="/pricing">
-                Get a Quote
+                Learn More
                 <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>

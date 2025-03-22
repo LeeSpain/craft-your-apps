@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, ChevronRight, Building, Building2 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { Link } from 'react-router-dom';
 
 interface PricingTier {
   id: string;
@@ -185,9 +186,11 @@ const PricingTiers = () => {
             <CardFooter>
               <Button 
                 className={`w-full ${tier.buttonColor}`} 
-                onClick={() => handleGetStarted(tier.name)}
+                asChild
               >
-                Get Started
+                <Link to="/contact">
+                  Contact Us
+                </Link>
               </Button>
             </CardFooter>
           </Card>
@@ -198,10 +201,12 @@ const PricingTiers = () => {
         <p className="text-gray-600 mb-4">Need a more customized solution?</p>
         <Button 
           variant="outline" 
-          onClick={() => navigate('/contact')}
           className="border-gray-300 text-gray-700"
+          asChild
         >
-          Contact Us for a Custom Quote
+          <Link to="/contact">
+            Discuss Your Project
+          </Link>
         </Button>
       </div>
     </div>
