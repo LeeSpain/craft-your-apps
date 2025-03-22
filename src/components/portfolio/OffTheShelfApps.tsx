@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { Link } from 'react-router-dom';
 
 const OffTheShelfApps = () => {
   const { openChatbot } = useApp();
@@ -75,13 +76,12 @@ const OffTheShelfApps = () => {
         </Card>
       </div>
       
-      <div className="flex justify-center gap-4">
-        <Button size="lg" className="bg-blue-600">
-          <ShoppingCart className="mr-2 h-5 w-5" />
-          Browse All Apps
-        </Button>
-        <Button size="lg" variant="outline" onClick={openChatbot}>
-          Get Started
+      <div className="flex justify-center">
+        <Button size="lg" className="bg-blue-600" asChild>
+          <Link to="/pricing">
+            <ShoppingCart className="mr-2 h-5 w-5" />
+            Browse All Apps
+          </Link>
         </Button>
       </div>
     </>

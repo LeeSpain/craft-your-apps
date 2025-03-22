@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Wrench } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
+import { Link } from 'react-router-dom';
 
 const BespokeApps = () => {
   const { openChatbot } = useApp();
@@ -69,13 +70,12 @@ const BespokeApps = () => {
         </Card>
       </div>
       
-      <div className="flex justify-center gap-4">
-        <Button size="lg" className="bg-indigo-600" onClick={openChatbot}>
-          <Wrench className="mr-2 h-5 w-5" />
-          Build Your Custom Quote
-        </Button>
-        <Button size="lg" variant="outline" onClick={openChatbot}>
-          Discuss Your Project
+      <div className="flex justify-center">
+        <Button size="lg" className="bg-indigo-600" asChild>
+          <Link to="/contact">
+            <Wrench className="mr-2 h-5 w-5" />
+            Build Your Custom Quote
+          </Link>
         </Button>
       </div>
     </>
