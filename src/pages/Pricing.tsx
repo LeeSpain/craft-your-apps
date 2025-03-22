@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,13 +8,27 @@ import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { QuoteForm } from '@/components/quote/QuoteForm';
-import { Check, Info } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { Info } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import PricingTiers from '@/components/business/PricingTiers';
+import BusinessHeader from '@/components/business/BusinessHeader';
 
 const Pricing = () => {
   const { formatPrice } = useApp();
   const { toast } = useToast();
+  const location = useLocation();
   const [paymentType, setPaymentType] = useState<'monthly' | 'milestone' | 'hybrid'>('monthly');
+  
+  // Get the selected tier from location state if available
+  useEffect(() => {
+    if (location.state && location.state.selectedTier) {
+      // You could use this to preselect certain options in the QuoteForm
+      toast({
+        title: `${location.state.selectedTier} Selected`,
+        description: "We've pre-selected this tier for your quote.",
+      });
+    }
+  }, [location.state, toast]);
   
   // Standard industry packages based on the provided information
   const industryPackages = [
@@ -98,19 +113,27 @@ const Pricing = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">Get Your Personalized Quote</h1>
+            <h1 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Use our interactive quote builder to get a custom quote based on your specific needs,
-              or browse our standard industry packages below.
+              Choose the perfect plan for your business needs or get a custom quote based on your specific requirements.
             </p>
           </div>
         </section>
         
         {/* Main content area */}
         <div className="container mx-auto px-4 py-12">
-          {/* Quote Builder - Now at the top for prominence */}
+          {/* Pricing Tiers - Now at the top */}
+          <div className="mb-16">
+            <BusinessHeader 
+              title="App Solutions for Every Size Business"
+              subtitle="From startups to enterprises, we offer packages tailored to your specific needs and growth stage."
+            />
+            <PricingTiers />
+          </div>
+          
+          {/* Quote Builder */}
           <div className="mb-16 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4 text-center">Build Your Custom Quote</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">Need Something Custom?</h2>
             <p className="text-gray-600 mb-6 text-center">
               Complete this simple form to get an instant, personalized quote for your app.
             </p>
