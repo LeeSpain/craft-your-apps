@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useApp } from '@/context/AppContext';
 import { ArrowDown, ChevronRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const { openChatbot } = useApp();
@@ -42,7 +43,7 @@ const Hero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-16 md:py-24 px-6 overflow-hidden bg-gradient-to-b from-indigo-50 via-blue-50 to-white" // Set consistent height via padding
+      className="relative py-16 md:py-24 px-6 overflow-hidden bg-gradient-to-b from-indigo-50 via-blue-50 to-white"
     >
       {/* Background blur effects */}
       <div className="absolute top-20 -left-24 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
@@ -54,20 +55,20 @@ const Hero = () => {
       
       <div className="container mx-auto text-center z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-block mb-4 px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-100"> {/* Reduced delay and margin */}
+          <div className="inline-block mb-4 px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-100">
             <p className="text-purple-700 text-sm font-medium">CUSTOM APP DEVELOPMENT</p>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-200 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700"> {/* Reduced delay and margin */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-200 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700">
             Transforming Business Ideas Into Powerful Applications
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-700 mb-6 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-300"> {/* Reduced delay and margin */}
+          <p className="text-lg md:text-xl text-gray-700 mb-6 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-300">
             We build custom apps that drive growth, streamline operations, and create exceptional user experiences.
             Trusted by startups, SMBs, and enterprise organizations.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-400"> {/* Reduced delay */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-400">
             <Button 
               onClick={scrollToServices}
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
@@ -76,19 +77,21 @@ const Hero = () => {
             </Button>
             
             <Button 
-              onClick={openChatbot}
               variant="outline" 
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-white/80 border-purple-200 hover:bg-purple-50 hover:border-purple-300 shadow-md hover:shadow-lg transition-all"
+              asChild
             >
-              Get a Quote
-              <ChevronRight className="ml-1 h-4 w-4" />
+              <Link to="/pricing">
+                Get a Quote
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>
         
         {/* Scroll indicator */}
         <div 
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" // Moved up
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
           onClick={scrollToServices}
         >
           <ArrowDown className="h-10 w-10 text-purple-500 opacity-70" />

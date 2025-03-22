@@ -31,9 +31,24 @@ const Features = () => {
           <div className="container mx-auto">
             <Tabs defaultValue="design" className="w-full">
               <TabsList className="w-full md:w-auto grid grid-cols-3 md:inline-flex mb-8">
-                <TabsTrigger value="design">Design</TabsTrigger>
-                <TabsTrigger value="development">Development</TabsTrigger>
-                <TabsTrigger value="security">Security</TabsTrigger>
+                <TabsTrigger 
+                  value="design"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white"
+                >
+                  Design
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="development"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white"
+                >
+                  Development
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="security"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-orange-500 data-[state=active]:text-white"
+                >
+                  Security
+                </TabsTrigger>
               </TabsList>
               
               <TabsContent value="design" className="space-y-12">

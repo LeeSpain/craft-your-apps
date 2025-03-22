@@ -87,7 +87,7 @@ export const QuoteForm = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden QuoteForm">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white">
         <h2 className="text-2xl font-bold mb-2">AIAppCrafter Quote Builder</h2>
