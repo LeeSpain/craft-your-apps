@@ -22,41 +22,16 @@ const OffTheShelfApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
-                alt="Hairdresser App" 
+                src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=800" 
+                alt="E-commerce Stores" 
                 loading="lazy"
-                onLoad={() => handleImageLoad('salon')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['salon'] ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => handleImageLoad('ecommerce')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['ecommerce'] ? 'opacity-100' : 'opacity-0'}`}
               />
             </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Salon & Spa Booking</h3>
+            <h3 className="text-xl font-bold mb-2">E-commerce Stores</h3>
             <p className="text-gray-600 mb-4">
-              Online booking, customer profiles, automated reminders, and payment integration for hairdressers and spas.
-            </p>
-            <div className="flex justify-between">
-              <span className="text-blue-600 font-semibold">From $7,000</span>
-              <Button size="sm" className="bg-blue-600">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                View Demo
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-white shadow-md hover:shadow-lg transition-all">
-          <CardContent className="p-6">
-            <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
-                alt="B&B App" 
-                loading="lazy"
-                onLoad={() => handleImageLoad('accommodation')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['accommodation'] ? 'opacity-100' : 'opacity-0'}`}
-              />
-            </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Accommodation Manager</h3>
-            <p className="text-gray-600 mb-4">
-              Room booking, guest management, and payment processing for B&Bs and small hotels.
+              Product catalogs, shopping carts, payment gateways, order tracking, AR fitting. Branding, logo uploads, product details, pricing, color schemes.
             </p>
             <div className="flex justify-between">
               <span className="text-blue-600 font-semibold">From $8,000</span>
@@ -72,19 +47,44 @@ const OffTheShelfApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                alt="Restaurant App" 
+                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800" 
+                alt="Food and Beverage" 
                 loading="lazy"
-                onLoad={() => handleImageLoad('restaurant')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['restaurant'] ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => handleImageLoad('food')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['food'] ? 'opacity-100' : 'opacity-0'}`}
               />
             </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Restaurant Suite</h3>
+            <h3 className="text-xl font-bold mb-2">Food and Beverage</h3>
             <p className="text-gray-600 mb-4">
-              Table reservations, digital menus, order management, and customer loyalty for restaurants.
+              Ordering, menu management, payments, delivery tracking, loyalty programs. Restaurant branding, menu items, delivery zones, promotional offers.
             </p>
             <div className="flex justify-between">
-              <span className="text-blue-600 font-semibold">From $8,500</span>
+              <span className="text-blue-600 font-semibold">From $7,500</span>
+              <Button size="sm" className="bg-blue-600">
+                <ExternalLink className="mr-2 h-4 w-4" />
+                View Demo
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-white shadow-md hover:shadow-lg transition-all">
+          <CardContent className="p-6">
+            <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1508873535684-277a3cbcc4e8?q=80&w=800" 
+                alt="Personal Services" 
+                loading="lazy"
+                onLoad={() => handleImageLoad('services')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['services'] ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </AspectRatio>
+            <h3 className="text-xl font-bold mb-2">Personal Services</h3>
+            <p className="text-gray-600 mb-4">
+              Scheduling, client management, bookings, video call integration, payments. Service offerings, availability, branding, client communication.
+            </p>
+            <div className="flex justify-between">
+              <span className="text-blue-600 font-semibold">From $6,500</span>
               <Button size="sm" className="bg-blue-600">
                 <ExternalLink className="mr-2 h-4 w-4" />
                 View Demo

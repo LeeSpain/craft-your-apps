@@ -20,7 +20,7 @@ const HeroSection = () => {
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
               <AspectRatio ratio={16/9} className="overflow-hidden rounded-lg">
                 <img 
-                  src="/lovable-uploads/90f17628-e973-47b8-9bbc-4435444a20f6.png"
+                  src="/lovable-uploads/f0f14872-32ce-4b9a-b082-9988b20792de.png"
                   alt="Business Solutions" 
                   className="w-full h-full object-cover"
                   loading="lazy"

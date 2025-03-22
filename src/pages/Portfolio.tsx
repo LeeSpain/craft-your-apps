@@ -10,8 +10,7 @@ import TestimonialsSection from '@/components/portfolio/TestimonialsSection';
 import CTASection from '@/components/portfolio/CTASection';
 import OffTheShelfApps from '@/components/portfolio/OffTheShelfApps';
 import BespokeApps from '@/components/portfolio/BespokeApps';
-import StartupApps from '@/components/portfolio/StartupApps';
-import { ShoppingCart, Wrench, Rocket } from 'lucide-react';
+import { ShoppingCart, Wrench } from 'lucide-react';
 
 const PortfolioPage = () => {
   return (
@@ -42,17 +41,6 @@ const PortfolioPage = () => {
           bgColor="bg-gray-50"
         >
           <BespokeApps />
-        </PortfolioSection>
-        
-        {/* Startup Apps Section */}
-        <PortfolioSection 
-          id="startup"
-          title="Startup Apps (Investment-Ready)"
-          subtitle="MVP applications designed to attract investors and demonstrate growth potential"
-          icon={<Rocket className="h-8 w-8 text-purple-600" />}
-          bgColor="bg-white"
-        >
-          <StartupApps />
         </PortfolioSection>
         
         {/* Featured Apps Grid Section */}

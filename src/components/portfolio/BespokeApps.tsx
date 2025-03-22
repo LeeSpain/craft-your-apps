@@ -2,18 +2,29 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Wrench } from 'lucide-react';
+import { Wrench, ExternalLink } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const BespokeApps = () => {
-  const { openChatbot } = useApp();
   const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
   
   const handleImageLoad = (id: string) => {
     setImagesLoaded(prev => ({...prev, [id]: true}));
   };
+  
+  const AppEmbed = ({ url, title }: { url: string, title: string }) => (
+    <div className="w-full h-full max-h-[80vh] overflow-hidden rounded-lg border border-gray-200">
+      <iframe 
+        src={url} 
+        title={title}
+        className="w-full h-[80vh]"
+        style={{ border: 'none' }}
+      />
+    </div>
+  );
   
   return (
     <>
@@ -22,21 +33,29 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1518770660439-4636190af475" 
-                alt="Custom CRM" 
+                src="https://images.unsplash.com/photo-1434682881908-b43d0467b798?q=80&w=800" 
+                alt="Move Sync" 
                 loading="lazy"
-                onLoad={() => handleImageLoad('crm')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['crm'] ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => handleImageLoad('movesync')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['movesync'] ? 'opacity-100' : 'opacity-0'}`}
               />
             </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Custom CRM Systems</h3>
+            <h3 className="text-xl font-bold mb-2">Move Sync</h3>
             <p className="text-gray-600 mb-4">
-              Integrated inventory management, customer loyalty programs, and advanced analytics tailored to your business.
+              Integrated fitness tracking, class bookings, and community features designed for fitness studios and users.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-indigo-600" onClick={openChatbot}>
-                Request Quote
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-full bg-indigo-600">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Explore App
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-6xl max-h-screen p-0 bg-white">
+                  <AppEmbed url="https://www.move-sync.com/" title="Move Sync" />
+                </DialogContent>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
@@ -45,21 +64,29 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
-                alt="Workflow Automation" 
+                src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=800" 
+                alt="PawPal Booking Buddy" 
                 loading="lazy"
-                onLoad={() => handleImageLoad('workflow')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['workflow'] ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => handleImageLoad('pawpal')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['pawpal'] ? 'opacity-100' : 'opacity-0'}`}
               />
             </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Workflow Automation</h3>
+            <h3 className="text-xl font-bold mb-2">PawPal Booking Buddy</h3>
             <p className="text-gray-600 mb-4">
-              Real-time tracking, route optimization, and process management customized for your operations.
+              Pet service booking, scheduling, and management platform for grooming and pet care businesses.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-indigo-600" onClick={openChatbot}>
-                Request Quote
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-full bg-indigo-600">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Explore App
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-6xl max-h-screen p-0 bg-white">
+                  <AppEmbed url="https://pawpal-booking-buddy.vercel.app/" title="PawPal Booking Buddy" />
+                </DialogContent>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
@@ -68,21 +95,29 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
-                alt="Custom Booking System" 
+                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800" 
+                alt="AIS Pain Homes" 
                 loading="lazy"
-                onLoad={() => handleImageLoad('enterprise')}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['enterprise'] ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => handleImageLoad('aispain')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['aispain'] ? 'opacity-100' : 'opacity-0'}`}
               />
             </AspectRatio>
-            <h3 className="text-xl font-bold mb-2">Enterprise Integration</h3>
+            <h3 className="text-xl font-bold mb-2">AIS Pain Homes</h3>
             <p className="text-gray-600 mb-4">
-              Seamless integration with existing systems, data migration, and custom API development.
+              Real estate listing, property management, and client portal for the Spanish real estate market.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-indigo-600" onClick={openChatbot}>
-                Request Quote
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-full bg-indigo-600">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Explore App
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-6xl max-h-screen p-0 bg-white">
+                  <AppEmbed url="https://aispainhomes.vercel.app/" title="AIS Pain Homes" />
+                </DialogContent>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
