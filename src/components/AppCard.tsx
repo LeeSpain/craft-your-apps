@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface AppCardProps {
   app: AppData;
@@ -15,6 +16,7 @@ interface AppCardProps {
 const AppCard = ({ app, onBuyNow }: AppCardProps) => {
   const { language, formatPrice } = useApp();
   const [isVisible, setIsVisible] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -38,21 +40,35 @@ const AppCard = ({ app, onBuyNow }: AppCardProps) => {
     };
   }, []);
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <div 
       ref={cardRef}
       className={cn(
-        "flex flex-col bg-white rounded-2xl shadow-lg transition-all duration-700 hover-up overflow-hidden",
+        "flex flex-col bg-white rounded-2xl shadow-lg transition-all duration-500 hover-up overflow-hidden",
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       )}
     >
       <div className="relative aspect-video bg-gray-100 overflow-hidden">
-        <img 
-          src={app.image} 
-          alt={app.name} 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        {isVisible && (
+          <AspectRatio ratio={16/9}>
+            <img 
+              src={app.image} 
+              alt={app.name}
+              loading="lazy" 
+              onLoad={handleImageLoad}
+              className={cn(
+                "w-full h-full object-cover transition-all duration-300",
+                imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95",
+                "hover:scale-105 transition-transform duration-500"
+              )}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          </AspectRatio>
+        )}
       </div>
       
       <div className="flex-1 p-6">

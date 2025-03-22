@@ -1,24 +1,34 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ShoppingCart } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { Link } from 'react-router-dom';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const OffTheShelfApps = () => {
   const { openChatbot } = useApp();
+  const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
+  
+  const handleImageLoad = (id: string) => {
+    setImagesLoaded(prev => ({...prev, [id]: true}));
+  };
   
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
         <Card className="bg-white shadow-md hover:shadow-lg transition-all">
           <CardContent className="p-6">
-            <img 
-              src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
-              alt="Hairdresser App" 
-              className="w-full h-48 object-cover rounded-md mb-4"
-            />
+            <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
+                alt="Hairdresser App" 
+                loading="lazy"
+                onLoad={() => handleImageLoad('salon')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['salon'] ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </AspectRatio>
             <h3 className="text-xl font-bold mb-2">Salon & Spa Booking</h3>
             <p className="text-gray-600 mb-4">
               Online booking, customer profiles, automated reminders, and payment integration for hairdressers and spas.
@@ -35,11 +45,15 @@ const OffTheShelfApps = () => {
         
         <Card className="bg-white shadow-md hover:shadow-lg transition-all">
           <CardContent className="p-6">
-            <img 
-              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
-              alt="B&B App" 
-              className="w-full h-48 object-cover rounded-md mb-4"
-            />
+            <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
+                alt="B&B App" 
+                loading="lazy"
+                onLoad={() => handleImageLoad('accommodation')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['accommodation'] ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </AspectRatio>
             <h3 className="text-xl font-bold mb-2">Accommodation Manager</h3>
             <p className="text-gray-600 mb-4">
               Room booking, guest management, and payment processing for B&Bs and small hotels.
@@ -56,11 +70,15 @@ const OffTheShelfApps = () => {
         
         <Card className="bg-white shadow-md hover:shadow-lg transition-all">
           <CardContent className="p-6">
-            <img 
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-              alt="Restaurant App" 
-              className="w-full h-48 object-cover rounded-md mb-4"
-            />
+            <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
+                alt="Restaurant App" 
+                loading="lazy"
+                onLoad={() => handleImageLoad('restaurant')}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['restaurant'] ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </AspectRatio>
             <h3 className="text-xl font-bold mb-2">Restaurant Suite</h3>
             <p className="text-gray-600 mb-4">
               Table reservations, digital menus, order management, and customer loyalty for restaurants.

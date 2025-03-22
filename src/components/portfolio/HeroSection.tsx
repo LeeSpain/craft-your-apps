@@ -1,9 +1,11 @@
 
 import React from 'react';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import SectionContainer from '@/components/shared/SectionContainer';
 
 const HeroSection = () => {
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-12 px-6 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Solutions for Every Business

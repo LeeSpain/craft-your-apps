@@ -6,7 +6,7 @@ import AppCard from '@/components/AppCard';
 
 const FeaturedAppsSection = () => {
   const { openChatbot } = useApp();
-  const [isVisible, setIsVisible] = useState(true); // Default to visible for faster initial load
+  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const FeaturedAppsSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.05, rootMargin: "50px" } // Reduced threshold and added rootMargin for earlier triggering
+      { threshold: 0.05, rootMargin: "100px" } // Increased rootMargin for earlier loading
     );
     
     if (sectionRef.current) {
@@ -38,15 +38,15 @@ const FeaturedAppsSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="py-8 px-6 bg-gray-50" // Reduced vertical padding
+      className="py-8 px-6 bg-gray-50"
     >
       <div className="container mx-auto">
         <div 
           className={`text-center max-w-2xl mx-auto mb-6 transition-all duration-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          }`} // Reduced margin and animation duration
+          }`}
         >
-          <h2 className="text-3xl font-bold mb-3"> {/* Reduced margin */}
+          <h2 className="text-3xl font-bold mb-3">
             Featured Applications
           </h2>
           <p className="text-gray-600">
@@ -54,15 +54,17 @@ const FeaturedAppsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Reduced gap */}
-          {APPS.slice(0, 3).map((app) => ( // Only show first 3 apps for performance
-            <AppCard 
-              key={app.id}
-              app={app}
-              onBuyNow={handleBuyNow}
-            />
-          ))}
-        </div>
+        {isVisible && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {APPS.slice(0, 3).map((app) => (
+              <AppCard 
+                key={app.id}
+                app={app}
+                onBuyNow={handleBuyNow}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
