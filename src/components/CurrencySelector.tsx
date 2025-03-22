@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { DollarSign, Pound, Euro, Currency } from 'lucide-react';
+import { DollarSign, PoundSterling, Euro, Currency } from 'lucide-react';
 
 const CurrencySelector = () => {
   const { currency, setCurrency } = useApp();
@@ -18,7 +18,7 @@ const CurrencySelector = () => {
       case 'USD':
         return <DollarSign className="h-4 w-4 text-white" />;
       case 'GBP':
-        return <Pound className="h-4 w-4 text-white" />;
+        return <PoundSterling className="h-4 w-4 text-white" />;
       case 'EUR':
         return <Euro className="h-4 w-4 text-white" />;
       case 'AUD':
@@ -59,7 +59,7 @@ const CurrencySelector = () => {
         </SelectItem>
         <SelectItem value="GBP" className="flex items-center">
           <div className="flex items-center">
-            <Pound className="h-4 w-4 mr-1 text-blue-600" /> GBP (£)
+            <PoundSterling className="h-4 w-4 mr-1 text-blue-600" /> GBP (£)
           </div>
         </SelectItem>
         <SelectItem value="EUR" className="flex items-center">
