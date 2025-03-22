@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { QuoteForm } from '@/components/quote/QuoteForm';
-import { Info } from "lucide-react";
+import { Info, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import PricingTiers from '@/components/business/PricingTiers';
 import BusinessHeader from '@/components/business/BusinessHeader';
