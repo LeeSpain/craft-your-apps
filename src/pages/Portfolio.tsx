@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/portfolio/HeroSection';
 import PortfolioSection from '@/components/portfolio/PortfolioSection';
-import FeaturedAppsSection from '@/components/portfolio/FeaturedAppsSection';
 import ProcessSection from '@/components/portfolio/ProcessSection';
 import TestimonialsSection from '@/components/portfolio/TestimonialsSection';
 import CTASection from '@/components/portfolio/CTASection';
@@ -42,9 +41,6 @@ const PortfolioPage = () => {
         >
           <BespokeApps />
         </PortfolioSection>
-        
-        {/* Featured Apps Grid Section */}
-        <FeaturedAppsSection />
         
         {/* Process Section */}
         <ProcessSection />
