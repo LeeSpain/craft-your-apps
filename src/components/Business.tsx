@@ -45,7 +45,7 @@ const Business = () => {
   }, []);
 
   const handleContact = () => {
-    openChatbot();
+    window.location.href = '/contact';
   };
 
   return (
@@ -109,9 +109,10 @@ const Business = () => {
         </div>
         <div className="order-1 md:order-2 bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1200" 
+            src="public/lovable-uploads/90f17628-e973-47b8-9bbc-4435444a20f6.png" 
             alt="Small Business Solutions" 
             className="w-full h-auto rounded-xl shadow-lg object-cover" 
+            loading="lazy"
           />
         </div>
       </div>
@@ -126,9 +127,10 @@ const Business = () => {
       >
         <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200" 
+            src="public/lovable-uploads/16951d9d-ae4e-4bd1-97d1-7bb1b16c0cfc.png" 
             alt="Medium Business Solutions" 
-            className="w-full h-auto rounded-xl shadow-lg object-cover" 
+            className="w-full h-auto rounded-xl shadow-lg object-cover"
+            loading="lazy" 
           />
         </div>
         <div>
@@ -215,9 +217,10 @@ const Business = () => {
         </div>
         <div className="order-1 md:order-2 bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=1200" 
+            src="public/lovable-uploads/cd8e3ceb-647c-4fde-99d2-dfe1dce01580.png" 
             alt="Enterprise Solutions" 
-            className="w-full h-auto rounded-xl shadow-lg object-cover" 
+            className="w-full h-auto rounded-xl shadow-lg object-cover"
+            loading="lazy"
           />
         </div>
       </div>
