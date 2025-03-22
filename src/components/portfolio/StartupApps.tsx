@@ -20,7 +20,7 @@ const StartupApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e" 
+                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=800" 
                 alt="HealthTech App" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('health')}
@@ -45,7 +45,7 @@ const StartupApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5" 
+                src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800" 
                 alt="FinTech App" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('fintech')}
@@ -70,7 +70,7 @@ const StartupApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1" 
+                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800" 
                 alt="EdTech App" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('edtech')}
