@@ -164,6 +164,7 @@ const PricingTiers = () => {
                 <span className="text-gray-500 ml-2">
                   /{billingPeriod === 'monthly' ? 'month' : 'year'}
                 </span>
+                <p className="text-xs text-gray-500 mt-1">Example pricing</p>
               </div>
             </CardHeader>
 

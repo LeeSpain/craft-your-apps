@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
@@ -73,10 +72,6 @@ const Pricing = () => {
                   <CardDescription>Split payments over time</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <div className="text-center mb-3">
-                    <span className="text-lg font-bold text-blue-600">{formatPrice(500)}</span>
-                    <span className="text-sm text-gray-500">/month</span>
-                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -111,10 +106,6 @@ const Pricing = () => {
                   <CardDescription>Pay as you progress</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <div className="text-center mb-3">
-                    <span className="text-lg font-bold text-purple-600">{formatPrice(1500)}</span>
-                    <span className="text-sm text-gray-500">/milestone</span>
-                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -149,10 +140,6 @@ const Pricing = () => {
                   <CardDescription>Best of both worlds</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
-                  <div className="text-center mb-3">
-                    <span className="text-lg font-bold text-teal-600">{formatPrice(1000)}</span>
-                    <span className="text-sm text-gray-500">/flexible</span>
-                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
