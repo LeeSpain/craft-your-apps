@@ -2,7 +2,6 @@
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
 import HeroSection from '@/components/portfolio/HeroSection';
 import PortfolioSection from '@/components/portfolio/PortfolioSection';
 import FeaturedAppsSection from '@/components/portfolio/FeaturedAppsSection';
@@ -28,7 +27,7 @@ const PortfolioPage = () => {
           id="off-the-shelf"
           title="Off-the-Shelf Apps"
           subtitle="Ready-to-launch applications designed for common business needs"
-          icon={<ShoppingCart className="h-8 w-8 text-blue-600" />}
+          icon={<ShoppingCart className="h-8 w-8 text-purple-600" />}
           bgColor="bg-white"
         >
           <OffTheShelfApps />
@@ -70,7 +69,6 @@ const PortfolioPage = () => {
       </main>
       
       <Footer />
-      <Chatbot />
     </div>
   );
 };

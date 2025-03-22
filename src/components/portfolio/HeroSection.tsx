@@ -5,9 +5,9 @@ import SectionContainer from '@/components/shared/SectionContainer';
 
 const HeroSection = () => {
   return (
-    <section className="py-12 px-6 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-12 px-6 bg-gradient-to-b from-purple-50 to-white">
       <div className="container mx-auto text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700">
           Solutions for Every Business
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">

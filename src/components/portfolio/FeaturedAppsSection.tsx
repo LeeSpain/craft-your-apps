@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useApp } from '@/context/AppContext';
 import { APPS } from '@/lib/constants';
 import AppCard from '@/components/AppCard';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const FeaturedAppsSection = () => {
-  const { openChatbot } = useApp();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +31,8 @@ const FeaturedAppsSection = () => {
   }, []);
 
   const handleBuyNow = (app: any) => {
-    openChatbot();
+    // Redirect to contact page instead of opening chatbot
+    window.location.href = '/contact';
     console.log(`Buy Now clicked for ${app.name}`);
   };
 
@@ -46,7 +47,7 @@ const FeaturedAppsSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           }`}
         >
-          <h2 className="text-3xl font-bold mb-3">
+          <h2 className="text-3xl font-bold mb-3 text-purple-700">
             Featured Applications
           </h2>
           <p className="text-gray-600">
@@ -65,6 +66,15 @@ const FeaturedAppsSection = () => {
             ))}
           </div>
         )}
+
+        <div className="mt-8 text-center">
+          <Button 
+            className="bg-purple-600 hover:bg-purple-700"
+            asChild
+          >
+            <Link to="/pricing">Browse All Apps</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

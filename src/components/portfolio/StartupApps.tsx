@@ -3,12 +3,10 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Rocket } from 'lucide-react';
-import { useApp } from '@/context/AppContext';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const StartupApps = () => {
-  const { openChatbot } = useApp();
   const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
   
   const handleImageLoad = (id: string) => {
@@ -34,8 +32,10 @@ const StartupApps = () => {
               AI-powered health platforms, appointment booking, and telemedicine integration with investor-ready metrics.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-purple-600" onClick={openChatbot}>
-                Request Consultation
+              <Button className="w-full bg-purple-600 hover:bg-purple-700" asChild>
+                <Link to="/contact">
+                  Request Consultation
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -57,8 +57,10 @@ const StartupApps = () => {
               Budget tracking, investment recommendations, and secure payment processing with scalable architecture.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-purple-600" onClick={openChatbot}>
-                Request Consultation
+              <Button className="w-full bg-purple-600 hover:bg-purple-700" asChild>
+                <Link to="/contact">
+                  Request Consultation
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -80,8 +82,10 @@ const StartupApps = () => {
               Interactive learning modules, progress tracking, and gamification designed to scale with user growth.
             </p>
             <div className="mt-auto text-center">
-              <Button className="w-full bg-purple-600" onClick={openChatbot}>
-                Request Consultation
+              <Button className="w-full bg-purple-600 hover:bg-purple-700" asChild>
+                <Link to="/contact">
+                  Request Consultation
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -89,7 +93,7 @@ const StartupApps = () => {
       </div>
       
       <div className="flex justify-center">
-        <Button size="lg" className="bg-purple-600" asChild>
+        <Button size="lg" className="bg-purple-600 hover:bg-purple-700" asChild>
           <Link to="/contact">
             <Rocket className="mr-2 h-5 w-5" />
             Request a Consultation

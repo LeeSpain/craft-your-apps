@@ -7,6 +7,7 @@ import { ExternalLink, ShoppingCart } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Link } from 'react-router-dom';
 
 interface AppCardProps {
   app: AppData;
@@ -74,8 +75,8 @@ const AppCard = ({ app, onBuyNow }: AppCardProps) => {
       <div className="flex-1 p-6">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-bold">{app.name}</h3>
-          <div className="bg-blue-50 px-3 py-1 rounded-full">
-            <span className="text-blue-700 font-medium">{formatPrice(app.price)}</span>
+          <div className="bg-purple-50 px-3 py-1 rounded-full">
+            <span className="text-purple-700 font-medium">{formatPrice(app.price)}</span>
           </div>
         </div>
         
@@ -84,7 +85,7 @@ const AppCard = ({ app, onBuyNow }: AppCardProps) => {
         <div className="mt-auto flex gap-3">
           <Button 
             onClick={() => onBuyNow(app)}
-            className="flex-1 button-hover bg-blue-600 hover:bg-blue-700"
+            className="flex-1 button-hover bg-purple-600 hover:bg-purple-700"
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
             {getTranslation('portfolio.buyNow', language)}
@@ -92,7 +93,7 @@ const AppCard = ({ app, onBuyNow }: AppCardProps) => {
           
           <Button 
             variant="outline" 
-            className="button-hover border-blue-200 hover:bg-blue-50"
+            className="button-hover border-purple-200 hover:bg-purple-50"
             onClick={() => window.open(app.demoLink, '_blank')}
           >
             <ExternalLink className="mr-2 h-4 w-4" />

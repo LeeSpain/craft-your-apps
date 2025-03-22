@@ -4,9 +4,11 @@ import { getTranslation } from '@/lib/translations';
 import { APPS, AppData } from '@/lib/constants';
 import AppCard from './AppCard';
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Portfolio = () => {
-  const { language, openChatbot } = useApp();
+  const { language } = useApp();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +34,8 @@ const Portfolio = () => {
   }, []);
 
   const handleBuyNow = (app: AppData) => {
-    // Open chatbot with the specific app pre-selected
-    openChatbot();
-    // In a real implementation, we would also send a message to the chatbot
-    // to start with this app selected
+    // Redirect to contact page instead of opening chatbot
+    window.location.href = '/contact';
     console.log(`Buy Now clicked for ${app.name}`);
   };
 
@@ -51,10 +51,10 @@ const Portfolio = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium mb-4">
             {getTranslation('portfolio.title', language)}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-purple-800">
             {getTranslation('portfolio.subtitle', language)}
           </h2>
         </div>
@@ -74,18 +74,20 @@ const Portfolio = () => {
             isVisible ? 'opacity-100 translate-y-0 delay-300' : 'opacity-0 translate-y-10'
           }`}
         >
-          <h3 className="text-2xl font-bold mb-4">
+          <h3 className="text-2xl font-bold mb-4 text-purple-700">
             {getTranslation('custom.title', language)}
           </h3>
           <p className="text-gray-600 mb-8">
             {getTranslation('custom.subtitle', language)}
           </p>
-          <button 
-            onClick={openChatbot}
-            className="px-8 py-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg button-hover"
+          <Button 
+            className="px-8 py-4 bg-purple-600 text-white rounded-xl font-medium hover:bg-purple-700 transition-colors shadow-md hover:shadow-lg button-hover"
+            asChild
           >
-            {getTranslation('custom.chatButton', language)}
-          </button>
+            <Link to="/contact">
+              {getTranslation('custom.chatButton', language)}
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
