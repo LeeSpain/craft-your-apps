@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import SectionContainer from '@/components/shared/SectionContainer';
 
 const HeroSection = () => {
@@ -15,13 +17,18 @@ const HeroSection = () => {
             <p className="text-xl text-gray-600 mb-6">
               From ready-to-launch applications to fully custom solutions, we deliver digital products that drive growth and efficiency. Find the perfect match for your business needs.
             </p>
+            <Button size="lg" className="bg-purple-600 hover:bg-purple-700" asChild>
+              <Link to="/pricing">
+                Get a Quote
+              </Link>
+            </Button>
           </div>
           <div className="hidden md:block">
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
               <AspectRatio ratio={16/9} className="overflow-hidden rounded-lg">
                 <img 
-                  src="/lovable-uploads/558eb31c-5a2b-476c-985c-45325a1ffb30.png"
-                  alt="Business Solutions" 
+                  src="/lovable-uploads/132059dc-2448-4d15-874e-0305ce7e4f9f.png"
+                  alt="Custom App Solutions" 
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
