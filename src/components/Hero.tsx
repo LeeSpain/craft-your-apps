@@ -21,7 +21,7 @@ const Hero = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: "50px" } // For earlier triggering
     );
 
     const elements = section.querySelectorAll('.animate-on-scroll');
@@ -42,7 +42,7 @@ const Hero = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center py-20 px-6 overflow-hidden bg-gradient-to-b from-indigo-50 via-blue-50 to-white"
+      className="relative py-16 md:py-24 px-6 overflow-hidden bg-gradient-to-b from-indigo-50 via-blue-50 to-white" // Set consistent height via padding
     >
       {/* Background blur effects */}
       <div className="absolute top-20 -left-24 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
@@ -54,20 +54,20 @@ const Hero = () => {
       
       <div className="container mx-auto text-center z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-block mb-6 px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-100">
+          <div className="inline-block mb-4 px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-indigo-100 border border-purple-200 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-100"> {/* Reduced delay and margin */}
             <p className="text-purple-700 text-sm font-medium">CUSTOM APP DEVELOPMENT</p>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-300 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-200 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700"> {/* Reduced delay and margin */}
             Transforming Business Ideas Into Powerful Applications
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-700 mb-10 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-500">
+          <p className="text-lg md:text-xl text-gray-700 mb-6 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-300"> {/* Reduced delay and margin */}
             We build custom apps that drive growth, streamline operations, and create exceptional user experiences.
             Trusted by startups, SMBs, and enterprise organizations.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 delay-700">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-500 delay-400"> {/* Reduced delay */}
             <Button 
               onClick={scrollToServices}
               className="w-full sm:w-auto px-8 py-6 text-base button-hover bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
@@ -88,7 +88,7 @@ const Hero = () => {
         
         {/* Scroll indicator */}
         <div 
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" 
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" // Moved up
           onClick={scrollToServices}
         >
           <ArrowDown className="h-10 w-10 text-purple-500 opacity-70" />
