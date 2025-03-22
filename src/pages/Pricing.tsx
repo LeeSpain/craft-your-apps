@@ -61,8 +61,8 @@ const Pricing = () => {
           <div className="mb-16 bg-gradient-to-br from-indigo-100 to-purple-100 p-8 rounded-2xl shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-indigo-900">Payment Options</h2>
             <p className="text-gray-700 mb-8 max-w-3xl">
-              We offer flexible payment plans for small businesses and individual entrepreneurs.
-              All projects start with a 30% non-refundable deposit.
+              We offer flexible payment plans that provide options for businesses of all sizes.
+              All projects start with a 30% non-refundable deposit to begin development.
             </p>
             
             <div className="grid md:grid-cols-3 gap-6">
@@ -73,6 +73,10 @@ const Pricing = () => {
                   <CardDescription>Split payments over time</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
+                  <div className="text-center mb-3">
+                    <span className="text-lg font-bold text-blue-600">{formatPrice(500)}</span>
+                    <span className="text-sm text-gray-500">/month</span>
+                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -107,6 +111,10 @@ const Pricing = () => {
                   <CardDescription>Pay as you progress</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
+                  <div className="text-center mb-3">
+                    <span className="text-lg font-bold text-purple-600">{formatPrice(1500)}</span>
+                    <span className="text-sm text-gray-500">/milestone</span>
+                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -141,6 +149,10 @@ const Pricing = () => {
                   <CardDescription>Best of both worlds</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3 pt-0">
+                  <div className="text-center mb-3">
+                    <span className="text-lg font-bold text-teal-600">{formatPrice(1000)}</span>
+                    <span className="text-sm text-gray-500">/flexible</span>
+                  </div>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -183,147 +195,14 @@ const Pricing = () => {
             </div>
           </div>
           
-          {/* FAQ Section - Moved above App Solutions */}
-          <section className="py-6 mb-16">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-2">Frequently Asked Questions</h2>
-              <p className="text-gray-600 max-w-3xl mx-auto">
-                Common questions about our pricing, development process, and payment options.
-              </p>
-            </div>
-            
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-left font-medium">
-                    Is the 30% deposit really non-refundable?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      Yes, the 30% deposit is non-refundable as it covers the initial discovery, planning, and design phases 
-                      which require significant resources. This deposit demonstrates client commitment and allows us to allocate 
-                      the necessary team members to your project right from the start.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-left font-medium">
-                    Do you offer discounts for full upfront payment?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      Yes! Clients who pay the full project cost upfront receive a 5% discount on the total price. 
-                      This option is popular with businesses that have allocated budget and want to maximize their investment.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-left font-medium">
-                    How long does app development typically take?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      Development timelines vary based on project complexity:
-                    </p>
-                    <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-700">
-                      <li>Small Business apps: 2-4 months</li>
-                      <li>Medium Business apps: 4-6 months</li>
-                      <li>Enterprise solutions: 6+ months</li>
-                    </ul>
-                    <p className="mt-2 text-gray-700">
-                      We'll provide a detailed timeline during the project planning phase so you know exactly what to expect.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-4">
-                  <AccordionTrigger className="text-left font-medium">
-                    What happens if I need changes after the app is launched?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      We offer a 30-day warranty period after launch to address any bugs or issues. 
-                      For feature additions or significant changes after launch, we provide flexible maintenance packages 
-                      starting at £500/month, or you can engage us on a project basis for specific enhancements.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-5">
-                  <AccordionTrigger className="text-left font-medium">
-                    Do you provide ongoing support and maintenance?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      Yes, we offer various support and maintenance packages:
-                    </p>
-                    <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-700">
-                      <li>Basic: Security updates and critical fixes (£500/month)</li>
-                      <li>Standard: Basic + priority support and minor enhancements (£1,000/month)</li>
-                      <li>Premium: Standard + dedicated support team and regular feature updates (£2,500/month)</li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-6">
-                  <AccordionTrigger className="text-left font-medium">
-                    Can I make changes to my payment plan after the project starts?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      While we prefer to maintain the initially agreed payment structure, we understand that business circumstances can change. 
-                      We're open to discussing modifications to payment terms if needed, but any changes must be agreed in writing
-                      and may affect the project timeline.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-7">
-                  <AccordionTrigger className="text-left font-medium">
-                    Who owns the code and intellectual property?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-gray-700">
-                      Once the project is fully paid for, you own 100% of the custom code and intellectual property we develop for you. 
-                      This includes all designs, source code, and documentation. We may use general concepts and non-proprietary 
-                      components in other projects, but your specific business logic and unique features remain exclusively yours.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </section>
-          
-          {/* Pricing Tiers - Modified to focus on learning more */}
-          <div className="mb-16">
-            <BusinessHeader 
-              title="App Solutions for Every Size Business"
-              subtitle="Explore our tailored solutions that fit your business needs at any stage. Get a detailed quote for any package."
-            />
-            <div className="text-center mb-8 max-w-2xl mx-auto">
-              <p className="text-gray-700">
-                Whether you're a small startup or an established enterprise, we have the perfect app solution for your needs.
-                Our packages are designed to be flexible and scalable, growing with your business.
-              </p>
-              <Button
-                className="mt-4 bg-blue-600 hover:bg-blue-700"
-                onClick={() => document.querySelector('.QuoteForm')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Get Your Custom Quote
-              </Button>
-            </div>
-          </div>
-          
-          {/* Industry Packages Section - Modified to add prices back but with a disclaimer */}
-          <div className="mb-12 bg-gradient-to-br from-purple-100 to-indigo-100 p-8 rounded-2xl shadow-sm">
+          {/* Industry Packages Section - Moved above FAQ */}
+          <div className="mb-16 bg-gradient-to-br from-purple-100 to-indigo-100 p-8 rounded-2xl shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-indigo-900">Tailored Solutions by Industry</h2>
             <p className="text-gray-700 mb-2 max-w-3xl">
               Our app solutions are tailored to the specific needs of your industry.
               Below are example prices to give you an idea of our starting points.
             </p>
-            <p className="text-gray-700 mb-8 max-w-3xl font-medium text-indigo-800">
+            <p className="text-gray-700 mb-8 max-w-3xl font-medium text-indigo-800 bg-yellow-50 p-2 rounded-md border border-yellow-200">
               Note: These are example prices only. Your final quote will be customized based on your specific requirements.
             </p>
             
@@ -469,6 +348,131 @@ const Pricing = () => {
                 </Card>
               </TabsContent>
             </Tabs>
+          </div>
+          
+          {/* FAQ Section - Moved below Tailored Solutions */}
+          <section className="py-6 mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold mb-2">Frequently Asked Questions</h2>
+              <p className="text-gray-600 max-w-3xl mx-auto">
+                Common questions about our pricing, development process, and payment options.
+              </p>
+            </div>
+            
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-left font-medium">
+                    Is the 30% deposit really non-refundable?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      Yes, the 30% deposit is non-refundable as it covers the initial discovery, planning, and design phases 
+                      which require significant resources. This deposit demonstrates client commitment and allows us to allocate 
+                      the necessary team members to your project right from the start.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-left font-medium">
+                    Do you offer discounts for full upfront payment?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      Yes! Clients who pay the full project cost upfront receive a 5% discount on the total price. 
+                      This option is popular with businesses that have allocated budget and want to maximize their investment.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-left font-medium">
+                    How long does app development typically take?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      Development timelines vary based on project complexity:
+                    </p>
+                    <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-700">
+                      <li>Small Business apps: 2-4 months</li>
+                      <li>Medium Business apps: 4-6 months</li>
+                      <li>Enterprise solutions: 6+ months</li>
+                    </ul>
+                    <p className="mt-2 text-gray-700">
+                      We'll provide a detailed timeline during the project planning phase so you know exactly what to expect.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-left font-medium">
+                    What happens if I need changes after the app is launched?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      We offer a 30-day warranty period after launch to address any bugs or issues. 
+                      For feature additions or significant changes after launch, we provide flexible maintenance packages 
+                      starting at £500/month, or you can engage us on a project basis for specific enhancements.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-left font-medium">
+                    Do you provide ongoing support and maintenance?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      Yes, we offer various support and maintenance packages:
+                    </p>
+                    <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-700">
+                      <li>Basic: Security updates and critical fixes (£500/month)</li>
+                      <li>Standard: Basic + priority support and minor enhancements (£1,000/month)</li>
+                      <li>Premium: Standard + dedicated support team and regular feature updates (£2,500/month)</li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-left font-medium">
+                    Can I make changes to my payment plan after the project starts?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      While we prefer to maintain the initially agreed payment structure, we understand that business circumstances can change. 
+                      We're open to discussing modifications to payment terms if needed, but any changes must be agreed in writing
+                      and may affect the project timeline.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-7">
+                  <AccordionTrigger className="text-left font-medium">
+                    Who owns the code and intellectual property?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700">
+                      Once the project is fully paid for, you own 100% of the custom code and intellectual property we develop for you. 
+                      This includes all designs, source code, and documentation. We may use general concepts and non-proprietary 
+                      components in other projects, but your specific business logic and unique features remain exclusively yours.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </section>
+          
+          {/* Pricing Tiers - Complete Section */}
+          <div className="mb-16">
+            <BusinessHeader 
+              title="App Solutions for Every Size Business"
+              subtitle="Explore our tailored solutions that fit your business needs at any stage. Get a detailed quote for any package."
+            />
+            
+            <div className="mt-8">
+              <PricingTiers />
+            </div>
           </div>
         </div>
       </main>

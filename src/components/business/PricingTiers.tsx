@@ -109,6 +109,13 @@ const PricingTiers = () => {
 
   return (
     <div className="container mx-auto py-12 px-4">
+      {/* Disclaimer Banner */}
+      <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-8 text-center">
+        <p className="text-yellow-800 font-medium">
+          These are example prices to illustrate our pricing structure. Your actual cost will be customized to your specific needs.
+        </p>
+      </div>
+
       {/* Pricing Switch */}
       <div className="flex justify-center items-center space-x-4 mb-12">
         <button
@@ -183,7 +190,7 @@ const PricingTiers = () => {
               </div>
             </CardContent>
 
-            <CardFooter>
+            <CardFooter className="flex flex-col space-y-3">
               <Button 
                 className={`w-full ${tier.buttonColor}`} 
                 asChild
@@ -191,6 +198,14 @@ const PricingTiers = () => {
                 <Link to="/contact">
                   Contact Us
                 </Link>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="w-full border-gray-300"
+                onClick={() => document.querySelector('.QuoteForm')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Get Custom Quote
               </Button>
             </CardFooter>
           </Card>
