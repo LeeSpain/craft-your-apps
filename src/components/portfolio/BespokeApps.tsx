@@ -33,7 +33,7 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1434682881908-b43d0467b798?q=80&w=800" 
+                src="/lovable-uploads/f0f14872-32ce-4b9a-b082-9988b20792de.png" 
                 alt="Move Sync" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('movesync')}
@@ -64,7 +64,7 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=800" 
+                src="/lovable-uploads/558eb31c-5a2b-476c-985c-45325a1ffb30.png" 
                 alt="PawPal Booking Buddy" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('pawpal')}
@@ -95,7 +95,7 @@ const BespokeApps = () => {
           <CardContent className="p-6">
             <AspectRatio ratio={16/9} className="bg-gray-100 rounded-md mb-4 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800" 
+                src="/lovable-uploads/132059dc-2448-4d15-874e-0305ce7e4f9f.png" 
                 alt="AIS Pain Homes" 
                 loading="lazy"
                 onLoad={() => handleImageLoad('aispain')}
