@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BarChart3, GalleryHorizontalEnd, Package, Users, DollarSign, ShoppingCart, Settings } from 'lucide-react';
 
 const AdminDashboard = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
   // Redirect to login if not authenticated
@@ -15,7 +15,7 @@ const AdminDashboard = () => {
     if (!isAuthenticated && !isLoading) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, isLoading, navigate]);
 
   const statCards = [
     { title: 'Total Apps', value: '12', icon: Package, color: 'bg-blue-500' },
