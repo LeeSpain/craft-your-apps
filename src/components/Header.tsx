@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useApp } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
-import { LogIn, User } from 'lucide-react';
+import { LogIn, User, ShieldCheck } from 'lucide-react';
 import CurrencySelector from './CurrencySelector';
 
 const Header = () => {
@@ -47,12 +47,20 @@ const Header = () => {
             <CurrencySelector />
             
             {isAuthenticated ? (
-              <Link to="/dashboard">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Dashboard
-                </Button>
-              </Link>
+              <div className="flex items-center space-x-3">
+                <Link to="/admin">
+                  <Button variant="outline" className="flex items-center gap-2 border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
+                    <ShieldCheck className="h-4 w-4" />
+                    Admin
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+              </div>
             ) : (
               <Link to="/login">
                 <Button variant="outline" className="flex items-center gap-2">
@@ -101,12 +109,20 @@ const Header = () => {
                 <CurrencySelector />
               </div>
               {isAuthenticated ? (
-                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="flex items-center gap-2 w-full">
-                    <User className="h-4 w-4" />
-                    Dashboard
-                  </Button>
-                </Link>
+                <div className="flex flex-col space-y-3">
+                  <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="flex items-center gap-2 w-full border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
+                      <ShieldCheck className="h-4 w-4" />
+                      Admin
+                    </Button>
+                  </Link>
+                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="flex items-center gap-2 w-full">
+                      <User className="h-4 w-4" />
+                      Dashboard
+                    </Button>
+                  </Link>
+                </div>
               ) : (
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="outline" className="flex items-center gap-2 w-full">

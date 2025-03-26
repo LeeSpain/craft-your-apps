@@ -24,6 +24,10 @@ import Payments from "./pages/dashboard/Payments";
 import Analytics from "./pages/dashboard/Analytics";
 import Settings from "./pages/dashboard/Settings";
 
+// Admin Dashboard Pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageApps from "./pages/admin/ManageApps";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -43,6 +47,10 @@ const App = () => (
               <Route path="/features" element={<Features />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/apps" element={<ManageApps />} />
               
               {/* Dashboard Routes */}
               <Route path="/dashboard" element={<DashboardLayout />}>
